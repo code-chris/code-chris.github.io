@@ -1,9 +1,10 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.AggregateError = AggregateError;
 exports.initializePAL = initializePAL;
-
 function AggregateError(message, innerError, skipIfAlreadyAggregate) {
   if (innerError) {
     if (innerError.innerError && skipIfAlreadyAggregate) {
@@ -23,16 +24,14 @@ function AggregateError(message, innerError, skipIfAlreadyAggregate) {
   return e;
 }
 
-var FEATURE = {};
+var FEATURE = exports.FEATURE = {};
 
-exports.FEATURE = FEATURE;
-var PLATFORM = {
+var PLATFORM = exports.PLATFORM = {
   noop: function noop() {},
   eachModule: function eachModule() {}
 };
 
-exports.PLATFORM = PLATFORM;
-PLATFORM.global = (function () {
+PLATFORM.global = function () {
   if (typeof self !== 'undefined') {
     return self;
   }
@@ -42,11 +41,9 @@ PLATFORM.global = (function () {
   }
 
   return new Function('return this')();
-})();
+}();
 
-var DOM = {};
-
-exports.DOM = DOM;
+var DOM = exports.DOM = {};
 
 function initializePAL(callback) {
   if (typeof Object.getPropertyDescriptor !== 'function') {

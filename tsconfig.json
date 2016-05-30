@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "amd",
         "target": "es5",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
@@ -9,9 +9,5 @@
     },
     "exclude": [
         "node_modules"
-    ],
-    "files": [
-        "app/Main.ts",
-        "app/App.ts"
     ]
 }

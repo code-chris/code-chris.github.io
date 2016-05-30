@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="{{author}}">
+    <meta name="description" content="{{description}}">
+    <meta name="keywords" content="{{keywords}}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@ckotzbauer1">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:creator" content="@ckotzbauer1">
+    <meta name="twitter:url" content="{{absoluteUrl}}">
+    <meta name="twitter:image" content="{{image}}">
+
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:url" content="{{absoluteUrl}}">
+    <meta property="og:site_name" content="{{siteTitle}}">
+    <meta property="og:image" content="{{image}}">
+
+    <link href="{{siteUrl}}/feed.xml" type="application/atom+xml" rel="alternate" title="{{siteTitle}} Feed">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="{{siteUrl}}/favicon.ico">
+
+    <link rel="canonical" href="{{siteUrl}}" />
+
+    <script>
+        // Redirect to right location in SPA-App
+        var oldUrl = window.location.href;
+        var host = oldUrl.substr(0, oldUrl.indexOf("posts"));
+        var postFragment = oldUrl.substr(host.length);
+        postFragment = postFragment.substr(0, postFragment.length - 10);
+        window.location.href = host + "#/" + postFragment;
+    </script>
+    <title>{{title}}</title>
+</head>
+
+<body>
+<p>{{title}}</p>
+</body>
+</html>

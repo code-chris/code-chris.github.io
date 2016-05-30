@@ -1,5 +1,12 @@
 <template>
-    ${myVariable}
-    <span text.bind="myVariable"></span>
-    <button click.trigger="buttonClicked()">Click here</button>
+    <require from='./components/Navigation'></require>
+    <require from='./components/BlogFooter'></require>
+
+    <navigation></navigation>
+
+    <div class="page-host">
+        <router-view></router-view>
+    </div>
+
+    <blog-footer></blog-footer>
 </template>

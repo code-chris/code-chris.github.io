@@ -1,8 +1,15 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getSetObserver = exports.BindingEngine = exports.NameExpression = exports.Listener = exports.ListenerExpression = exports.BindingBehaviorResource = exports.ValueConverterResource = exports.Call = exports.CallExpression = exports.Binding = exports.BindingExpression = exports.ObjectObservationAdapter = exports.ObserverLocator = exports.SVGAnalyzer = exports.presentationAttributes = exports.presentationElements = exports.elements = exports.ComputedExpression = exports.ClassObserver = exports.SelectValueObserver = exports.CheckedObserver = exports.ValueAttributeObserver = exports.StyleObserver = exports.DataAttributeObserver = exports.dataAttributeAccessor = exports.XLinkAttributeObserver = exports.SetterObserver = exports.PrimitiveObserver = exports.propertyAccessor = exports.DirtyCheckProperty = exports.DirtyChecker = exports.EventManager = exports.getMapObserver = exports.ParserImplementation = exports.Parser = exports.Scanner = exports.Lexer = exports.Token = exports.bindingMode = exports.ExpressionCloner = exports.Unparser = exports.LiteralObject = exports.LiteralArray = exports.LiteralString = exports.LiteralPrimitive = exports.PrefixNot = exports.Binary = exports.CallFunction = exports.CallMember = exports.CallScope = exports.AccessKeyed = exports.AccessMember = exports.AccessScope = exports.AccessThis = exports.Conditional = exports.Assign = exports.ValueConverter = exports.BindingBehavior = exports.Chain = exports.Expression = exports.getArrayObserver = exports.CollectionLengthObserver = exports.ModifyCollectionObserver = exports.ExpressionObserver = exports.sourceContext = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _dec2, _class, _dec3, _class2, _dec4, _class3, _dec5, _class5, _dec6, _class7, _dec7, _class8, _dec8, _class9, _dec9, _class10, _class11, _temp, _dec10, _class12, _class13, _temp2;
 
 exports.camelCase = camelCase;
 exports.createOverrideContext = createOverrideContext;
@@ -15,26 +22,26 @@ exports.calcSplices = calcSplices;
 exports.mergeSplice = mergeSplice;
 exports.projectArraySplices = projectArraySplices;
 exports.getChangeRecords = getChangeRecords;
-exports.getArrayObserver = _getArrayObserver;
-exports.getMapObserver = _getMapObserver;
+exports.cloneExpression = cloneExpression;
 exports.hasDeclaredDependencies = hasDeclaredDependencies;
 exports.declarePropertyDependencies = declarePropertyDependencies;
 exports.computedFrom = computedFrom;
+exports.createComputedObserver = createComputedObserver;
 exports.valueConverter = valueConverter;
 exports.bindingBehavior = bindingBehavior;
-exports.getSetObserver = getSetObserver;
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-require('core-js');
+exports.observable = observable;
 
 var _aureliaPal = require('aurelia-pal');
 
 var _aureliaTaskQueue = require('aurelia-task-queue');
 
 var _aureliaMetadata = require('aurelia-metadata');
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function camelCase(name) {
   return name.charAt(0).toLowerCase() + name.slice(1);
@@ -84,8 +91,7 @@ function createScopeForTest(bindingContext, parentBindingContext) {
   };
 }
 
-var sourceContext = 'Binding:source';
-exports.sourceContext = sourceContext;
+var sourceContext = exports.sourceContext = 'Binding:source';
 var slotNames = [];
 var versionSlotNames = [];
 
@@ -146,6 +152,7 @@ function connectable() {
     target.prototype.observeProperty = observeProperty;
     target.prototype.observeArray = observeArray;
     target.prototype.unobserve = unobserve;
+    target.prototype.addObserver = addObserver;
   };
 }
 
@@ -158,21 +165,16 @@ var immediate = 0;
 
 function flush(animationFrameStart) {
   var i = 0;
-  for (var _iterator = bindings, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-    var _ref;
+  var keys = bindings.keys();
+  var item = void 0;
 
-    if (_isArray) {
-      if (_i >= _iterator.length) break;
-      _ref = _iterator[_i++];
-    } else {
-      _i = _iterator.next();
-      if (_i.done) break;
-      _ref = _i.value;
+  while (item = keys.next()) {
+    if (item.done) {
+      break;
     }
 
-    var binding = _ref[0];
-
-    bindings['delete'](binding);
+    var binding = item.value;
+    bindings.delete(binding);
     binding.connect(true);
     i++;
 
@@ -248,7 +250,7 @@ function removeSubscriber(context, callable) {
     return true;
   }
   var rest = this._contextsRest;
-  var index = undefined;
+  var index = void 0;
   if (!rest || !rest.length || (index = rest.indexOf(context)) === -1 || this._callablesRest[index] !== callable) {
     return false;
   }
@@ -269,10 +271,10 @@ function callSubscribers(newValue, oldValue) {
   var context2 = this._context2;
   var callable2 = this._callable2;
   var length = this._contextsRest ? this._contextsRest.length : 0;
-  var contextsRest = undefined;
-  var callablesRest = undefined;
-  var poolIndex = undefined;
-  var i = undefined;
+  var contextsRest = void 0;
+  var callablesRest = void 0;
+  var poolIndex = void 0;
+  var i = void 0;
   if (length) {
     poolIndex = poolUtilization.length;
     while (poolIndex-- && poolUtilization[poolIndex]) {}
@@ -342,7 +344,7 @@ function hasSubscriber(context, callable) {
   if (has) {
     return true;
   }
-  var index = undefined;
+  var index = void 0;
   var contexts = this._contextsRest;
   if (!contexts || (index = contexts.length) === 0) {
     return false;
@@ -365,6 +367,64 @@ function subscriberCollection() {
     target.prototype.hasSubscriber = hasSubscriber;
   };
 }
+
+var ExpressionObserver = exports.ExpressionObserver = (_dec = connectable(), _dec2 = subscriberCollection(), _dec(_class = _dec2(_class = function () {
+  function ExpressionObserver(scope, expression, observerLocator, lookupFunctions) {
+    _classCallCheck(this, ExpressionObserver);
+
+    this.scope = scope;
+    this.expression = expression;
+    this.observerLocator = observerLocator;
+    this.lookupFunctions = lookupFunctions;
+  }
+
+  ExpressionObserver.prototype.getValue = function getValue() {
+    return this.expression.evaluate(this.scope, this.lookupFunctions);
+  };
+
+  ExpressionObserver.prototype.setValue = function setValue(newValue) {
+    this.expression.assign(this.scope, newValue);
+  };
+
+  ExpressionObserver.prototype.subscribe = function subscribe(context, callable) {
+    var _this = this;
+
+    if (!this.hasSubscribers()) {
+      this.oldValue = this.expression.evaluate(this.scope, this.lookupFunctions);
+      this.expression.connect(this, this.scope);
+    }
+    this.addSubscriber(context, callable);
+    if (arguments.length === 1 && context instanceof Function) {
+      return {
+        dispose: function dispose() {
+          _this.unsubscribe(context, callable);
+        }
+      };
+    }
+  };
+
+  ExpressionObserver.prototype.unsubscribe = function unsubscribe(context, callable) {
+    if (this.removeSubscriber(context, callable) && !this.hasSubscribers()) {
+      this.unobserve(true);
+      this.oldValue = undefined;
+    }
+  };
+
+  ExpressionObserver.prototype.call = function call() {
+    var newValue = this.expression.evaluate(this.scope, this.lookupFunctions);
+    var oldValue = this.oldValue;
+    if (newValue !== oldValue) {
+      this.oldValue = newValue;
+      this.callSubscribers(newValue, oldValue);
+    }
+    this._version++;
+    this.expression.connect(this, this.scope);
+    this.unobserve(false);
+  };
+
+  return ExpressionObserver;
+}()) || _class) || _class);
+
 
 function isIndex(s) {
   return +s === s >>> 0;
@@ -483,9 +543,9 @@ ArraySplice.prototype = {
 
     if (currentStart == currentEnd) {
       var splice = newSplice(currentStart, [], 0);
-      while (oldStart < oldEnd) splice.removed.push(old[oldStart++]);
-
-      return [splice];
+      while (oldStart < oldEnd) {
+        splice.removed.push(old[oldStart++]);
+      }return [splice];
     } else if (oldStart == oldEnd) return [newSplice(currentStart, [], currentEnd - currentStart)];
 
     var ops = this.spliceOperationsFromEditDistances(this.calcEditDistances(current, currentStart, currentEnd, old, oldStart, oldEnd));
@@ -536,17 +596,18 @@ ArraySplice.prototype = {
   },
 
   sharedPrefix: function sharedPrefix(current, old, searchLength) {
-    for (var i = 0; i < searchLength; ++i) if (!this.equals(current[i], old[i])) return i;
-    return searchLength;
+    for (var i = 0; i < searchLength; ++i) {
+      if (!this.equals(current[i], old[i])) return i;
+    }return searchLength;
   },
 
   sharedSuffix: function sharedSuffix(current, old, searchLength) {
     var index1 = current.length;
     var index2 = old.length;
     var count = 0;
-    while (count < searchLength && this.equals(current[--index1], old[--index2])) count++;
-
-    return count;
+    while (count < searchLength && this.equals(current[--index1], old[--index2])) {
+      count++;
+    }return count;
   },
 
   calculateSplices: function calculateSplices(current, previous) {
@@ -689,29 +750,26 @@ function newRecord(type, object, key, oldValue) {
 }
 
 function getChangeRecords(map) {
-  var entries = [];
-  for (var _iterator2 = map.keys(), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-    var _ref2;
+  var entries = new Array(map.size);
+  var keys = map.keys();
+  var i = 0;
+  var item = void 0;
 
-    if (_isArray2) {
-      if (_i2 >= _iterator2.length) break;
-      _ref2 = _iterator2[_i2++];
-    } else {
-      _i2 = _iterator2.next();
-      if (_i2.done) break;
-      _ref2 = _i2.value;
+  while (item = keys.next()) {
+    if (item.done) {
+      break;
     }
 
-    var key = _ref2;
-
-    entries.push(newRecord('added', map, key));
+    entries[i] = newRecord('added', map, item.value);
+    i++;
   }
+
   return entries;
 }
 
-var ModifyCollectionObserver = (function () {
+var ModifyCollectionObserver = exports.ModifyCollectionObserver = (_dec3 = subscriberCollection(), _dec3(_class2 = function () {
   function ModifyCollectionObserver(taskQueue, collection) {
-    _classCallCheck(this, _ModifyCollectionObserver);
+    _classCallCheck(this, ModifyCollectionObserver);
 
     this.taskQueue = taskQueue;
     this.queued = false;
@@ -782,7 +840,7 @@ var ModifyCollectionObserver = (function () {
   ModifyCollectionObserver.prototype.call = function call() {
     var changeRecords = this.changeRecords;
     var oldCollection = this.oldCollection;
-    var records = undefined;
+    var records = void 0;
 
     this.queued = false;
     this.changeRecords = [];
@@ -811,16 +869,11 @@ var ModifyCollectionObserver = (function () {
     }
   };
 
-  var _ModifyCollectionObserver = ModifyCollectionObserver;
-  ModifyCollectionObserver = subscriberCollection()(ModifyCollectionObserver) || ModifyCollectionObserver;
   return ModifyCollectionObserver;
-})();
-
-exports.ModifyCollectionObserver = ModifyCollectionObserver;
-
-var CollectionLengthObserver = (function () {
+}()) || _class2);
+var CollectionLengthObserver = exports.CollectionLengthObserver = (_dec4 = subscriberCollection(), _dec4(_class3 = function () {
   function CollectionLengthObserver(collection) {
-    _classCallCheck(this, _CollectionLengthObserver);
+    _classCallCheck(this, CollectionLengthObserver);
 
     this.collection = collection;
     this.lengthPropertyName = collection instanceof Map || collection instanceof Set ? 'size' : 'length';
@@ -849,12 +902,9 @@ var CollectionLengthObserver = (function () {
     this.currentValue = newValue;
   };
 
-  var _CollectionLengthObserver = CollectionLengthObserver;
-  CollectionLengthObserver = subscriberCollection()(CollectionLengthObserver) || CollectionLengthObserver;
   return CollectionLengthObserver;
-})();
+}()) || _class3);
 
-exports.CollectionLengthObserver = CollectionLengthObserver;
 
 var pop = Array.prototype.pop;
 var push = Array.prototype.push;
@@ -866,8 +916,8 @@ var unshift = Array.prototype.unshift;
 
 Array.prototype.pop = function () {
   var methodCallResult = pop.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.addChangeRecord({
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.addChangeRecord({
       type: 'delete',
       object: this,
       name: this.length,
@@ -879,8 +929,8 @@ Array.prototype.pop = function () {
 
 Array.prototype.push = function () {
   var methodCallResult = push.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.addChangeRecord({
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.addChangeRecord({
       type: 'splice',
       object: this,
       index: this.length - arguments.length,
@@ -892,22 +942,22 @@ Array.prototype.push = function () {
 };
 
 Array.prototype.reverse = function () {
-  var oldArray = undefined;
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.flushChangeRecords();
+  var oldArray = void 0;
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.flushChangeRecords();
     oldArray = this.slice();
   }
   var methodCallResult = reverse.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.reset(oldArray);
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.reset(oldArray);
   }
   return methodCallResult;
 };
 
 Array.prototype.shift = function () {
   var methodCallResult = shift.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.addChangeRecord({
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.addChangeRecord({
       type: 'delete',
       object: this,
       name: 0,
@@ -918,22 +968,22 @@ Array.prototype.shift = function () {
 };
 
 Array.prototype.sort = function () {
-  var oldArray = undefined;
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.flushChangeRecords();
+  var oldArray = void 0;
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.flushChangeRecords();
     oldArray = this.slice();
   }
   var methodCallResult = sort.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.reset(oldArray);
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.reset(oldArray);
   }
   return methodCallResult;
 };
 
 Array.prototype.splice = function () {
   var methodCallResult = splice.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.addChangeRecord({
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.addChangeRecord({
       type: 'splice',
       object: this,
       index: arguments[0],
@@ -946,8 +996,8 @@ Array.prototype.splice = function () {
 
 Array.prototype.unshift = function () {
   var methodCallResult = unshift.apply(this, arguments);
-  if (this.__arrayObserver !== undefined) {
-    this.__arrayObserver.addChangeRecord({
+  if (this.__array_observer__ !== undefined) {
+    this.__array_observer__.addChangeRecord({
       type: 'splice',
       object: this,
       index: 0,
@@ -959,28 +1009,37 @@ Array.prototype.unshift = function () {
 };
 
 function _getArrayObserver(taskQueue, array) {
-  return ModifyArrayObserver.create(taskQueue, array);
+  return ModifyArrayObserver.for(taskQueue, array);
 }
 
-var ModifyArrayObserver = (function (_ModifyCollectionObserver2) {
-  _inherits(ModifyArrayObserver, _ModifyCollectionObserver2);
+exports.getArrayObserver = _getArrayObserver;
+
+var ModifyArrayObserver = function (_ModifyCollectionObse) {
+  _inherits(ModifyArrayObserver, _ModifyCollectionObse);
 
   function ModifyArrayObserver(taskQueue, array) {
     _classCallCheck(this, ModifyArrayObserver);
 
-    _ModifyCollectionObserver2.call(this, taskQueue, array);
+    return _possibleConstructorReturn(this, _ModifyCollectionObse.call(this, taskQueue, array));
   }
+
+  ModifyArrayObserver.for = function _for(taskQueue, array) {
+    if (!('__array_observer__' in array)) {
+      var observer = ModifyArrayObserver.create(taskQueue, array);
+      Object.defineProperty(array, '__array_observer__', { value: observer, enumerable: false, configurable: false });
+    }
+    return array.__array_observer__;
+  };
 
   ModifyArrayObserver.create = function create(taskQueue, array) {
     var observer = new ModifyArrayObserver(taskQueue, array);
-    Object.defineProperty(array, '__arrayObserver', { value: observer, enumerable: false, configurable: false });
     return observer;
   };
 
   return ModifyArrayObserver;
-})(ModifyCollectionObserver);
+}(ModifyCollectionObserver);
 
-var Expression = (function () {
+var Expression = exports.Expression = function () {
   function Expression() {
     _classCallCheck(this, Expression);
 
@@ -1001,20 +1060,19 @@ var Expression = (function () {
   };
 
   return Expression;
-})();
+}();
 
-exports.Expression = Expression;
-
-var Chain = (function (_Expression) {
+var Chain = exports.Chain = function (_Expression) {
   _inherits(Chain, _Expression);
 
   function Chain(expressions) {
     _classCallCheck(this, Chain);
 
-    _Expression.call(this);
+    var _this3 = _possibleConstructorReturn(this, _Expression.call(this));
 
-    this.expressions = expressions;
-    this.isChain = true;
+    _this3.expressions = expressions;
+    _this3.isChain = true;
+    return _this3;
   }
 
   Chain.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1036,25 +1094,24 @@ var Chain = (function (_Expression) {
   };
 
   Chain.prototype.accept = function accept(visitor) {
-    visitor.visitChain(this);
+    return visitor.visitChain(this);
   };
 
   return Chain;
-})(Expression);
+}(Expression);
 
-exports.Chain = Chain;
-
-var BindingBehavior = (function (_Expression2) {
+var BindingBehavior = exports.BindingBehavior = function (_Expression2) {
   _inherits(BindingBehavior, _Expression2);
 
   function BindingBehavior(expression, name, args) {
     _classCallCheck(this, BindingBehavior);
 
-    _Expression2.call(this);
+    var _this4 = _possibleConstructorReturn(this, _Expression2.call(this));
 
-    this.expression = expression;
-    this.name = name;
-    this.args = args;
+    _this4.expression = expression;
+    _this4.name = name;
+    _this4.args = args;
+    return _this4;
   }
 
   BindingBehavior.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1066,7 +1123,7 @@ var BindingBehavior = (function (_Expression2) {
   };
 
   BindingBehavior.prototype.accept = function accept(visitor) {
-    visitor.visitBindingBehavior(this);
+    return visitor.visitBindingBehavior(this);
   };
 
   BindingBehavior.prototype.connect = function connect(binding, scope) {
@@ -1099,22 +1156,21 @@ var BindingBehavior = (function (_Expression2) {
   };
 
   return BindingBehavior;
-})(Expression);
+}(Expression);
 
-exports.BindingBehavior = BindingBehavior;
-
-var ValueConverter = (function (_Expression3) {
+var ValueConverter = exports.ValueConverter = function (_Expression3) {
   _inherits(ValueConverter, _Expression3);
 
   function ValueConverter(expression, name, args, allArgs) {
     _classCallCheck(this, ValueConverter);
 
-    _Expression3.call(this);
+    var _this5 = _possibleConstructorReturn(this, _Expression3.call(this));
 
-    this.expression = expression;
-    this.name = name;
-    this.args = args;
-    this.allArgs = allArgs;
+    _this5.expression = expression;
+    _this5.name = name;
+    _this5.args = args;
+    _this5.allArgs = allArgs;
+    return _this5;
   }
 
   ValueConverter.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1144,7 +1200,7 @@ var ValueConverter = (function (_Expression3) {
   };
 
   ValueConverter.prototype.accept = function accept(visitor) {
-    visitor.visitValueConverter(this);
+    return visitor.visitValueConverter(this);
   };
 
   ValueConverter.prototype.connect = function connect(binding, scope) {
@@ -1156,20 +1212,19 @@ var ValueConverter = (function (_Expression3) {
   };
 
   return ValueConverter;
-})(Expression);
+}(Expression);
 
-exports.ValueConverter = ValueConverter;
-
-var Assign = (function (_Expression4) {
+var Assign = exports.Assign = function (_Expression4) {
   _inherits(Assign, _Expression4);
 
   function Assign(target, value) {
     _classCallCheck(this, Assign);
 
-    _Expression4.call(this);
+    var _this6 = _possibleConstructorReturn(this, _Expression4.call(this));
 
-    this.target = target;
-    this.value = value;
+    _this6.target = target;
+    _this6.value = value;
+    return _this6;
   }
 
   Assign.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1183,21 +1238,20 @@ var Assign = (function (_Expression4) {
   Assign.prototype.connect = function connect(binding, scope) {};
 
   return Assign;
-})(Expression);
+}(Expression);
 
-exports.Assign = Assign;
-
-var Conditional = (function (_Expression5) {
+var Conditional = exports.Conditional = function (_Expression5) {
   _inherits(Conditional, _Expression5);
 
   function Conditional(condition, yes, no) {
     _classCallCheck(this, Conditional);
 
-    _Expression5.call(this);
+    var _this7 = _possibleConstructorReturn(this, _Expression5.call(this));
 
-    this.condition = condition;
-    this.yes = yes;
-    this.no = no;
+    _this7.condition = condition;
+    _this7.yes = yes;
+    _this7.no = no;
+    return _this7;
   }
 
   Conditional.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1205,7 +1259,7 @@ var Conditional = (function (_Expression5) {
   };
 
   Conditional.prototype.accept = function accept(visitor) {
-    visitor.visitConditional(this);
+    return visitor.visitConditional(this);
   };
 
   Conditional.prototype.connect = function connect(binding, scope) {
@@ -1218,18 +1272,18 @@ var Conditional = (function (_Expression5) {
   };
 
   return Conditional;
-})(Expression);
+}(Expression);
 
-exports.Conditional = Conditional;
-
-var AccessThis = (function (_Expression6) {
+var AccessThis = exports.AccessThis = function (_Expression6) {
   _inherits(AccessThis, _Expression6);
 
   function AccessThis(ancestor) {
     _classCallCheck(this, AccessThis);
 
-    _Expression6.call(this);
-    this.ancestor = ancestor;
+    var _this8 = _possibleConstructorReturn(this, _Expression6.call(this));
+
+    _this8.ancestor = ancestor;
+    return _this8;
   }
 
   AccessThis.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1242,27 +1296,26 @@ var AccessThis = (function (_Expression6) {
   };
 
   AccessThis.prototype.accept = function accept(visitor) {
-    visitor.visitAccessThis(this);
+    return visitor.visitAccessThis(this);
   };
 
   AccessThis.prototype.connect = function connect(binding, scope) {};
 
   return AccessThis;
-})(Expression);
+}(Expression);
 
-exports.AccessThis = AccessThis;
-
-var AccessScope = (function (_Expression7) {
+var AccessScope = exports.AccessScope = function (_Expression7) {
   _inherits(AccessScope, _Expression7);
 
   function AccessScope(name, ancestor) {
     _classCallCheck(this, AccessScope);
 
-    _Expression7.call(this);
+    var _this9 = _possibleConstructorReturn(this, _Expression7.call(this));
 
-    this.name = name;
-    this.ancestor = ancestor;
-    this.isAssignable = true;
+    _this9.name = name;
+    _this9.ancestor = ancestor;
+    _this9.isAssignable = true;
+    return _this9;
   }
 
   AccessScope.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1272,11 +1325,11 @@ var AccessScope = (function (_Expression7) {
 
   AccessScope.prototype.assign = function assign(scope, value) {
     var context = getContextFor(this.name, scope, this.ancestor);
-    return context[this.name] = value;
+    return context ? context[this.name] = value : undefined;
   };
 
   AccessScope.prototype.accept = function accept(visitor) {
-    visitor.visitAccessScope(this);
+    return visitor.visitAccessScope(this);
   };
 
   AccessScope.prototype.connect = function connect(binding, scope) {
@@ -1285,21 +1338,20 @@ var AccessScope = (function (_Expression7) {
   };
 
   return AccessScope;
-})(Expression);
+}(Expression);
 
-exports.AccessScope = AccessScope;
-
-var AccessMember = (function (_Expression8) {
+var AccessMember = exports.AccessMember = function (_Expression8) {
   _inherits(AccessMember, _Expression8);
 
   function AccessMember(object, name) {
     _classCallCheck(this, AccessMember);
 
-    _Expression8.call(this);
+    var _this10 = _possibleConstructorReturn(this, _Expression8.call(this));
 
-    this.object = object;
-    this.name = name;
-    this.isAssignable = true;
+    _this10.object = object;
+    _this10.name = name;
+    _this10.isAssignable = true;
+    return _this10;
   }
 
   AccessMember.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1319,7 +1371,7 @@ var AccessMember = (function (_Expression8) {
   };
 
   AccessMember.prototype.accept = function accept(visitor) {
-    visitor.visitAccessMember(this);
+    return visitor.visitAccessMember(this);
   };
 
   AccessMember.prototype.connect = function connect(binding, scope) {
@@ -1331,21 +1383,20 @@ var AccessMember = (function (_Expression8) {
   };
 
   return AccessMember;
-})(Expression);
+}(Expression);
 
-exports.AccessMember = AccessMember;
-
-var AccessKeyed = (function (_Expression9) {
+var AccessKeyed = exports.AccessKeyed = function (_Expression9) {
   _inherits(AccessKeyed, _Expression9);
 
   function AccessKeyed(object, key) {
     _classCallCheck(this, AccessKeyed);
 
-    _Expression9.call(this);
+    var _this11 = _possibleConstructorReturn(this, _Expression9.call(this));
 
-    this.object = object;
-    this.key = key;
-    this.isAssignable = true;
+    _this11.object = object;
+    _this11.key = key;
+    _this11.isAssignable = true;
+    return _this11;
   }
 
   AccessKeyed.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1361,7 +1412,7 @@ var AccessKeyed = (function (_Expression9) {
   };
 
   AccessKeyed.prototype.accept = function accept(visitor) {
-    visitor.visitAccessKeyed(this);
+    return visitor.visitAccessKeyed(this);
   };
 
   AccessKeyed.prototype.connect = function connect(binding, scope) {
@@ -1378,21 +1429,20 @@ var AccessKeyed = (function (_Expression9) {
   };
 
   return AccessKeyed;
-})(Expression);
+}(Expression);
 
-exports.AccessKeyed = AccessKeyed;
-
-var CallScope = (function (_Expression10) {
+var CallScope = exports.CallScope = function (_Expression10) {
   _inherits(CallScope, _Expression10);
 
   function CallScope(name, args, ancestor) {
     _classCallCheck(this, CallScope);
 
-    _Expression10.call(this);
+    var _this12 = _possibleConstructorReturn(this, _Expression10.call(this));
 
-    this.name = name;
-    this.args = args;
-    this.ancestor = ancestor;
+    _this12.name = name;
+    _this12.args = args;
+    _this12.ancestor = ancestor;
+    return _this12;
   }
 
   CallScope.prototype.evaluate = function evaluate(scope, lookupFunctions, mustEvaluate) {
@@ -1406,7 +1456,7 @@ var CallScope = (function (_Expression10) {
   };
 
   CallScope.prototype.accept = function accept(visitor) {
-    visitor.visitCallScope(this);
+    return visitor.visitCallScope(this);
   };
 
   CallScope.prototype.connect = function connect(binding, scope) {
@@ -1418,21 +1468,20 @@ var CallScope = (function (_Expression10) {
   };
 
   return CallScope;
-})(Expression);
+}(Expression);
 
-exports.CallScope = CallScope;
-
-var CallMember = (function (_Expression11) {
+var CallMember = exports.CallMember = function (_Expression11) {
   _inherits(CallMember, _Expression11);
 
   function CallMember(object, name, args) {
     _classCallCheck(this, CallMember);
 
-    _Expression11.call(this);
+    var _this13 = _possibleConstructorReturn(this, _Expression11.call(this));
 
-    this.object = object;
-    this.name = name;
-    this.args = args;
+    _this13.object = object;
+    _this13.name = name;
+    _this13.args = args;
+    return _this13;
   }
 
   CallMember.prototype.evaluate = function evaluate(scope, lookupFunctions, mustEvaluate) {
@@ -1446,7 +1495,7 @@ var CallMember = (function (_Expression11) {
   };
 
   CallMember.prototype.accept = function accept(visitor) {
-    visitor.visitCallMember(this);
+    return visitor.visitCallMember(this);
   };
 
   CallMember.prototype.connect = function connect(binding, scope) {
@@ -1454,28 +1503,27 @@ var CallMember = (function (_Expression11) {
     var obj = this.object.evaluate(scope);
     if (getFunction(obj, this.name, false)) {
       var args = this.args;
-      var i = args.length;
-      while (i--) {
-        args[i].connect(binding, scope);
+      var _i = args.length;
+      while (_i--) {
+        args[_i].connect(binding, scope);
       }
     }
   };
 
   return CallMember;
-})(Expression);
+}(Expression);
 
-exports.CallMember = CallMember;
-
-var CallFunction = (function (_Expression12) {
+var CallFunction = exports.CallFunction = function (_Expression12) {
   _inherits(CallFunction, _Expression12);
 
   function CallFunction(func, args) {
     _classCallCheck(this, CallFunction);
 
-    _Expression12.call(this);
+    var _this14 = _possibleConstructorReturn(this, _Expression12.call(this));
 
-    this.func = func;
-    this.args = args;
+    _this14.func = func;
+    _this14.args = args;
+    return _this14;
   }
 
   CallFunction.prototype.evaluate = function evaluate(scope, lookupFunctions, mustEvaluate) {
@@ -1490,7 +1538,7 @@ var CallFunction = (function (_Expression12) {
   };
 
   CallFunction.prototype.accept = function accept(visitor) {
-    visitor.visitCallFunction(this);
+    return visitor.visitCallFunction(this);
   };
 
   CallFunction.prototype.connect = function connect(binding, scope) {
@@ -1498,29 +1546,28 @@ var CallFunction = (function (_Expression12) {
     var func = this.func.evaluate(scope);
     if (typeof func === 'function') {
       var args = this.args;
-      var i = args.length;
-      while (i--) {
-        args[i].connect(binding, scope);
+      var _i2 = args.length;
+      while (_i2--) {
+        args[_i2].connect(binding, scope);
       }
     }
   };
 
   return CallFunction;
-})(Expression);
+}(Expression);
 
-exports.CallFunction = CallFunction;
-
-var Binary = (function (_Expression13) {
+var Binary = exports.Binary = function (_Expression13) {
   _inherits(Binary, _Expression13);
 
   function Binary(operation, left, right) {
     _classCallCheck(this, Binary);
 
-    _Expression13.call(this);
+    var _this15 = _possibleConstructorReturn(this, _Expression13.call(this));
 
-    this.operation = operation;
-    this.left = left;
-    this.right = right;
+    _this15.operation = operation;
+    _this15.left = left;
+    _this15.right = right;
+    return _this15;
   }
 
   Binary.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1588,7 +1635,7 @@ var Binary = (function (_Expression13) {
   };
 
   Binary.prototype.accept = function accept(visitor) {
-    visitor.visitBinary(this);
+    return visitor.visitBinary(this);
   };
 
   Binary.prototype.connect = function connect(binding, scope) {
@@ -1601,20 +1648,19 @@ var Binary = (function (_Expression13) {
   };
 
   return Binary;
-})(Expression);
+}(Expression);
 
-exports.Binary = Binary;
-
-var PrefixNot = (function (_Expression14) {
+var PrefixNot = exports.PrefixNot = function (_Expression14) {
   _inherits(PrefixNot, _Expression14);
 
   function PrefixNot(operation, expression) {
     _classCallCheck(this, PrefixNot);
 
-    _Expression14.call(this);
+    var _this16 = _possibleConstructorReturn(this, _Expression14.call(this));
 
-    this.operation = operation;
-    this.expression = expression;
+    _this16.operation = operation;
+    _this16.expression = expression;
+    return _this16;
   }
 
   PrefixNot.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1622,7 +1668,7 @@ var PrefixNot = (function (_Expression14) {
   };
 
   PrefixNot.prototype.accept = function accept(visitor) {
-    visitor.visitPrefix(this);
+    return visitor.visitPrefix(this);
   };
 
   PrefixNot.prototype.connect = function connect(binding, scope) {
@@ -1630,19 +1676,18 @@ var PrefixNot = (function (_Expression14) {
   };
 
   return PrefixNot;
-})(Expression);
+}(Expression);
 
-exports.PrefixNot = PrefixNot;
-
-var LiteralPrimitive = (function (_Expression15) {
+var LiteralPrimitive = exports.LiteralPrimitive = function (_Expression15) {
   _inherits(LiteralPrimitive, _Expression15);
 
   function LiteralPrimitive(value) {
     _classCallCheck(this, LiteralPrimitive);
 
-    _Expression15.call(this);
+    var _this17 = _possibleConstructorReturn(this, _Expression15.call(this));
 
-    this.value = value;
+    _this17.value = value;
+    return _this17;
   }
 
   LiteralPrimitive.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1650,25 +1695,24 @@ var LiteralPrimitive = (function (_Expression15) {
   };
 
   LiteralPrimitive.prototype.accept = function accept(visitor) {
-    visitor.visitLiteralPrimitive(this);
+    return visitor.visitLiteralPrimitive(this);
   };
 
   LiteralPrimitive.prototype.connect = function connect(binding, scope) {};
 
   return LiteralPrimitive;
-})(Expression);
+}(Expression);
 
-exports.LiteralPrimitive = LiteralPrimitive;
-
-var LiteralString = (function (_Expression16) {
+var LiteralString = exports.LiteralString = function (_Expression16) {
   _inherits(LiteralString, _Expression16);
 
   function LiteralString(value) {
     _classCallCheck(this, LiteralString);
 
-    _Expression16.call(this);
+    var _this18 = _possibleConstructorReturn(this, _Expression16.call(this));
 
-    this.value = value;
+    _this18.value = value;
+    return _this18;
   }
 
   LiteralString.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1676,25 +1720,24 @@ var LiteralString = (function (_Expression16) {
   };
 
   LiteralString.prototype.accept = function accept(visitor) {
-    visitor.visitLiteralString(this);
+    return visitor.visitLiteralString(this);
   };
 
   LiteralString.prototype.connect = function connect(binding, scope) {};
 
   return LiteralString;
-})(Expression);
+}(Expression);
 
-exports.LiteralString = LiteralString;
-
-var LiteralArray = (function (_Expression17) {
+var LiteralArray = exports.LiteralArray = function (_Expression17) {
   _inherits(LiteralArray, _Expression17);
 
   function LiteralArray(elements) {
     _classCallCheck(this, LiteralArray);
 
-    _Expression17.call(this);
+    var _this19 = _possibleConstructorReturn(this, _Expression17.call(this));
 
-    this.elements = elements;
+    _this19.elements = elements;
+    return _this19;
   }
 
   LiteralArray.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1711,31 +1754,30 @@ var LiteralArray = (function (_Expression17) {
   };
 
   LiteralArray.prototype.accept = function accept(visitor) {
-    visitor.visitLiteralArray(this);
+    return visitor.visitLiteralArray(this);
   };
 
   LiteralArray.prototype.connect = function connect(binding, scope) {
     var length = this.elements.length;
-    for (var i = 0; i < length; i++) {
-      this.elements[i].connect(binding, scope);
+    for (var _i3 = 0; _i3 < length; _i3++) {
+      this.elements[_i3].connect(binding, scope);
     }
   };
 
   return LiteralArray;
-})(Expression);
+}(Expression);
 
-exports.LiteralArray = LiteralArray;
-
-var LiteralObject = (function (_Expression18) {
+var LiteralObject = exports.LiteralObject = function (_Expression18) {
   _inherits(LiteralObject, _Expression18);
 
   function LiteralObject(keys, values) {
     _classCallCheck(this, LiteralObject);
 
-    _Expression18.call(this);
+    var _this20 = _possibleConstructorReturn(this, _Expression18.call(this));
 
-    this.keys = keys;
-    this.values = values;
+    _this20.keys = keys;
+    _this20.values = values;
+    return _this20;
   }
 
   LiteralObject.prototype.evaluate = function evaluate(scope, lookupFunctions) {
@@ -1753,236 +1795,18 @@ var LiteralObject = (function (_Expression18) {
   };
 
   LiteralObject.prototype.accept = function accept(visitor) {
-    visitor.visitLiteralObject(this);
+    return visitor.visitLiteralObject(this);
   };
 
   LiteralObject.prototype.connect = function connect(binding, scope) {
     var length = this.keys.length;
-    for (var i = 0; i < length; i++) {
-      this.values[i].connect(binding, scope);
+    for (var _i4 = 0; _i4 < length; _i4++) {
+      this.values[_i4].connect(binding, scope);
     }
   };
 
   return LiteralObject;
-})(Expression);
-
-exports.LiteralObject = LiteralObject;
-
-var Unparser = (function () {
-  function Unparser(buffer) {
-    _classCallCheck(this, Unparser);
-
-    this.buffer = buffer;
-  }
-
-  Unparser.unparse = function unparse(expression) {
-    var buffer = [],
-        visitor = new Unparser(buffer);
-
-    expression.accept(visitor);
-
-    return buffer.join('');
-  };
-
-  Unparser.prototype.write = function write(text) {
-    this.buffer.push(text);
-  };
-
-  Unparser.prototype.writeArgs = function writeArgs(args) {
-    var i, length;
-
-    this.write('(');
-
-    for (i = 0, length = args.length; i < length; ++i) {
-      if (i !== 0) {
-        this.write(',');
-      }
-
-      args[i].accept(this);
-    }
-
-    this.write(')');
-  };
-
-  Unparser.prototype.visitChain = function visitChain(chain) {
-    var expressions = chain.expressions,
-        length = expressions.length,
-        i;
-
-    for (i = 0; i < length; ++i) {
-      if (i !== 0) {
-        this.write(';');
-      }
-
-      expressions[i].accept(this);
-    }
-  };
-
-  Unparser.prototype.visitBindingBehavior = function visitBindingBehavior(behavior) {
-    var args = behavior.args,
-        length = args.length,
-        i;
-
-    this.write('(');
-    behavior.expression.accept(this);
-    this.write('&' + behavior.name);
-
-    for (i = 0; i < length; ++i) {
-      this.write(' :');
-      args[i].accept(this);
-    }
-
-    this.write(')');
-  };
-
-  Unparser.prototype.visitValueConverter = function visitValueConverter(converter) {
-    var args = converter.args,
-        length = args.length,
-        i;
-
-    this.write('(');
-    converter.expression.accept(this);
-    this.write('|' + converter.name);
-
-    for (i = 0; i < length; ++i) {
-      this.write(' :');
-      args[i].accept(this);
-    }
-
-    this.write(')');
-  };
-
-  Unparser.prototype.visitAssign = function visitAssign(assign) {
-    assign.target.accept(this);
-    this.write('=');
-    assign.value.accept(this);
-  };
-
-  Unparser.prototype.visitConditional = function visitConditional(conditional) {
-    conditional.condition.accept(this);
-    this.write('?');
-    conditional.yes.accept(this);
-    this.write(':');
-    conditional.no.accept(this);
-  };
-
-  Unparser.prototype.visitAccessThis = function visitAccessThis(access) {
-    if (access.ancestor === 0) {
-      this.write('$this');
-      return;
-    }
-    this.write('$parent');
-    var i = access.ancestor - 1;
-    while (i--) {
-      this.write('.$parent');
-    }
-  };
-
-  Unparser.prototype.visitAccessScope = function visitAccessScope(access) {
-    var i = access.ancestor;
-    while (i--) {
-      this.write('$parent.');
-    }
-    this.write(access.name);
-  };
-
-  Unparser.prototype.visitAccessMember = function visitAccessMember(access) {
-    access.object.accept(this);
-    this.write('.' + access.name);
-  };
-
-  Unparser.prototype.visitAccessKeyed = function visitAccessKeyed(access) {
-    access.object.accept(this);
-    this.write('[');
-    access.key.accept(this);
-    this.write(']');
-  };
-
-  Unparser.prototype.visitCallScope = function visitCallScope(call) {
-    var i = call.ancestor;
-    while (i--) {
-      this.write('$parent.');
-    }
-    this.write(call.name);
-    this.writeArgs(call.args);
-  };
-
-  Unparser.prototype.visitCallFunction = function visitCallFunction(call) {
-    call.func.accept(this);
-    this.writeArgs(call.args);
-  };
-
-  Unparser.prototype.visitCallMember = function visitCallMember(call) {
-    call.object.accept(this);
-    this.write('.' + call.name);
-    this.writeArgs(call.args);
-  };
-
-  Unparser.prototype.visitPrefix = function visitPrefix(prefix) {
-    this.write('(' + prefix.operation);
-    prefix.expression.accept(this);
-    this.write(')');
-  };
-
-  Unparser.prototype.visitBinary = function visitBinary(binary) {
-    this.write('(');
-    binary.left.accept(this);
-    this.write(binary.operation);
-    binary.right.accept(this);
-    this.write(')');
-  };
-
-  Unparser.prototype.visitLiteralPrimitive = function visitLiteralPrimitive(literal) {
-    this.write('' + literal.value);
-  };
-
-  Unparser.prototype.visitLiteralArray = function visitLiteralArray(literal) {
-    var elements = literal.elements,
-        length = elements.length,
-        i;
-
-    this.write('[');
-
-    for (i = 0; i < length; ++i) {
-      if (i !== 0) {
-        this.write(',');
-      }
-
-      elements[i].accept(this);
-    }
-
-    this.write(']');
-  };
-
-  Unparser.prototype.visitLiteralObject = function visitLiteralObject(literal) {
-    var keys = literal.keys,
-        values = literal.values,
-        length = keys.length,
-        i;
-
-    this.write('{');
-
-    for (i = 0; i < length; ++i) {
-      if (i !== 0) {
-        this.write(',');
-      }
-
-      this.write('\'' + keys[i] + '\':');
-      values[i].accept(this);
-    }
-
-    this.write('}');
-  };
-
-  Unparser.prototype.visitLiteralString = function visitLiteralString(literal) {
-    var escaped = literal.value.replace(/'/g, "\'");
-    this.write('\'' + escaped + '\'');
-  };
-
-  return Unparser;
-})();
-
-exports.Unparser = Unparser;
+}(Expression);
 
 var evalListCache = [[], [0], [0, 0], [0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0, 0]];
 
@@ -2067,15 +1891,313 @@ function setKeyed(obj, key, value) {
   return value;
 }
 
-var bindingMode = {
+var Unparser = exports.Unparser = function () {
+  function Unparser(buffer) {
+    _classCallCheck(this, Unparser);
+
+    this.buffer = buffer;
+  }
+
+  Unparser.unparse = function unparse(expression) {
+    var buffer = [],
+        visitor = new Unparser(buffer);
+
+    expression.accept(visitor);
+
+    return buffer.join('');
+  };
+
+  Unparser.prototype.write = function write(text) {
+    this.buffer.push(text);
+  };
+
+  Unparser.prototype.writeArgs = function writeArgs(args) {
+    var i, length;
+
+    this.write('(');
+
+    for (i = 0, length = args.length; i < length; ++i) {
+      if (i !== 0) {
+        this.write(',');
+      }
+
+      args[i].accept(this);
+    }
+
+    this.write(')');
+  };
+
+  Unparser.prototype.visitChain = function visitChain(chain) {
+    var expressions = chain.expressions,
+        length = expressions.length,
+        i;
+
+    for (i = 0; i < length; ++i) {
+      if (i !== 0) {
+        this.write(';');
+      }
+
+      expressions[i].accept(this);
+    }
+  };
+
+  Unparser.prototype.visitBindingBehavior = function visitBindingBehavior(behavior) {
+    var args = behavior.args,
+        length = args.length,
+        i;
+
+    behavior.expression.accept(this);
+    this.write('&' + behavior.name);
+
+    for (i = 0; i < length; ++i) {
+      this.write(':');
+      args[i].accept(this);
+    }
+  };
+
+  Unparser.prototype.visitValueConverter = function visitValueConverter(converter) {
+    var args = converter.args,
+        length = args.length,
+        i;
+
+    converter.expression.accept(this);
+    this.write('|' + converter.name);
+
+    for (i = 0; i < length; ++i) {
+      this.write(':');
+      args[i].accept(this);
+    }
+  };
+
+  Unparser.prototype.visitAssign = function visitAssign(assign) {
+    assign.target.accept(this);
+    this.write('=');
+    assign.value.accept(this);
+  };
+
+  Unparser.prototype.visitConditional = function visitConditional(conditional) {
+    conditional.condition.accept(this);
+    this.write('?');
+    conditional.yes.accept(this);
+    this.write(':');
+    conditional.no.accept(this);
+  };
+
+  Unparser.prototype.visitAccessThis = function visitAccessThis(access) {
+    if (access.ancestor === 0) {
+      this.write('$this');
+      return;
+    }
+    this.write('$parent');
+    var i = access.ancestor - 1;
+    while (i--) {
+      this.write('.$parent');
+    }
+  };
+
+  Unparser.prototype.visitAccessScope = function visitAccessScope(access) {
+    var i = access.ancestor;
+    while (i--) {
+      this.write('$parent.');
+    }
+    this.write(access.name);
+  };
+
+  Unparser.prototype.visitAccessMember = function visitAccessMember(access) {
+    access.object.accept(this);
+    this.write('.' + access.name);
+  };
+
+  Unparser.prototype.visitAccessKeyed = function visitAccessKeyed(access) {
+    access.object.accept(this);
+    this.write('[');
+    access.key.accept(this);
+    this.write(']');
+  };
+
+  Unparser.prototype.visitCallScope = function visitCallScope(call) {
+    var i = call.ancestor;
+    while (i--) {
+      this.write('$parent.');
+    }
+    this.write(call.name);
+    this.writeArgs(call.args);
+  };
+
+  Unparser.prototype.visitCallFunction = function visitCallFunction(call) {
+    call.func.accept(this);
+    this.writeArgs(call.args);
+  };
+
+  Unparser.prototype.visitCallMember = function visitCallMember(call) {
+    call.object.accept(this);
+    this.write('.' + call.name);
+    this.writeArgs(call.args);
+  };
+
+  Unparser.prototype.visitPrefix = function visitPrefix(prefix) {
+    this.write('(' + prefix.operation);
+    prefix.expression.accept(this);
+    this.write(')');
+  };
+
+  Unparser.prototype.visitBinary = function visitBinary(binary) {
+    binary.left.accept(this);
+    this.write(binary.operation);
+    binary.right.accept(this);
+  };
+
+  Unparser.prototype.visitLiteralPrimitive = function visitLiteralPrimitive(literal) {
+    this.write('' + literal.value);
+  };
+
+  Unparser.prototype.visitLiteralArray = function visitLiteralArray(literal) {
+    var elements = literal.elements,
+        length = elements.length,
+        i;
+
+    this.write('[');
+
+    for (i = 0; i < length; ++i) {
+      if (i !== 0) {
+        this.write(',');
+      }
+
+      elements[i].accept(this);
+    }
+
+    this.write(']');
+  };
+
+  Unparser.prototype.visitLiteralObject = function visitLiteralObject(literal) {
+    var keys = literal.keys,
+        values = literal.values,
+        length = keys.length,
+        i;
+
+    this.write('{');
+
+    for (i = 0; i < length; ++i) {
+      if (i !== 0) {
+        this.write(',');
+      }
+
+      this.write('\'' + keys[i] + '\':');
+      values[i].accept(this);
+    }
+
+    this.write('}');
+  };
+
+  Unparser.prototype.visitLiteralString = function visitLiteralString(literal) {
+    var escaped = literal.value.replace(/'/g, "\'");
+    this.write('\'' + escaped + '\'');
+  };
+
+  return Unparser;
+}();
+
+var ExpressionCloner = exports.ExpressionCloner = function () {
+  function ExpressionCloner() {
+    _classCallCheck(this, ExpressionCloner);
+  }
+
+  ExpressionCloner.prototype.cloneExpressionArray = function cloneExpressionArray(array) {
+    var clonedArray = [];
+    var i = array.length;
+    while (i--) {
+      clonedArray[i] = array[i].accept(this);
+    }
+    return clonedArray;
+  };
+
+  ExpressionCloner.prototype.visitChain = function visitChain(chain) {
+    return new Chain(this.cloneExpressionArray(chain.expressions));
+  };
+
+  ExpressionCloner.prototype.visitBindingBehavior = function visitBindingBehavior(behavior) {
+    return new BindingBehavior(behavior.expression.accept(this), behavior.name, this.cloneExpressionArray(behavior.args));
+  };
+
+  ExpressionCloner.prototype.visitValueConverter = function visitValueConverter(converter) {
+    return new ValueConverter(converter.expression.accept(this), converter.name, this.cloneExpressionArray(converter.args));
+  };
+
+  ExpressionCloner.prototype.visitAssign = function visitAssign(assign) {
+    return new Assign(assign.target.accept(this), assign.value.accept(this));
+  };
+
+  ExpressionCloner.prototype.visitConditional = function visitConditional(conditional) {
+    return new Conditional(conditional.condition.accept(this), conditional.yes.accept(this), conditional.no.accept(this));
+  };
+
+  ExpressionCloner.prototype.visitAccessThis = function visitAccessThis(access) {
+    return new AccessThis(access.ancestor);
+  };
+
+  ExpressionCloner.prototype.visitAccessScope = function visitAccessScope(access) {
+    return new AccessScope(access.name, access.ancestor);
+  };
+
+  ExpressionCloner.prototype.visitAccessMember = function visitAccessMember(access) {
+    return new AccessMember(access.object.accept(this), access.name);
+  };
+
+  ExpressionCloner.prototype.visitAccessKeyed = function visitAccessKeyed(access) {
+    return new AccessKeyed(access.object.accept(this), access.key.accept(this));
+  };
+
+  ExpressionCloner.prototype.visitCallScope = function visitCallScope(call) {
+    return new CallScope(call.name, this.cloneExpressionArray(call.args), call.ancestor);
+  };
+
+  ExpressionCloner.prototype.visitCallFunction = function visitCallFunction(call) {
+    return new CallFunction(call.func.accept(this), this.cloneExpressionArray(call.args));
+  };
+
+  ExpressionCloner.prototype.visitCallMember = function visitCallMember(call) {
+    return new CallMember(call.object.accept(this), call.name, this.cloneExpressionArray(call.args));
+  };
+
+  ExpressionCloner.prototype.visitPrefix = function visitPrefix(prefix) {
+    return new PrefixNot(prefix.operation, prefix.expression.accept(this));
+  };
+
+  ExpressionCloner.prototype.visitBinary = function visitBinary(binary) {
+    return new Binary(binary.operation, binary.left.accept(this), binary.right.accept(this));
+  };
+
+  ExpressionCloner.prototype.visitLiteralPrimitive = function visitLiteralPrimitive(literal) {
+    return new LiteralPrimitive(literal);
+  };
+
+  ExpressionCloner.prototype.visitLiteralArray = function visitLiteralArray(literal) {
+    return new LiteralArray(this.cloneExpressionArray(literal.elements));
+  };
+
+  ExpressionCloner.prototype.visitLiteralObject = function visitLiteralObject(literal) {
+    return new LiteralObject(literal.keys, this.cloneExpressionArray(literal.values));
+  };
+
+  ExpressionCloner.prototype.visitLiteralString = function visitLiteralString(literal) {
+    return new LiteralString(literal.value);
+  };
+
+  return ExpressionCloner;
+}();
+
+function cloneExpression(expression) {
+  var visitor = new ExpressionCloner();
+  return expression.accept(visitor);
+}
+
+var bindingMode = exports.bindingMode = {
   oneTime: 0,
   oneWay: 1,
   twoWay: 2
 };
 
-exports.bindingMode = bindingMode;
-
-var Token = (function () {
+var Token = exports.Token = function () {
   function Token(index, text) {
     _classCallCheck(this, Token);
 
@@ -2103,11 +2225,9 @@ var Token = (function () {
   };
 
   return Token;
-})();
+}();
 
-exports.Token = Token;
-
-var Lexer = (function () {
+var Lexer = exports.Lexer = function () {
   function Lexer() {
     _classCallCheck(this, Lexer);
   }
@@ -2126,11 +2246,9 @@ var Lexer = (function () {
   };
 
   return Lexer;
-})();
+}();
 
-exports.Lexer = Lexer;
-
-var Scanner = (function () {
+var Scanner = exports.Scanner = function () {
   function Scanner(input) {
     _classCallCheck(this, Scanner);
 
@@ -2305,7 +2423,7 @@ var Scanner = (function () {
 
     this.advance();
 
-    var buffer = undefined;
+    var buffer = void 0;
     var marker = this.index;
 
     while (this.peek !== quote) {
@@ -2317,7 +2435,7 @@ var Scanner = (function () {
         buffer.push(this.input.substring(marker, this.index));
         this.advance();
 
-        var _unescaped = undefined;
+        var _unescaped = void 0;
 
         if (this.peek === $u) {
           var hex = this.input.substring(this.index + 1, this.index + 5);
@@ -2328,7 +2446,7 @@ var Scanner = (function () {
 
           _unescaped = parseInt(hex, 16);
 
-          for (var i = 0; i < 5; ++i) {
+          for (var _i5 = 0; _i5 < 5; ++_i5) {
             this.advance();
           }
         } else {
@@ -2375,9 +2493,7 @@ var Scanner = (function () {
   };
 
   return Scanner;
-})();
-
-exports.Scanner = Scanner;
+}();
 
 var OPERATORS = ['undefined', 'null', 'true', 'false', '+', '-', '*', '/', '%', '^', '=', '==', '===', '!=', '!==', '<', '>', '<=', '>=', '&&', '||', '&', '|', '!', '?'];
 
@@ -2486,7 +2602,7 @@ function assert(condition, message) {
 
 var EOF = new Token(-1, null);
 
-var Parser = (function () {
+var Parser = exports.Parser = function () {
   function Parser() {
     _classCallCheck(this, Parser);
 
@@ -2501,11 +2617,9 @@ var Parser = (function () {
   };
 
   return Parser;
-})();
+}();
 
-exports.Parser = Parser;
-
-var ParserImplementation = (function () {
+var ParserImplementation = exports.ParserImplementation = function () {
   function ParserImplementation(lexer, input) {
     _classCallCheck(this, ParserImplementation);
 
@@ -2546,7 +2660,7 @@ var ParserImplementation = (function () {
     var result = this.parseValueConverter();
 
     while (this.optional('&')) {
-      var _name = this.peek.text;
+      var name = this.peek.text;
       var args = [];
 
       this.advance();
@@ -2555,7 +2669,7 @@ var ParserImplementation = (function () {
         args.push(this.parseExpression());
       }
 
-      result = new BindingBehavior(result, _name, args);
+      result = new BindingBehavior(result, name, args);
     }
 
     return result;
@@ -2565,7 +2679,7 @@ var ParserImplementation = (function () {
     var result = this.parseExpression();
 
     while (this.optional('|')) {
-      var _name2 = this.peek.text;
+      var name = this.peek.text;
       var args = [];
 
       this.advance();
@@ -2574,7 +2688,7 @@ var ParserImplementation = (function () {
         args.push(this.parseExpression());
       }
 
-      result = new ValueConverter(result, _name2, args, [result].concat(args));
+      result = new ValueConverter(result, name, args, [result].concat(args));
     }
 
     return result;
@@ -2723,7 +2837,7 @@ var ParserImplementation = (function () {
 
     while (true) {
       if (this.optional('.')) {
-        var _name3 = this.peek.text;
+        var name = this.peek.text;
 
         this.advance();
 
@@ -2731,15 +2845,15 @@ var ParserImplementation = (function () {
           var args = this.parseExpressionList(')');
           this.expect(')');
           if (result instanceof AccessThis) {
-            result = new CallScope(_name3, args, result.ancestor);
+            result = new CallScope(name, args, result.ancestor);
           } else {
-            result = new CallMember(result, _name3, args);
+            result = new CallMember(result, name, args);
           }
         } else {
           if (result instanceof AccessThis) {
-            result = new AccessScope(_name3, result.ancestor);
+            result = new AccessScope(name, result.ancestor);
           } else {
-            result = new AccessMember(result, _name3);
+            result = new AccessMember(result, name);
           }
         }
       } else if (this.optional('[')) {
@@ -2747,9 +2861,9 @@ var ParserImplementation = (function () {
         this.expect(']');
         result = new AccessKeyed(result, key);
       } else if (this.optional('(')) {
-        var args = this.parseExpressionList(')');
+        var _args = this.parseExpressionList(')');
         this.expect(')');
-        result = new CallFunction(result, args);
+        result = new CallFunction(result, _args);
       } else {
         return result;
       }
@@ -2770,9 +2884,9 @@ var ParserImplementation = (function () {
     } else if (this.optional('false')) {
       return new LiteralPrimitive(false);
     } else if (this.optional('[')) {
-      var _elements = this.parseExpressionList(']');
+      var elements = this.parseExpressionList(']');
       this.expect(']');
-      return new LiteralArray(_elements);
+      return new LiteralArray(elements);
     } else if (this.peek.text == '{') {
       return this.parseObject();
     } else if (this.peek.key != null) {
@@ -2894,55 +3008,78 @@ var ParserImplementation = (function () {
   }]);
 
   return ParserImplementation;
-})();
-
-exports.ParserImplementation = ParserImplementation;
+}();
 
 var mapProto = Map.prototype;
 
 function _getMapObserver(taskQueue, map) {
-  return ModifyMapObserver.create(taskQueue, map);
+  return ModifyMapObserver.for(taskQueue, map);
 }
 
-var ModifyMapObserver = (function (_ModifyCollectionObserver3) {
-  _inherits(ModifyMapObserver, _ModifyCollectionObserver3);
+exports.getMapObserver = _getMapObserver;
+
+var ModifyMapObserver = function (_ModifyCollectionObse2) {
+  _inherits(ModifyMapObserver, _ModifyCollectionObse2);
 
   function ModifyMapObserver(taskQueue, map) {
     _classCallCheck(this, ModifyMapObserver);
 
-    _ModifyCollectionObserver3.call(this, taskQueue, map);
+    return _possibleConstructorReturn(this, _ModifyCollectionObse2.call(this, taskQueue, map));
   }
+
+  ModifyMapObserver.for = function _for(taskQueue, map) {
+    if (!('__map_observer__' in map)) {
+      var observer = ModifyMapObserver.create(taskQueue, map);
+      Object.defineProperty(map, '__map_observer__', { value: observer, enumerable: false, configurable: false });
+    }
+    return map.__map_observer__;
+  };
 
   ModifyMapObserver.create = function create(taskQueue, map) {
     var observer = new ModifyMapObserver(taskQueue, map);
 
+    var proto = mapProto;
+    if (proto.add !== map.add || proto.delete !== map.delete || proto.clear !== map.clear) {
+      proto = {
+        add: map.add,
+        delete: map.delete,
+        clear: map.clear
+      };
+    }
+
     map['set'] = function () {
+      var hasValue = map.has(arguments[0]);
+      var type = hasValue ? 'update' : 'add';
       var oldValue = map.get(arguments[0]);
-      var type = typeof oldValue !== 'undefined' ? 'update' : 'add';
-      var methodCallResult = mapProto['set'].apply(map, arguments);
-      observer.addChangeRecord({
-        type: type,
-        object: map,
-        key: arguments[0],
-        oldValue: oldValue
-      });
+      var methodCallResult = proto['set'].apply(map, arguments);
+      if (!hasValue || oldValue !== map.get(arguments[0])) {
+        observer.addChangeRecord({
+          type: type,
+          object: map,
+          key: arguments[0],
+          oldValue: oldValue
+        });
+      }
       return methodCallResult;
     };
 
     map['delete'] = function () {
+      var hasValue = map.has(arguments[0]);
       var oldValue = map.get(arguments[0]);
-      var methodCallResult = mapProto['delete'].apply(map, arguments);
-      observer.addChangeRecord({
-        type: 'delete',
-        object: map,
-        key: arguments[0],
-        oldValue: oldValue
-      });
+      var methodCallResult = proto['delete'].apply(map, arguments);
+      if (hasValue) {
+        observer.addChangeRecord({
+          type: 'delete',
+          object: map,
+          key: arguments[0],
+          oldValue: oldValue
+        });
+      }
       return methodCallResult;
     };
 
     map['clear'] = function () {
-      var methodCallResult = mapProto['clear'].apply(map, arguments);
+      var methodCallResult = proto['clear'].apply(map, arguments);
       observer.addChangeRecord({
         type: 'clear',
         object: map
@@ -2954,7 +3091,7 @@ var ModifyMapObserver = (function (_ModifyCollectionObserver3) {
   };
 
   return ModifyMapObserver;
-})(ModifyCollectionObserver);
+}(ModifyCollectionObserver);
 
 function findOriginalEventTarget(event) {
   return event.path && event.path[0] || event.deepPath && event.deepPath[0] || event.target;
@@ -2962,7 +3099,7 @@ function findOriginalEventTarget(event) {
 
 function handleDelegatedEvent(event) {
   var target = findOriginalEventTarget(event);
-  var callback = undefined;
+  var callback = void 0;
 
   while (target && !callback) {
     if (target.delegatedCallbacks) {
@@ -2979,7 +3116,7 @@ function handleDelegatedEvent(event) {
   }
 }
 
-var DelegateHandlerEntry = (function () {
+var DelegateHandlerEntry = function () {
   function DelegateHandlerEntry(eventName) {
     _classCallCheck(this, DelegateHandlerEntry);
 
@@ -3004,9 +3141,9 @@ var DelegateHandlerEntry = (function () {
   };
 
   return DelegateHandlerEntry;
-})();
+}();
 
-var DefaultEventStrategy = (function () {
+var DefaultEventStrategy = function () {
   function DefaultEventStrategy() {
     _classCallCheck(this, DefaultEventStrategy);
 
@@ -3014,11 +3151,11 @@ var DefaultEventStrategy = (function () {
   }
 
   DefaultEventStrategy.prototype.subscribe = function subscribe(target, targetEvent, callback, delegate) {
-    var _this = this;
+    var _this22 = this;
 
     if (delegate) {
-      var _ret = (function () {
-        var delegatedHandlers = _this.delegatedHandlers;
+      var _ret = function () {
+        var delegatedHandlers = _this22.delegatedHandlers;
         var handlerEntry = delegatedHandlers[targetEvent] || (delegatedHandlers[targetEvent] = new DelegateHandlerEntry(targetEvent));
         var delegatedCallbacks = target.delegatedCallbacks || (target.delegatedCallbacks = {});
 
@@ -3026,14 +3163,14 @@ var DefaultEventStrategy = (function () {
         delegatedCallbacks[targetEvent] = callback;
 
         return {
-          v: function () {
+          v: function v() {
             handlerEntry.decrement();
             delegatedCallbacks[targetEvent] = null;
           }
         };
-      })();
+      }();
 
-      if (typeof _ret === 'object') return _ret.v;
+      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
     } else {
       target.addEventListener(targetEvent, callback, false);
 
@@ -3044,9 +3181,9 @@ var DefaultEventStrategy = (function () {
   };
 
   return DefaultEventStrategy;
-})();
+}();
 
-var EventManager = (function () {
+var EventManager = exports.EventManager = function () {
   function EventManager() {
     _classCallCheck(this, EventManager);
 
@@ -3097,7 +3234,7 @@ var EventManager = (function () {
   EventManager.prototype.registerElementConfig = function registerElementConfig(config) {
     var tagName = config.tagName.toLowerCase();
     var properties = config.properties;
-    var propertyName = undefined;
+    var propertyName = void 0;
 
     this.elementHandlerLookup[tagName] = {};
 
@@ -3137,7 +3274,7 @@ var EventManager = (function () {
   };
 
   EventManager.prototype.getElementHandler = function getElementHandler(target, propertyName) {
-    var tagName = undefined;
+    var tagName = void 0;
     var lookup = this.elementHandlerLookup;
 
     if (target.tagName) {
@@ -3164,11 +3301,9 @@ var EventManager = (function () {
   };
 
   return EventManager;
-})();
+}();
 
-exports.EventManager = EventManager;
-
-var DirtyChecker = (function () {
+var DirtyChecker = exports.DirtyChecker = function () {
   function DirtyChecker() {
     _classCallCheck(this, DirtyChecker);
 
@@ -3192,10 +3327,10 @@ var DirtyChecker = (function () {
   };
 
   DirtyChecker.prototype.scheduleDirtyCheck = function scheduleDirtyCheck() {
-    var _this2 = this;
+    var _this23 = this;
 
     setTimeout(function () {
-      return _this2.check();
+      return _this23.check();
     }, this.checkDelay);
   };
 
@@ -3217,13 +3352,11 @@ var DirtyChecker = (function () {
   };
 
   return DirtyChecker;
-})();
+}();
 
-exports.DirtyChecker = DirtyChecker;
-
-var DirtyCheckProperty = (function () {
+var DirtyCheckProperty = exports.DirtyCheckProperty = (_dec5 = subscriberCollection(), _dec5(_class5 = function () {
   function DirtyCheckProperty(dirtyChecker, obj, propertyName) {
-    _classCallCheck(this, _DirtyCheckProperty);
+    _classCallCheck(this, DirtyCheckProperty);
 
     this.dirtyChecker = dirtyChecker;
     this.obj = obj;
@@ -3265,13 +3398,9 @@ var DirtyCheckProperty = (function () {
     }
   };
 
-  var _DirtyCheckProperty = DirtyCheckProperty;
-  DirtyCheckProperty = subscriberCollection()(DirtyCheckProperty) || DirtyCheckProperty;
   return DirtyCheckProperty;
-})();
-
-exports.DirtyCheckProperty = DirtyCheckProperty;
-var propertyAccessor = {
+}()) || _class5);
+var propertyAccessor = exports.propertyAccessor = {
   getValue: function getValue(obj, propertyName) {
     return obj[propertyName];
   },
@@ -3280,9 +3409,7 @@ var propertyAccessor = {
   }
 };
 
-exports.propertyAccessor = propertyAccessor;
-
-var PrimitiveObserver = (function () {
+var PrimitiveObserver = exports.PrimitiveObserver = function () {
   function PrimitiveObserver(primitive, propertyName) {
     _classCallCheck(this, PrimitiveObserver);
 
@@ -3297,7 +3424,7 @@ var PrimitiveObserver = (function () {
   };
 
   PrimitiveObserver.prototype.setValue = function setValue() {
-    var type = typeof this.primitive;
+    var type = _typeof(this.primitive);
     throw new Error('The ' + this.propertyName + ' property of a ' + type + ' (' + this.primitive + ') cannot be assigned.');
   };
 
@@ -3306,13 +3433,11 @@ var PrimitiveObserver = (function () {
   PrimitiveObserver.prototype.unsubscribe = function unsubscribe() {};
 
   return PrimitiveObserver;
-})();
+}();
 
-exports.PrimitiveObserver = PrimitiveObserver;
-
-var SetterObserver = (function () {
+var SetterObserver = exports.SetterObserver = (_dec6 = subscriberCollection(), _dec6(_class7 = function () {
   function SetterObserver(taskQueue, obj, propertyName) {
-    _classCallCheck(this, _SetterObserver);
+    _classCallCheck(this, SetterObserver);
 
     this.taskQueue = taskQueue;
     this.obj = obj;
@@ -3383,14 +3508,10 @@ var SetterObserver = (function () {
     } catch (_) {}
   };
 
-  var _SetterObserver = SetterObserver;
-  SetterObserver = subscriberCollection()(SetterObserver) || SetterObserver;
   return SetterObserver;
-})();
+}()) || _class7);
 
-exports.SetterObserver = SetterObserver;
-
-var XLinkAttributeObserver = (function () {
+var XLinkAttributeObserver = exports.XLinkAttributeObserver = function () {
   function XLinkAttributeObserver(element, propertyName, attributeName) {
     _classCallCheck(this, XLinkAttributeObserver);
 
@@ -3412,10 +3533,9 @@ var XLinkAttributeObserver = (function () {
   };
 
   return XLinkAttributeObserver;
-})();
+}();
 
-exports.XLinkAttributeObserver = XLinkAttributeObserver;
-var dataAttributeAccessor = {
+var dataAttributeAccessor = exports.dataAttributeAccessor = {
   getValue: function getValue(obj, propertyName) {
     return obj.getAttribute(propertyName);
   },
@@ -3424,9 +3544,7 @@ var dataAttributeAccessor = {
   }
 };
 
-exports.dataAttributeAccessor = dataAttributeAccessor;
-
-var DataAttributeObserver = (function () {
+var DataAttributeObserver = exports.DataAttributeObserver = function () {
   function DataAttributeObserver(element, propertyName) {
     _classCallCheck(this, DataAttributeObserver);
 
@@ -3447,11 +3565,9 @@ var DataAttributeObserver = (function () {
   };
 
   return DataAttributeObserver;
-})();
+}();
 
-exports.DataAttributeObserver = DataAttributeObserver;
-
-var StyleObserver = (function () {
+var StyleObserver = exports.StyleObserver = function () {
   function StyleObserver(element, propertyName) {
     _classCallCheck(this, StyleObserver);
 
@@ -3468,7 +3584,7 @@ var StyleObserver = (function () {
 
   StyleObserver.prototype.setValue = function setValue(newValue) {
     var styles = this.styles || {},
-        style = undefined,
+        style = void 0,
         version = this.version;
 
     if (newValue !== null && newValue !== undefined) {
@@ -3480,16 +3596,16 @@ var StyleObserver = (function () {
           }
         }
       } else if (newValue.length) {
-        var pairs = newValue.split(/(?:[:;]\s*)/);
-        for (var i = 0, _length = pairs.length; i < _length; i++) {
-          style = pairs[i];
+        var pairs = newValue.split(/(?:;|:(?!\/))\s*/);
+        for (var _i6 = 0, length = pairs.length; _i6 < length; _i6++) {
+          style = pairs[_i6].trim();
           if (!style) {
             continue;
           }
 
           styles[style] = version;
 
-          this.element.style[style] = pairs[++i];
+          this.element.style[style] = pairs[++_i6];
         }
       }
     }
@@ -3516,13 +3632,11 @@ var StyleObserver = (function () {
   };
 
   return StyleObserver;
-})();
+}();
 
-exports.StyleObserver = StyleObserver;
-
-var ValueAttributeObserver = (function () {
+var ValueAttributeObserver = exports.ValueAttributeObserver = (_dec7 = subscriberCollection(), _dec7(_class8 = function () {
   function ValueAttributeObserver(element, propertyName, handler) {
-    _classCallCheck(this, _ValueAttributeObserver);
+    _classCallCheck(this, ValueAttributeObserver);
 
     this.element = element;
     this.propertyName = propertyName;
@@ -3569,14 +3683,346 @@ var ValueAttributeObserver = (function () {
     }
   };
 
-  var _ValueAttributeObserver = ValueAttributeObserver;
-  ValueAttributeObserver = subscriberCollection()(ValueAttributeObserver) || ValueAttributeObserver;
   return ValueAttributeObserver;
-})();
+}()) || _class8);
 
-exports.ValueAttributeObserver = ValueAttributeObserver;
 
-var ClassObserver = (function () {
+var checkedArrayContext = 'CheckedObserver:array';
+
+var CheckedObserver = exports.CheckedObserver = (_dec8 = subscriberCollection(), _dec8(_class9 = function () {
+  function CheckedObserver(element, handler, observerLocator) {
+    _classCallCheck(this, CheckedObserver);
+
+    this.element = element;
+    this.handler = handler;
+    this.observerLocator = observerLocator;
+  }
+
+  CheckedObserver.prototype.getValue = function getValue() {
+    return this.value;
+  };
+
+  CheckedObserver.prototype.setValue = function setValue(newValue) {
+    if (this.value === newValue) {
+      return;
+    }
+
+    if (this.arrayObserver) {
+      this.arrayObserver.unsubscribe(checkedArrayContext, this);
+      this.arrayObserver = null;
+    }
+
+    if (this.element.type === 'checkbox' && Array.isArray(newValue)) {
+      this.arrayObserver = this.observerLocator.getArrayObserver(newValue);
+      this.arrayObserver.subscribe(checkedArrayContext, this);
+    }
+
+    this.oldValue = this.value;
+    this.value = newValue;
+    this.synchronizeElement();
+    this.notify();
+
+    if (!this.initialSync) {
+      this.initialSync = true;
+      this.observerLocator.taskQueue.queueMicroTask(this);
+    }
+  };
+
+  CheckedObserver.prototype.call = function call(context, splices) {
+    this.synchronizeElement();
+  };
+
+  CheckedObserver.prototype.synchronizeElement = function synchronizeElement() {
+    var value = this.value,
+        element = this.element,
+        elementValue = element.hasOwnProperty('model') ? element.model : element.value,
+        isRadio = element.type === 'radio',
+        matcher = element.matcher || function (a, b) {
+      return a === b;
+    };
+
+    element.checked = isRadio && !!matcher(value, elementValue) || !isRadio && value === true || !isRadio && Array.isArray(value) && !!value.find(function (item) {
+      return !!matcher(item, elementValue);
+    });
+  };
+
+  CheckedObserver.prototype.synchronizeValue = function synchronizeValue() {
+    var value = this.value,
+        element = this.element,
+        elementValue = element.hasOwnProperty('model') ? element.model : element.value,
+        index = void 0,
+        matcher = element.matcher || function (a, b) {
+      return a === b;
+    };
+
+    if (element.type === 'checkbox') {
+      if (Array.isArray(value)) {
+        index = value.findIndex(function (item) {
+          return !!matcher(item, elementValue);
+        });
+        if (element.checked && index === -1) {
+          value.push(elementValue);
+        } else if (!element.checked && index !== -1) {
+          value.splice(index, 1);
+        }
+
+        return;
+      } else {
+        value = element.checked;
+      }
+    } else if (element.checked) {
+      value = elementValue;
+    } else {
+      return;
+    }
+
+    this.oldValue = this.value;
+    this.value = value;
+    this.notify();
+  };
+
+  CheckedObserver.prototype.notify = function notify() {
+    var oldValue = this.oldValue;
+    var newValue = this.value;
+
+    this.callSubscribers(newValue, oldValue);
+  };
+
+  CheckedObserver.prototype.subscribe = function subscribe(context, callable) {
+    if (!this.hasSubscribers()) {
+      this.disposeHandler = this.handler.subscribe(this.element, this.synchronizeValue.bind(this, false));
+    }
+    this.addSubscriber(context, callable);
+  };
+
+  CheckedObserver.prototype.unsubscribe = function unsubscribe(context, callable) {
+    if (this.removeSubscriber(context, callable) && !this.hasSubscribers()) {
+      this.disposeHandler();
+      this.disposeHandler = null;
+    }
+  };
+
+  CheckedObserver.prototype.unbind = function unbind() {
+    if (this.arrayObserver) {
+      this.arrayObserver.unsubscribe(checkedArrayContext, this);
+      this.arrayObserver = null;
+    }
+  };
+
+  return CheckedObserver;
+}()) || _class9);
+
+
+var selectArrayContext = 'SelectValueObserver:array';
+
+var SelectValueObserver = exports.SelectValueObserver = (_dec9 = subscriberCollection(), _dec9(_class10 = function () {
+  function SelectValueObserver(element, handler, observerLocator) {
+    _classCallCheck(this, SelectValueObserver);
+
+    this.element = element;
+    this.handler = handler;
+    this.observerLocator = observerLocator;
+  }
+
+  SelectValueObserver.prototype.getValue = function getValue() {
+    return this.value;
+  };
+
+  SelectValueObserver.prototype.setValue = function setValue(newValue) {
+    if (newValue !== null && newValue !== undefined && this.element.multiple && !Array.isArray(newValue)) {
+      throw new Error('Only null or Array instances can be bound to a multi-select.');
+    }
+    if (this.value === newValue) {
+      return;
+    }
+
+    if (this.arrayObserver) {
+      this.arrayObserver.unsubscribe(selectArrayContext, this);
+      this.arrayObserver = null;
+    }
+
+    if (Array.isArray(newValue)) {
+      this.arrayObserver = this.observerLocator.getArrayObserver(newValue);
+      this.arrayObserver.subscribe(selectArrayContext, this);
+    }
+
+    this.oldValue = this.value;
+    this.value = newValue;
+    this.synchronizeOptions();
+    this.notify();
+
+    if (!this.initialSync) {
+      this.initialSync = true;
+      this.observerLocator.taskQueue.queueMicroTask(this);
+    }
+  };
+
+  SelectValueObserver.prototype.call = function call(context, splices) {
+    this.synchronizeOptions();
+  };
+
+  SelectValueObserver.prototype.synchronizeOptions = function synchronizeOptions() {
+    var value = this.value,
+        clear = void 0,
+        isArray = void 0;
+
+    if (value === null || value === undefined) {
+      clear = true;
+    } else if (Array.isArray(value)) {
+      isArray = true;
+    }
+
+    var options = this.element.options;
+    var i = options.length;
+    var matcher = this.element.matcher || function (a, b) {
+      return a === b;
+    };
+
+    var _loop = function _loop() {
+      var option = options.item(i);
+      if (clear) {
+        option.selected = false;
+        return 'continue';
+      }
+      var optionValue = option.hasOwnProperty('model') ? option.model : option.value;
+      if (isArray) {
+        option.selected = !!value.find(function (item) {
+          return !!matcher(optionValue, item);
+        });
+        return 'continue';
+      }
+      option.selected = !!matcher(optionValue, value);
+    };
+
+    while (i--) {
+      var _ret2 = _loop();
+
+      if (_ret2 === 'continue') continue;
+    }
+  };
+
+  SelectValueObserver.prototype.synchronizeValue = function synchronizeValue() {
+    var _this24 = this;
+
+    var options = this.element.options,
+        count = 0,
+        value = [];
+
+    for (var _i7 = 0, ii = options.length; _i7 < ii; _i7++) {
+      var _option = options.item(_i7);
+      if (!_option.selected) {
+        continue;
+      }
+      value.push(_option.hasOwnProperty('model') ? _option.model : _option.value);
+      count++;
+    }
+
+    if (this.element.multiple) {
+      if (Array.isArray(this.value)) {
+        var _ret3 = function () {
+          var matcher = _this24.element.matcher || function (a, b) {
+            return a === b;
+          };
+
+          var i = 0;
+
+          var _loop2 = function _loop2() {
+            var a = _this24.value[i];
+            if (value.findIndex(function (b) {
+              return matcher(a, b);
+            }) === -1) {
+              _this24.value.splice(i, 1);
+            } else {
+              i++;
+            }
+          };
+
+          while (i < _this24.value.length) {
+            _loop2();
+          }
+
+          i = 0;
+
+          var _loop3 = function _loop3() {
+            var a = value[i];
+            if (_this24.value.findIndex(function (b) {
+              return matcher(a, b);
+            }) === -1) {
+              _this24.value.push(a);
+            }
+            i++;
+          };
+
+          while (i < value.length) {
+            _loop3();
+          }
+          return {
+            v: void 0
+          };
+        }();
+
+        if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
+      }
+    } else {
+        if (count === 0) {
+          value = null;
+        } else {
+          value = value[0];
+        }
+      }
+
+    if (value !== this.value) {
+      this.oldValue = this.value;
+      this.value = value;
+      this.notify();
+    }
+  };
+
+  SelectValueObserver.prototype.notify = function notify() {
+    var oldValue = this.oldValue;
+    var newValue = this.value;
+
+    this.callSubscribers(newValue, oldValue);
+  };
+
+  SelectValueObserver.prototype.subscribe = function subscribe(context, callable) {
+    if (!this.hasSubscribers()) {
+      this.disposeHandler = this.handler.subscribe(this.element, this.synchronizeValue.bind(this, false));
+    }
+    this.addSubscriber(context, callable);
+  };
+
+  SelectValueObserver.prototype.unsubscribe = function unsubscribe(context, callable) {
+    if (this.removeSubscriber(context, callable) && !this.hasSubscribers()) {
+      this.disposeHandler();
+      this.disposeHandler = null;
+    }
+  };
+
+  SelectValueObserver.prototype.bind = function bind() {
+    var _this25 = this;
+
+    this.domObserver = _aureliaPal.DOM.createMutationObserver(function () {
+      _this25.synchronizeOptions();
+      _this25.synchronizeValue();
+    });
+    this.domObserver.observe(this.element, { childList: true, subtree: true });
+  };
+
+  SelectValueObserver.prototype.unbind = function unbind() {
+    this.domObserver.disconnect();
+    this.domObserver = null;
+
+    if (this.arrayObserver) {
+      this.arrayObserver.unsubscribe(selectArrayContext, this);
+      this.arrayObserver = null;
+    }
+  };
+
+  return SelectValueObserver;
+}()) || _class10);
+
+var ClassObserver = exports.ClassObserver = function () {
   function ClassObserver(element) {
     _classCallCheck(this, ClassObserver);
 
@@ -3598,8 +4044,8 @@ var ClassObserver = (function () {
 
     if (newValue !== null && newValue !== undefined && newValue.length) {
       names = newValue.split(/\s+/);
-      for (var i = 0, _length2 = names.length; i < _length2; i++) {
-        name = names[i];
+      for (var _i8 = 0, length = names.length; _i8 < length; _i8++) {
+        name = names[_i8];
         if (name === '') {
           continue;
         }
@@ -3630,76 +4076,10 @@ var ClassObserver = (function () {
   };
 
   return ClassObserver;
-})();
-
-exports.ClassObserver = ClassObserver;
-
-var computedContext = 'ComputedPropertyObserver';
-
-var ComputedPropertyObserver = (function () {
-  function ComputedPropertyObserver(obj, propertyName, descriptor, observerLocator) {
-    _classCallCheck(this, _ComputedPropertyObserver);
-
-    this.obj = obj;
-    this.propertyName = propertyName;
-    this.descriptor = descriptor;
-    this.observerLocator = observerLocator;
-  }
-
-  ComputedPropertyObserver.prototype.getValue = function getValue() {
-    return this.obj[this.propertyName];
-  };
-
-  ComputedPropertyObserver.prototype.setValue = function setValue(newValue) {
-    this.obj[this.propertyName] = newValue;
-  };
-
-  ComputedPropertyObserver.prototype.call = function call(context) {
-    var newValue = this.getValue();
-    if (this.oldValue === newValue) return;
-    this.callSubscribers(newValue, this.oldValue);
-    this.oldValue = newValue;
-    return;
-  };
-
-  ComputedPropertyObserver.prototype.subscribe = function subscribe(context, callable) {
-    if (!this.hasSubscribers()) {
-      this.oldValue = this.getValue();
-
-      var dependencies = this.descriptor.get.dependencies;
-      this.observers = [];
-      for (var i = 0, ii = dependencies.length; i < ii; i++) {
-        var observer = this.observerLocator.getObserver(this.obj, dependencies[i]);
-
-        this.observers.push(observer);
-        observer.subscribe(computedContext, this);
-      }
-    }
-
-    this.addSubscriber(context, callable);
-  };
-
-  ComputedPropertyObserver.prototype.unsubscribe = function unsubscribe(context, callable) {
-    if (this.removeSubscriber(context, callable) && !this.hasSubscribers()) {
-      this.oldValue = undefined;
-
-      var i = this.observers.length;
-      while (i--) {
-        this.observers[i].unsubscribe(computedContext, this);
-      }
-      this.observers = null;
-    }
-  };
-
-  var _ComputedPropertyObserver = ComputedPropertyObserver;
-  ComputedPropertyObserver = subscriberCollection()(ComputedPropertyObserver) || ComputedPropertyObserver;
-  return ComputedPropertyObserver;
-})();
-
-exports.ComputedPropertyObserver = ComputedPropertyObserver;
+}();
 
 function hasDeclaredDependencies(descriptor) {
-  return descriptor && descriptor.get && descriptor.get.dependencies && descriptor.get.dependencies.length > 0;
+  return !!(descriptor && descriptor.get && descriptor.get.dependencies);
 }
 
 function declarePropertyDependencies(ctor, propertyName, dependencies) {
@@ -3718,7 +4098,58 @@ function computedFrom() {
   };
 }
 
-var elements = {
+var ComputedExpression = exports.ComputedExpression = function (_Expression19) {
+  _inherits(ComputedExpression, _Expression19);
+
+  function ComputedExpression(name, dependencies) {
+    _classCallCheck(this, ComputedExpression);
+
+    var _this26 = _possibleConstructorReturn(this, _Expression19.call(this));
+
+    _this26.name = name;
+    _this26.dependencies = dependencies;
+    _this26.isAssignable = true;
+    return _this26;
+  }
+
+  ComputedExpression.prototype.evaluate = function evaluate(scope, lookupFunctions) {
+    return scope.bindingContext[this.name];
+  };
+
+  ComputedExpression.prototype.assign = function assign(scope, value) {
+    scope.bindingContext[this.name] = value;
+  };
+
+  ComputedExpression.prototype.accept = function accept(visitor) {
+    throw new Error('not implemented');
+  };
+
+  ComputedExpression.prototype.connect = function connect(binding, scope) {
+    var dependencies = this.dependencies;
+    var i = dependencies.length;
+    while (i--) {
+      dependencies[i].connect(binding, scope);
+    }
+  };
+
+  return ComputedExpression;
+}(Expression);
+
+function createComputedObserver(obj, propertyName, descriptor, observerLocator) {
+  var dependencies = descriptor.get.dependencies;
+  if (!(dependencies instanceof ComputedExpression)) {
+    var _i9 = dependencies.length;
+    while (_i9--) {
+      dependencies[_i9] = observerLocator.parser.parse(dependencies[_i9]);
+    }
+    dependencies = descriptor.get.dependencies = new ComputedExpression(propertyName, dependencies);
+  }
+
+  var scope = { bindingContext: obj, overrideContext: createOverrideContext(obj) };
+  return new ExpressionObserver(scope, dependencies, observerLocator);
+}
+
+var elements = exports.elements = {
   a: ['class', 'externalResourcesRequired', 'id', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'style', 'systemLanguage', 'target', 'transform', 'xlink:actuate', 'xlink:arcrole', 'xlink:href', 'xlink:role', 'xlink:show', 'xlink:title', 'xlink:type', 'xml:base', 'xml:lang', 'xml:space'],
   altGlyph: ['class', 'dx', 'dy', 'externalResourcesRequired', 'format', 'glyphRef', 'id', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'rotate', 'style', 'systemLanguage', 'x', 'xlink:actuate', 'xlink:arcrole', 'xlink:href', 'xlink:role', 'xlink:show', 'xlink:title', 'xlink:type', 'xml:base', 'xml:lang', 'xml:space', 'y'],
   altGlyphDef: ['id', 'xml:base', 'xml:lang', 'xml:space'],
@@ -3789,7 +4220,7 @@ var elements = {
   stop: ['class', 'id', 'offset', 'style', 'xml:base', 'xml:lang', 'xml:space'],
   style: ['id', 'media', 'title', 'type', 'xml:base', 'xml:lang', 'xml:space'],
   svg: ['baseProfile', 'class', 'contentScriptType', 'contentStyleType', 'externalResourcesRequired', 'height', 'id', 'onabort', 'onactivate', 'onclick', 'onerror', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onresize', 'onscroll', 'onunload', 'onzoom', 'preserveAspectRatio', 'requiredExtensions', 'requiredFeatures', 'style', 'systemLanguage', 'version', 'viewBox', 'width', 'x', 'xml:base', 'xml:lang', 'xml:space', 'y', 'zoomAndPan'],
-  'switch': ['class', 'externalResourcesRequired', 'id', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'style', 'systemLanguage', 'transform', 'xml:base', 'xml:lang', 'xml:space'],
+  switch: ['class', 'externalResourcesRequired', 'id', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'style', 'systemLanguage', 'transform', 'xml:base', 'xml:lang', 'xml:space'],
   symbol: ['class', 'externalResourcesRequired', 'id', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'preserveAspectRatio', 'style', 'viewBox', 'xml:base', 'xml:lang', 'xml:space'],
   text: ['class', 'dx', 'dy', 'externalResourcesRequired', 'id', 'lengthAdjust', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'rotate', 'style', 'systemLanguage', 'textLength', 'transform', 'x', 'xml:base', 'xml:lang', 'xml:space', 'y'],
   textPath: ['class', 'externalResourcesRequired', 'id', 'lengthAdjust', 'method', 'onactivate', 'onclick', 'onfocusin', 'onfocusout', 'onload', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'requiredExtensions', 'requiredFeatures', 'spacing', 'startOffset', 'style', 'systemLanguage', 'textLength', 'xlink:arcrole', 'xlink:href', 'xlink:role', 'xlink:title', 'xlink:type', 'xml:base', 'xml:lang', 'xml:space'],
@@ -3801,8 +4232,7 @@ var elements = {
   vkern: ['g1', 'g2', 'id', 'k', 'u1', 'u2', 'xml:base', 'xml:lang', 'xml:space']
 };
 
-exports.elements = elements;
-var presentationElements = {
+var presentationElements = exports.presentationElements = {
   'a': true,
   'altGlyph': true,
   'animate': true,
@@ -3856,8 +4286,7 @@ var presentationElements = {
   'use': true
 };
 
-exports.presentationElements = presentationElements;
-var presentationAttributes = {
+var presentationAttributes = exports.presentationAttributes = {
   'alignment-baseline': true,
   'baseline-shift': true,
   'clip-path': true,
@@ -3919,15 +4348,13 @@ var presentationAttributes = {
   'writing-mode': true
 };
 
-exports.presentationAttributes = presentationAttributes;
-
 function createElement(html) {
   var div = _aureliaPal.DOM.createElement('div');
   div.innerHTML = html;
   return div.firstChild;
 }
 
-var SVGAnalyzer = (function () {
+var SVGAnalyzer = exports.SVGAnalyzer = function () {
   function SVGAnalyzer() {
     _classCallCheck(this, SVGAnalyzer);
 
@@ -3948,30 +4375,23 @@ var SVGAnalyzer = (function () {
   };
 
   return SVGAnalyzer;
-})();
+}();
 
-exports.SVGAnalyzer = SVGAnalyzer;
-
-var ObserverLocator = (function () {
-  _createClass(ObserverLocator, null, [{
-    key: 'inject',
-    value: [_aureliaTaskQueue.TaskQueue, EventManager, DirtyChecker, SVGAnalyzer],
-    enumerable: true
-  }]);
-
-  function ObserverLocator(taskQueue, eventManager, dirtyChecker, svgAnalyzer) {
+var ObserverLocator = exports.ObserverLocator = (_temp = _class11 = function () {
+  function ObserverLocator(taskQueue, eventManager, dirtyChecker, svgAnalyzer, parser) {
     _classCallCheck(this, ObserverLocator);
 
     this.taskQueue = taskQueue;
     this.eventManager = eventManager;
     this.dirtyChecker = dirtyChecker;
     this.svgAnalyzer = svgAnalyzer;
+    this.parser = parser;
     this.adapters = [];
   }
 
   ObserverLocator.prototype.getObserver = function getObserver(obj, propertyName) {
     var observersLookup = obj.__observers__;
-    var observer = undefined;
+    var observer = void 0;
 
     if (observersLookup && propertyName in observersLookup) {
       return observersLookup[propertyName];
@@ -4014,8 +4434,8 @@ var ObserverLocator = (function () {
   };
 
   ObserverLocator.prototype.getAdapterObserver = function getAdapterObserver(obj, propertyName, descriptor) {
-    for (var i = 0, ii = this.adapters.length; i < ii; i++) {
-      var adapter = this.adapters[i];
+    for (var _i10 = 0, ii = this.adapters.length; _i10 < ii; _i10++) {
+      var adapter = this.adapters[_i10];
       var observer = adapter.getObserver(obj, propertyName, descriptor);
       if (observer) {
         return observer;
@@ -4025,10 +4445,10 @@ var ObserverLocator = (function () {
   };
 
   ObserverLocator.prototype.createPropertyObserver = function createPropertyObserver(obj, propertyName) {
-    var observerLookup = undefined;
-    var descriptor = undefined;
-    var handler = undefined;
-    var xlinkResult = undefined;
+    var observerLookup = void 0;
+    var descriptor = void 0;
+    var handler = void 0;
+    var xlinkResult = void 0;
 
     if (!(obj instanceof Object)) {
       return new PrimitiveObserver(obj, propertyName);
@@ -4063,10 +4483,10 @@ var ObserverLocator = (function () {
     descriptor = Object.getPropertyDescriptor(obj, propertyName);
 
     if (hasDeclaredDependencies(descriptor)) {
-      return new ComputedPropertyObserver(obj, propertyName, descriptor, this);
+      return createComputedObserver(obj, propertyName, descriptor, this);
     }
 
-    var existingGetterOrSetter = undefined;
+    var existingGetterOrSetter = void 0;
     if (descriptor && (existingGetterOrSetter = descriptor.get || descriptor.set)) {
       if (existingGetterOrSetter.getObserver) {
         return existingGetterOrSetter.getObserver(obj);
@@ -4115,45 +4535,21 @@ var ObserverLocator = (function () {
   };
 
   ObserverLocator.prototype.getArrayObserver = function getArrayObserver(array) {
-    if ('__array_observer__' in array) {
-      return array.__array_observer__;
-    }
-
-    return array.__array_observer__ = _getArrayObserver(this.taskQueue, array);
+    return _getArrayObserver(this.taskQueue, array);
   };
 
   ObserverLocator.prototype.getMapObserver = function getMapObserver(map) {
-    if ('__map_observer__' in map) {
-      return map.__map_observer__;
-    }
-
-    return map.__map_observer__ = _getMapObserver(this.taskQueue, map);
+    return _getMapObserver(this.taskQueue, map);
   };
 
-  ObserverLocator.prototype.getSetObserver = (function (_getSetObserver) {
-    function getSetObserver(_x) {
-      return _getSetObserver.apply(this, arguments);
-    }
-
-    getSetObserver.toString = function () {
-      return _getSetObserver.toString();
-    };
-
-    return getSetObserver;
-  })(function (set) {
-    if ('__set_observer__' in set) {
-      return set.__set_observer__;
-    }
-
-    return set.__set_observer__ = getSetObserver(this.taskQueue, set);
-  });
+  ObserverLocator.prototype.getSetObserver = function getSetObserver(set) {
+    return _getSetObserver(this.taskQueue, set);
+  };
 
   return ObserverLocator;
-})();
+}(), _class11.inject = [_aureliaTaskQueue.TaskQueue, EventManager, DirtyChecker, SVGAnalyzer, Parser], _temp);
 
-exports.ObserverLocator = ObserverLocator;
-
-var ObjectObservationAdapter = (function () {
+var ObjectObservationAdapter = exports.ObjectObservationAdapter = function () {
   function ObjectObservationAdapter() {
     _classCallCheck(this, ObjectObservationAdapter);
   }
@@ -4163,11 +4559,9 @@ var ObjectObservationAdapter = (function () {
   };
 
   return ObjectObservationAdapter;
-})();
+}();
 
-exports.ObjectObservationAdapter = ObjectObservationAdapter;
-
-var BindingExpression = (function () {
+var BindingExpression = exports.BindingExpression = function () {
   function BindingExpression(observerLocator, targetProperty, sourceExpression, mode, lookupFunctions, attribute) {
     _classCallCheck(this, BindingExpression);
 
@@ -4185,15 +4579,13 @@ var BindingExpression = (function () {
   };
 
   return BindingExpression;
-})();
-
-exports.BindingExpression = BindingExpression;
+}();
 
 var targetContext = 'Binding:target';
 
-var Binding = (function () {
+var Binding = exports.Binding = (_dec10 = connectable(), _dec10(_class12 = function () {
   function Binding(observerLocator, sourceExpression, target, targetProperty, mode, lookupFunctions) {
-    _classCallCheck(this, _Binding);
+    _classCallCheck(this, Binding);
 
     this.observerLocator = observerLocator;
     this.sourceExpression = sourceExpression;
@@ -4247,9 +4639,8 @@ var Binding = (function () {
     this.isBound = true;
     this.source = source;
 
-    var sourceExpression = this.sourceExpression;
-    if (sourceExpression.bind) {
-      sourceExpression.bind(this, source, this.lookupFunctions);
+    if (this.sourceExpression.bind) {
+      this.sourceExpression.bind(this, source, this.lookupFunctions);
     }
 
     var mode = this.mode;
@@ -4261,13 +4652,13 @@ var Binding = (function () {
     if ('bind' in this.targetObserver) {
       this.targetObserver.bind();
     }
-    var value = sourceExpression.evaluate(source, this.lookupFunctions);
+    var value = this.sourceExpression.evaluate(source, this.lookupFunctions);
     this.updateTarget(value);
 
     if (mode === bindingMode.oneWay) {
       enqueueBindingConnect(this);
     } else if (mode === bindingMode.twoWay) {
-      sourceExpression.connect(this, source);
+      this.sourceExpression.connect(this, source);
       this.targetObserver.subscribe(targetContext, this);
     }
   };
@@ -4301,14 +4692,10 @@ var Binding = (function () {
     this.sourceExpression.connect(this, this.source);
   };
 
-  var _Binding = Binding;
-  Binding = connectable()(Binding) || Binding;
   return Binding;
-})();
+}()) || _class12);
 
-exports.Binding = Binding;
-
-var CallExpression = (function () {
+var CallExpression = exports.CallExpression = function () {
   function CallExpression(observerLocator, targetProperty, sourceExpression, lookupFunctions) {
     _classCallCheck(this, CallExpression);
 
@@ -4323,11 +4710,9 @@ var CallExpression = (function () {
   };
 
   return CallExpression;
-})();
+}();
 
-exports.CallExpression = CallExpression;
-
-var Call = (function () {
+var Call = exports.Call = function () {
   function Call(observerLocator, sourceExpression, target, targetProperty, lookupFunctions) {
     _classCallCheck(this, Call);
 
@@ -4351,7 +4736,7 @@ var Call = (function () {
   };
 
   Call.prototype.bind = function bind(source) {
-    var _this3 = this;
+    var _this27 = this;
 
     if (this.isBound) {
       if (this.source === source) {
@@ -4362,12 +4747,11 @@ var Call = (function () {
     this.isBound = true;
     this.source = source;
 
-    var sourceExpression = this.sourceExpression;
-    if (sourceExpression.bind) {
-      sourceExpression.bind(this, source, this.lookupFunctions);
+    if (this.sourceExpression.bind) {
+      this.sourceExpression.bind(this, source, this.lookupFunctions);
     }
     this.targetProperty.setValue(function ($event) {
-      return _this3.callSource($event);
+      return _this27.callSource($event);
     });
   };
 
@@ -4384,11 +4768,9 @@ var Call = (function () {
   };
 
   return Call;
-})();
+}();
 
-exports.Call = Call;
-
-var ValueConverterResource = (function () {
+var ValueConverterResource = exports.ValueConverterResource = function () {
   function ValueConverterResource(name) {
     _classCallCheck(this, ValueConverterResource);
 
@@ -4412,9 +4794,7 @@ var ValueConverterResource = (function () {
   ValueConverterResource.prototype.load = function load(container, target) {};
 
   return ValueConverterResource;
-})();
-
-exports.ValueConverterResource = ValueConverterResource;
+}();
 
 function valueConverter(nameOrTarget) {
   if (nameOrTarget === undefined || typeof nameOrTarget === 'string') {
@@ -4426,7 +4806,7 @@ function valueConverter(nameOrTarget) {
   _aureliaMetadata.metadata.define(_aureliaMetadata.metadata.resource, new ValueConverterResource(), nameOrTarget);
 }
 
-var BindingBehaviorResource = (function () {
+var BindingBehaviorResource = exports.BindingBehaviorResource = function () {
   function BindingBehaviorResource(name) {
     _classCallCheck(this, BindingBehaviorResource);
 
@@ -4450,9 +4830,7 @@ var BindingBehaviorResource = (function () {
   BindingBehaviorResource.prototype.load = function load(container, target) {};
 
   return BindingBehaviorResource;
-})();
-
-exports.BindingBehaviorResource = BindingBehaviorResource;
+}();
 
 function bindingBehavior(nameOrTarget) {
   if (nameOrTarget === undefined || typeof nameOrTarget === 'string') {
@@ -4464,7 +4842,7 @@ function bindingBehavior(nameOrTarget) {
   _aureliaMetadata.metadata.define(_aureliaMetadata.metadata.resource, new BindingBehaviorResource(), nameOrTarget);
 }
 
-var ListenerExpression = (function () {
+var ListenerExpression = exports.ListenerExpression = function () {
   function ListenerExpression(eventManager, targetEvent, sourceExpression, delegate, preventDefault, lookupFunctions) {
     _classCallCheck(this, ListenerExpression);
 
@@ -4482,11 +4860,9 @@ var ListenerExpression = (function () {
   };
 
   return ListenerExpression;
-})();
+}();
 
-exports.ListenerExpression = ListenerExpression;
-
-var Listener = (function () {
+var Listener = exports.Listener = function () {
   function Listener(eventManager, targetEvent, delegate, sourceExpression, target, preventDefault, lookupFunctions) {
     _classCallCheck(this, Listener);
 
@@ -4512,7 +4888,7 @@ var Listener = (function () {
   };
 
   Listener.prototype.bind = function bind(source) {
-    var _this4 = this;
+    var _this28 = this;
 
     if (this.isBound) {
       if (this.source === source) {
@@ -4523,12 +4899,11 @@ var Listener = (function () {
     this.isBound = true;
     this.source = source;
 
-    var sourceExpression = this.sourceExpression;
-    if (sourceExpression.bind) {
-      sourceExpression.bind(this, source, this.lookupFunctions);
+    if (this.sourceExpression.bind) {
+      this.sourceExpression.bind(this, source, this.lookupFunctions);
     }
     this._disposeListener = this.eventManager.addEventListener(this.target, this.targetEvent, function (event) {
-      return _this4.callSource(event);
+      return _this28.callSource(event);
     }, this.delegate);
   };
 
@@ -4546,9 +4921,7 @@ var Listener = (function () {
   };
 
   return Listener;
-})();
-
-exports.Listener = Listener;
+}();
 
 function getAU(element) {
   var au = element.au;
@@ -4560,17 +4933,18 @@ function getAU(element) {
   return au;
 }
 
-var NameExpression = (function () {
-  function NameExpression(property, apiName) {
+var NameExpression = exports.NameExpression = function () {
+  function NameExpression(sourceExpression, apiName, lookupFunctions) {
     _classCallCheck(this, NameExpression);
 
-    this.property = property;
+    this.sourceExpression = sourceExpression;
     this.apiName = apiName;
+    this.lookupFunctions = lookupFunctions;
     this.discrete = true;
   }
 
   NameExpression.prototype.createBinding = function createBinding(target) {
-    return new NameBinder(this.property, NameExpression.locateAPI(target, this.apiName));
+    return new NameBinder(this.sourceExpression, NameExpression.locateAPI(target, this.apiName), this.lookupFunctions);
   };
 
   NameExpression.locateAPI = function locateAPI(element, apiName) {
@@ -4595,49 +4969,46 @@ var NameExpression = (function () {
   };
 
   return NameExpression;
-})();
+}();
 
-exports.NameExpression = NameExpression;
-
-var NameBinder = (function () {
-  function NameBinder(property, target) {
+var NameBinder = function () {
+  function NameBinder(sourceExpression, target, lookupFunctions) {
     _classCallCheck(this, NameBinder);
 
-    this.property = property;
+    this.sourceExpression = sourceExpression;
     this.target = target;
-    this.source = null;
-    this.context = null;
+    this.lookupFunctions = lookupFunctions;
   }
 
   NameBinder.prototype.bind = function bind(source) {
-    if (this.source !== null) {
+    if (this.isBound) {
       if (this.source === source) {
         return;
       }
-
       this.unbind();
     }
-
-    this.source = source || null;
-    this.context = source.bindingContext || source.overrideContext || null;
-
-    if (this.context !== null) {
-      this.context[this.property] = this.target;
+    this.isBound = true;
+    this.source = source;
+    if (this.sourceExpression.bind) {
+      this.sourceExpression.bind(this, source, this.lookupFunctions);
     }
+    this.sourceExpression.assign(this.source, this.target, this.lookupFunctions);
   };
 
   NameBinder.prototype.unbind = function unbind() {
-    if (this.source !== null) {
-      this.source = null;
+    if (!this.isBound) {
+      return;
     }
-
-    if (this.context !== null) {
-      this.context[this.property] = null;
+    this.isBound = false;
+    this.sourceExpression.assign(this.source, null, this.lookupFunctions);
+    if (this.sourceExpression.unbind) {
+      this.sourceExpression.unbind(this, this.source);
     }
+    this.source = null;
   };
 
   return NameBinder;
-})();
+}();
 
 var lookupFunctions = {
   bindingBehaviors: function bindingBehaviors(name) {
@@ -4648,13 +5019,7 @@ var lookupFunctions = {
   }
 };
 
-var BindingEngine = (function () {
-  _createClass(BindingEngine, null, [{
-    key: 'inject',
-    value: [ObserverLocator, Parser],
-    enumerable: true
-  }]);
-
+var BindingEngine = exports.BindingEngine = (_temp2 = _class13 = function () {
   function BindingEngine(observerLocator, parser) {
     _classCallCheck(this, BindingEngine);
 
@@ -4665,17 +5030,16 @@ var BindingEngine = (function () {
   BindingEngine.prototype.createBindingExpression = function createBindingExpression(targetProperty, sourceExpression) {
     var mode = arguments.length <= 2 || arguments[2] === undefined ? bindingMode.oneWay : arguments[2];
     var lookupFunctions = arguments.length <= 3 || arguments[3] === undefined ? lookupFunctions : arguments[3];
-    return (function () {
-      return new BindingExpression(this.observerLocator, targetProperty, this.parser.parse(sourceExpression), mode, lookupFunctions);
-    }).apply(this, arguments);
+
+    return new BindingExpression(this.observerLocator, targetProperty, this.parser.parse(sourceExpression), mode, lookupFunctions);
   };
 
   BindingEngine.prototype.propertyObserver = function propertyObserver(obj, propertyName) {
-    var _this5 = this;
+    var _this29 = this;
 
     return {
       subscribe: function subscribe(callback) {
-        var observer = _this5.observerLocator.getObserver(obj, propertyName);
+        var observer = _this29.observerLocator.getObserver(obj, propertyName);
         observer.subscribe(callback);
         return {
           dispose: function dispose() {
@@ -4687,17 +5051,17 @@ var BindingEngine = (function () {
   };
 
   BindingEngine.prototype.collectionObserver = function collectionObserver(collection) {
-    var _this6 = this;
+    var _this30 = this;
 
     return {
       subscribe: function subscribe(callback) {
-        var observer = undefined;
+        var observer = void 0;
         if (collection instanceof Array) {
-          observer = _this6.observerLocator.getArrayObserver(collection);
+          observer = _this30.observerLocator.getArrayObserver(collection);
         } else if (collection instanceof Map) {
-          observer = _this6.observerLocator.getMapObserver(collection);
+          observer = _this30.observerLocator.getMapObserver(collection);
         } else if (collection instanceof Set) {
-          observer = _this6.observerLocator.getSetObserver(collection);
+          observer = _this30.observerLocator.getSetObserver(collection);
         } else {
           throw new Error('collection must be an instance of Array, Map or Set.');
         }
@@ -4713,7 +5077,7 @@ var BindingEngine = (function () {
 
   BindingEngine.prototype.expressionObserver = function expressionObserver(bindingContext, expression) {
     var scope = { bindingContext: bindingContext, overrideContext: createOverrideContext(bindingContext) };
-    return new ExpressionObserver(scope, this.parser.parse(expression), this.observerLocator);
+    return new ExpressionObserver(scope, this.parser.parse(expression), this.observerLocator, lookupFunctions);
   };
 
   BindingEngine.prototype.parseExpression = function parseExpression(expression) {
@@ -4725,81 +5089,56 @@ var BindingEngine = (function () {
   };
 
   return BindingEngine;
-})();
+}(), _class13.inject = [ObserverLocator, Parser], _temp2);
 
-exports.BindingEngine = BindingEngine;
-
-var ExpressionObserver = (function () {
-  function ExpressionObserver(scope, expression, observerLocator) {
-    _classCallCheck(this, _ExpressionObserver);
-
-    this.scope = scope;
-    this.expression = expression;
-    this.observerLocator = observerLocator;
-  }
-
-  ExpressionObserver.prototype.subscribe = function subscribe(callback) {
-    var _this7 = this;
-
-    if (!this.hasSubscribers()) {
-      this.oldValue = this.expression.evaluate(this.scope, lookupFunctions);
-      this.expression.connect(this, this.scope);
-    }
-    this.addSubscriber(callback);
-    return {
-      dispose: function dispose() {
-        if (_this7.removeSubscriber(callback) && !_this7.hasSubscribers()) {
-          _this7.unobserve(true);
-        }
-      }
-    };
-  };
-
-  ExpressionObserver.prototype.call = function call() {
-    var newValue = this.expression.evaluate(this.scope, lookupFunctions);
-    var oldValue = this.oldValue;
-    if (newValue !== oldValue) {
-      this.oldValue = newValue;
-      this.callSubscribers(newValue, oldValue);
-    }
-    this._version++;
-    this.expression.connect(this, this.scope);
-    this.unobserve(false);
-  };
-
-  var _ExpressionObserver = ExpressionObserver;
-  ExpressionObserver = subscriberCollection()(ExpressionObserver) || ExpressionObserver;
-  ExpressionObserver = connectable()(ExpressionObserver) || ExpressionObserver;
-  return ExpressionObserver;
-})();
 
 var setProto = Set.prototype;
 
-function getSetObserver(taskQueue, set) {
-  return ModifySetObserver.create(taskQueue, set);
+function _getSetObserver(taskQueue, set) {
+  return ModifySetObserver.for(taskQueue, set);
 }
 
-var ModifySetObserver = (function (_ModifyCollectionObserver4) {
-  _inherits(ModifySetObserver, _ModifyCollectionObserver4);
+exports.getSetObserver = _getSetObserver;
+
+var ModifySetObserver = function (_ModifyCollectionObse3) {
+  _inherits(ModifySetObserver, _ModifyCollectionObse3);
 
   function ModifySetObserver(taskQueue, set) {
     _classCallCheck(this, ModifySetObserver);
 
-    _ModifyCollectionObserver4.call(this, taskQueue, set);
+    return _possibleConstructorReturn(this, _ModifyCollectionObse3.call(this, taskQueue, set));
   }
+
+  ModifySetObserver.for = function _for(taskQueue, set) {
+    if (!('__set_observer__' in set)) {
+      var observer = ModifySetObserver.create(taskQueue, set);
+      Object.defineProperty(set, '__set_observer__', { value: observer, enumerable: false, configurable: false });
+    }
+    return set.__set_observer__;
+  };
 
   ModifySetObserver.create = function create(taskQueue, set) {
     var observer = new ModifySetObserver(taskQueue, set);
 
+    var proto = setProto;
+    if (proto.add !== set.add || proto.delete !== set.delete || proto.clear !== set.clear) {
+      proto = {
+        add: set.add,
+        delete: set.delete,
+        clear: set.clear
+      };
+    }
+
     set['add'] = function () {
       var type = 'add';
-      var hasValue = set.has(arguments[0]);
-      var methodCallResult = setProto['add'].apply(set, arguments);
+      var oldSize = set.size;
+      var methodCallResult = proto['add'].apply(set, arguments);
+      var hasValue = set.size === oldSize;
       if (!hasValue) {
         observer.addChangeRecord({
           type: type,
           object: set,
-          value: arguments[0]
+          value: Array.from(set).pop()
         });
       }
       return methodCallResult;
@@ -4807,7 +5146,7 @@ var ModifySetObserver = (function (_ModifyCollectionObserver4) {
 
     set['delete'] = function () {
       var hasValue = set.has(arguments[0]);
-      var methodCallResult = setProto['delete'].apply(set, arguments);
+      var methodCallResult = proto['delete'].apply(set, arguments);
       if (hasValue) {
         observer.addChangeRecord({
           type: 'delete',
@@ -4819,7 +5158,7 @@ var ModifySetObserver = (function (_ModifyCollectionObserver4) {
     };
 
     set['clear'] = function () {
-      var methodCallResult = setProto['clear'].apply(set, arguments);
+      var methodCallResult = proto['clear'].apply(set, arguments);
       observer.addChangeRecord({
         type: 'clear',
         object: set
@@ -4831,4 +5170,49 @@ var ModifySetObserver = (function (_ModifyCollectionObserver4) {
   };
 
   return ModifySetObserver;
-})(ModifyCollectionObserver);
+}(ModifyCollectionObserver);
+
+function observable(targetOrConfig, key, descriptor) {
+  var deco = function deco(target, key2, descriptor2) {
+    var innerPropertyName = '_' + key2;
+    var callbackName = targetOrConfig && targetOrConfig.changeHandler || key2 + 'Changed';
+
+    var babel = descriptor2 !== undefined;
+
+    if (babel) {
+      if (typeof descriptor2.initializer === 'function') {
+        target[innerPropertyName] = descriptor2.initializer();
+      }
+    } else {
+      descriptor2 = {};
+    }
+
+    delete descriptor2.writable;
+    delete descriptor2.initializer;
+
+    descriptor2.get = function () {
+      return this[innerPropertyName];
+    };
+    descriptor2.set = function (newValue) {
+      var oldValue = this[innerPropertyName];
+      this[innerPropertyName] = newValue;
+      if (this[callbackName]) {
+        this[callbackName](newValue, oldValue);
+      }
+    };
+
+    descriptor2.get.dependencies = [innerPropertyName];
+
+    if (!babel) {
+      Object.defineProperty(target, key2, descriptor2);
+    }
+  };
+
+  if (key) {
+    var target = targetOrConfig;
+    targetOrConfig = null;
+    return deco(target, key, descriptor);
+  }
+
+  return deco;
+}

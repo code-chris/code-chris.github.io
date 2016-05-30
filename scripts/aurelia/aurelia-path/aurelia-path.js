@@ -1,6 +1,11 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 exports.relativeToFile = relativeToFile;
 exports.join = join;
 exports.buildQueryString = buildQueryString;
@@ -49,7 +54,7 @@ function join(path1, path2) {
   var scheme = schemeMatch && schemeMatch.length > 0 ? schemeMatch[1] : '';
   path1 = path1.substr(scheme.length);
 
-  var urlPrefix = undefined;
+  var urlPrefix = void 0;
   if (path1.indexOf('///') === 0 && scheme === 'file:') {
     urlPrefix = '///';
   } else if (path1.indexOf('//') === 0) {
@@ -76,42 +81,50 @@ function join(path1, path2) {
     }
   }
 
-  for (var i = 0, ii = url2.length; i < ii; ++i) {
-    if (url2[i] === '..') {
+  for (var _i = 0, _ii = url2.length; _i < _ii; ++_i) {
+    if (url2[_i] === '..') {
       url3.pop();
-    } else if (url2[i] === '.' || url2[i] === '') {
+    } else if (url2[_i] === '.' || url2[_i] === '') {
       continue;
     } else {
-      url3.push(url2[i]);
+      url3.push(url2[_i]);
     }
   }
 
   return scheme + urlPrefix + url3.join('/') + trailingSlash;
 }
 
+var encode = encodeURIComponent;
+var encodeKey = function encodeKey(k) {
+  return encode(k).replace('%24', '$');
+};
+
+function buildParam(key, value) {
+  var result = [];
+  if (value === null || value === undefined) {
+    return result;
+  }
+  if (Array.isArray(value)) {
+    for (var i = 0, l = value.length; i < l; i++) {
+      var arrayKey = key + '[' + (_typeof(value[i]) === 'object' && value[i] !== null ? i : '') + ']';
+      result = result.concat(buildParam(arrayKey, value[i]));
+    }
+  } else if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+    for (var propertyName in value) {
+      result = result.concat(buildParam(key + '[' + propertyName + ']', value[propertyName]));
+    }
+  } else {
+    result.push(encodeKey(key) + '=' + encode(value));
+  }
+  return result;
+}
+
 function buildQueryString(params) {
   var pairs = [];
   var keys = Object.keys(params || {}).sort();
-  var encode = encodeURIComponent;
-  var encodeKey = function encodeKey(k) {
-    return encode(k).replace('%24', '$');
-  };
-
   for (var i = 0, len = keys.length; i < len; i++) {
     var key = keys[i];
-    var value = params[key];
-    if (value === null || value === undefined) {
-      continue;
-    }
-
-    if (Array.isArray(value)) {
-      var arrayKey = encodeKey(key) + '[]';
-      for (var j = 0, l = value.length; j < l; j++) {
-        pairs.push(arrayKey + '=' + encode(value[j]));
-      }
-    } else {
-      pairs.push(encodeKey(key) + '=' + encode(value));
-    }
+    pairs = pairs.concat(buildParam(key, params[key]));
   }
 
   if (pairs.length === 0) {
@@ -119,6 +132,31 @@ function buildQueryString(params) {
   }
 
   return pairs.join('&');
+}
+
+function processScalarParam(existedParam, value, isPrimitive) {
+  if (Array.isArray(existedParam)) {
+    existedParam.push(value);
+    return existedParam;
+  }
+  if (existedParam !== undefined) {
+    return isPrimitive ? value : [existedParam, value];
+  }
+
+  return value;
+}
+
+function parseComplexParam(queryParams, keys, value) {
+  var currentParams = queryParams;
+  var keysLastIndex = keys.length - 1;
+  for (var j = 0; j <= keysLastIndex; j++) {
+    var key = keys[j] === '' ? currentParams.length : keys[j];
+    if (j < keysLastIndex) {
+      currentParams = currentParams[key] = currentParams[key] || (isNaN(keys[j + 1]) ? {} : []);
+    } else {
+      currentParams = currentParams[key] = value;
+    }
+  }
 }
 
 function parseQueryString(queryString) {
@@ -132,36 +170,37 @@ function parseQueryString(queryString) {
     query = query.substr(1);
   }
 
-  var pairs = query.split('&');
+  var pairs = query.replace(/\+/g, ' ').split('&');
   for (var i = 0; i < pairs.length; i++) {
     var pair = pairs[i].split('=');
     var key = decodeURIComponent(pair[0]);
-    var keyLength = key.length;
-    var isArray = false;
-    var value = undefined;
-
+    var isPrimitive = false;
     if (!key) {
       continue;
-    } else if (pair.length === 1) {
-      value = true;
-    } else {
-      if (keyLength > 2 && key.slice(keyLength - 2) === '[]') {
-        isArray = true;
-        key = key.slice(0, keyLength - 2);
-        if (!queryParams[key]) {
-          queryParams[key] = [];
-        }
-      }
-
-      value = pair[1] ? decodeURIComponent(pair[1]) : '';
     }
 
-    if (isArray) {
-      queryParams[key].push(value);
+    var keys = key.split('][');
+    var keysLastIndex = keys.length - 1;
+
+    if (/\[/.test(keys[0]) && /\]$/.test(keys[keysLastIndex])) {
+      keys[keysLastIndex] = keys[keysLastIndex].replace(/\]$/, '');
+      keys = keys.shift().split('[').concat(keys);
+      keysLastIndex = keys.length - 1;
     } else {
-      queryParams[key] = value;
+      isPrimitive = true;
+      keysLastIndex = 0;
+    }
+
+    if (pair.length === 2) {
+      var value = pair[1] ? decodeURIComponent(pair[1]) : '';
+      if (keysLastIndex) {
+        parseComplexParam(queryParams, keys, value);
+      } else {
+        queryParams[key] = processScalarParam(queryParams[key], value, isPrimitive);
+      }
+    } else {
+      queryParams[key] = true;
     }
   }
-
   return queryParams;
 }

@@ -1,13 +1,15 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.getLogger = getLogger;
 exports.addAppender = addAppender;
 exports.setLevel = setLevel;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var logLevel = {
+var logLevel = exports.logLevel = {
   none: 0,
   error: 1,
   warn: 2,
@@ -15,7 +17,6 @@ var logLevel = {
   debug: 4
 };
 
-exports.logLevel = logLevel;
 var loggers = {};
 var currentLevel = logLevel.none;
 var appenders = [];
@@ -24,7 +25,7 @@ var loggerConstructionKey = {};
 
 function log(logger, level, args) {
   var i = appenders.length;
-  var current = undefined;
+  var current = void 0;
 
   args = slice.call(args);
   args.unshift(logger);
@@ -102,7 +103,7 @@ function setLevel(level) {
   currentLevel = level;
 }
 
-var Logger = (function () {
+var Logger = exports.Logger = function () {
   function Logger(id, key) {
     _classCallCheck(this, Logger);
 
@@ -122,6 +123,4 @@ var Logger = (function () {
   Logger.prototype.error = function error(message) {};
 
   return Logger;
-})();
-
-exports.Logger = Logger;
+}();

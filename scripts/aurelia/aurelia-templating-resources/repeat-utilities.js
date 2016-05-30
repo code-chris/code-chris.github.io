@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.updateOverrideContexts = updateOverrideContexts;
 exports.createFullOverrideContext = createFullOverrideContext;
 exports.updateOverrideContext = updateOverrideContext;
@@ -27,7 +29,7 @@ function updateOverrideContexts(views, startIndex) {
 
 function createFullOverrideContext(repeat, data, index, length, key) {
   var bindingContext = {};
-  var overrideContext = _aureliaBinding.createOverrideContext(bindingContext, repeat.scope.overrideContext);
+  var overrideContext = (0, _aureliaBinding.createOverrideContext)(bindingContext, repeat.scope.overrideContext);
 
   if (typeof key !== 'undefined') {
     bindingContext[repeat.key] = key;
@@ -83,5 +85,7 @@ function isOneTime(expression) {
 function updateOneTimeBinding(binding) {
   if (binding.call && binding.mode === oneTime) {
     binding.call(_aureliaBinding.sourceContext);
+  } else if (binding.updateOneTimeBindings) {
+    binding.updateOneTimeBindings();
   }
 }

@@ -1,11 +1,11 @@
 declare module 'aurelia-path' {
   
   /**
-  * Calcualtes a path relative to a file.
+  * Calculates a path relative to a file.
   *
   * @param name The relative path.
   * @param file The file path.
-  * @return The calcualted path.
+  * @return The calculated path.
   */
   export function relativeToFile(name: string, file: string): string;
   
@@ -29,7 +29,7 @@ declare module 'aurelia-path' {
   /**
   * Parse a query string.
   *
-  * @param The query string to parse.
+  * @param queryString The query string to parse.
   * @returns Object with keys and values mapped from the query string.
   */
   export function parseQueryString(queryString: string): Object;

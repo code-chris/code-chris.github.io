@@ -1,6 +1,7 @@
 declare module 'aurelia-metadata' {
-  import 'core-js';
-  import { PLATFORM }  from 'aurelia-pal';
+  import {
+    PLATFORM
+  } from 'aurelia-pal';
   
   /**
   * Helpers for working with metadata on functions.
@@ -28,7 +29,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup the metadata on.
       * @param targetKey The member on the target to lookup the metadata on.
       */
-    get(metadataKey: string, target: Function, targetKey: string): Object;
+    get(metadataKey: string, target: Function, targetKey?: string): Object;
     
     /**
       * Gets metadata specified by a key on a target, only searching the own instance.
@@ -36,7 +37,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup the metadata on.
       * @param targetKey The member on the target to lookup the metadata on.
       */
-    getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+    getOwn(metadataKey: string, target: Function, targetKey?: string): Object;
     
     /**
       * Defines metadata specified by a key on a target.
@@ -44,7 +45,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to set the metadata on.
       * @param targetKey The member on the target to set the metadata on.
       */
-    define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+    define(metadataKey: string, metadataValue: Object, target: Function, targetKey?: string): void;
     
     /**
       * Gets metadata specified by a key on a target, or creates an instance of the specified metadata if not found.
@@ -53,7 +54,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup or create the metadata on.
       * @param targetKey The member on the target to lookup or create the metadata on.
       */
-    getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
+    getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey?: string): Object;
   }
   
   /**
@@ -106,6 +107,9 @@ declare module 'aurelia-metadata' {
   /**
   * Provides helpers for working with metadata.
   */
+  /**
+  * Provides helpers for working with metadata.
+  */
   export const metadata: MetadataType;
   
   /**
@@ -150,8 +154,16 @@ declare module 'aurelia-metadata' {
   * Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
   * @param rest The decorators to apply.
   */
+  /**
+  * Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
+  * @param rest The decorators to apply.
+  */
   export function decorators(...rest: Function[]): DecoratorApplicator;
   
+  /**
+  * Decorator: Enables marking methods as deprecated.
+  * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
+  */
   /**
   * Decorator: Enables marking methods as deprecated.
   * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
@@ -164,6 +176,11 @@ declare module 'aurelia-metadata' {
   */
   export function mixin(behavior: Object): any;
   
+  /**
+  * Decorator: Creates a protocol.
+  * @param name The name of the protocol.
+  * @param options The validation function or options object used in configuring the protocol.
+  */
   /**
   * Decorator: Creates a protocol.
   * @param name The name of the protocol.

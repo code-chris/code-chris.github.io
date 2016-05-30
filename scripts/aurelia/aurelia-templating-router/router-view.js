@@ -1,12 +1,11 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RouterView = undefined;
 
-var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === 'function') { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError('The decorator for method ' + descriptor.key + ' is of the invalid type ' + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
-
-function _defineDecoratedPropertyDescriptor(target, key, descriptors) { var _descriptor = descriptors[key]; if (!_descriptor) return; var descriptor = {}; for (var _key in _descriptor) descriptor[_key] = _descriptor[_key]; descriptor.value = descriptor.initializer ? descriptor.initializer.call(target) : undefined; Object.defineProperty(target, key, descriptor); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
@@ -18,7 +17,52 @@ var _aureliaMetadata = require('aurelia-metadata');
 
 var _aureliaPal = require('aurelia-pal');
 
-var SwapStrategies = (function () {
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+function _initializerWarningHelper(descriptor, context) {
+  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+}
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SwapStrategies = function () {
   function SwapStrategies() {
     _classCallCheck(this, SwapStrategies);
   }
@@ -35,7 +79,7 @@ var SwapStrategies = (function () {
     return promise;
   };
 
-  SwapStrategies.prototype['with'] = function _with(viewSlot, previousView, callback) {
+  SwapStrategies.prototype.with = function _with(viewSlot, previousView, callback) {
     var promise = Promise.resolve(callback());
 
     if (previousView !== undefined) {
@@ -50,31 +94,28 @@ var SwapStrategies = (function () {
   };
 
   return SwapStrategies;
-})();
+}();
 
 var swapStrategies = new SwapStrategies();
 
-var RouterView = (function () {
-  var _instanceInitializers = {};
+var RouterView = exports.RouterView = (_dec = (0, _aureliaTemplating.customElement)('router-view'), _dec2 = (0, _aureliaDependencyInjection.inject)(_aureliaPal.DOM.Element, _aureliaDependencyInjection.Container, _aureliaTemplating.ViewSlot, _aureliaRouter.Router, _aureliaTemplating.ViewLocator, _aureliaTemplating.CompositionTransaction), _dec(_class = (0, _aureliaTemplating.noView)(_class = _dec2(_class = (_class2 = function () {
+  function RouterView(element, container, viewSlot, router, viewLocator, compositionTransaction) {
+    _classCallCheck(this, RouterView);
 
-  _createDecoratedClass(RouterView, [{
-    key: 'swapOrder',
-    decorators: [_aureliaTemplating.bindable],
-    initializer: null,
-    enumerable: true
-  }], null, _instanceInitializers);
-
-  function RouterView(element, container, viewSlot, router, viewLocator) {
-    _classCallCheck(this, _RouterView);
-
-    _defineDecoratedPropertyDescriptor(this, 'swapOrder', _instanceInitializers);
+    _initDefineProp(this, 'swapOrder', _descriptor, this);
 
     this.element = element;
     this.container = container;
     this.viewSlot = viewSlot;
     this.router = router;
     this.viewLocator = viewLocator;
+    this.compositionTransaction = compositionTransaction;
     this.router.registerViewPort(this, this.element.getAttribute('name'));
+
+    if (!('initialComposition' in compositionTransaction)) {
+      compositionTransaction.initialComposition = true;
+      this.compositionTransactionNotifier = compositionTransaction.enlist();
+    }
   }
 
   RouterView.prototype.created = function created(owningView) {
@@ -101,6 +142,10 @@ var RouterView = (function () {
     }
 
     return metadata.load(childContainer, viewModelResource.value, null, viewStrategy, true).then(function (viewFactory) {
+      if (!_this.compositionTransactionNotifier) {
+        _this.compositionTransactionOwnershipToken = _this.compositionTransaction.tryCapture();
+      }
+
       viewPortInstruction.controller = metadata.create(childContainer, _aureliaTemplating.BehaviorInstruction.dynamic(_this.element, viewModel, viewFactory));
 
       if (waitToSwap) {
@@ -114,25 +159,39 @@ var RouterView = (function () {
   RouterView.prototype.swap = function swap(viewPortInstruction) {
     var _this2 = this;
 
-    var previousView = this.view;
-    var viewSlot = this.viewSlot;
-    var swapStrategy = undefined;
+    var work = function work() {
+      var previousView = _this2.view;
+      var viewSlot = _this2.viewSlot;
+      var swapStrategy = void 0;
 
-    swapStrategy = this.swapOrder in swapStrategies ? swapStrategies[this.swapOrder] : swapStrategies.after;
+      swapStrategy = _this2.swapOrder in swapStrategies ? swapStrategies[_this2.swapOrder] : swapStrategies.after;
 
-    swapStrategy(viewSlot, previousView, function () {
-      viewPortInstruction.controller.automate(_this2.overrideContext, _this2.owningView);
-      return viewSlot.add(viewPortInstruction.controller.view);
-    });
+      swapStrategy(viewSlot, previousView, function () {
+        return Promise.resolve(viewSlot.add(viewPortInstruction.controller.view)).then(function () {
+          if (_this2.compositionTransactionNotifier) {
+            _this2.compositionTransactionNotifier.done();
+            _this2.compositionTransactionNotifier = null;
+          }
+        });
+      });
 
-    this.view = viewPortInstruction.controller.view;
+      _this2.view = viewPortInstruction.controller.view;
+    };
+
+    viewPortInstruction.controller.automate(this.overrideContext, this.owningView);
+
+    if (this.compositionTransactionOwnershipToken) {
+      return this.compositionTransactionOwnershipToken.waitForCompositionComplete().then(function () {
+        _this2.compositionTransactionOwnershipToken = null;
+        work();
+      });
+    }
+
+    work();
   };
 
-  var _RouterView = RouterView;
-  RouterView = _aureliaDependencyInjection.inject(_aureliaPal.DOM.Element, _aureliaDependencyInjection.Container, _aureliaTemplating.ViewSlot, _aureliaRouter.Router, _aureliaTemplating.ViewLocator)(RouterView) || RouterView;
-  RouterView = _aureliaTemplating.noView(RouterView) || RouterView;
-  RouterView = _aureliaTemplating.customElement('router-view')(RouterView) || RouterView;
   return RouterView;
-})();
-
-exports.RouterView = RouterView;
+}(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'swapOrder', [_aureliaTemplating.bindable], {
+  enumerable: true,
+  initializer: null
+})), _class2)) || _class) || _class) || _class);

@@ -25,6 +25,7 @@ declare module 'aurelia-history' {
        * Activates the history object.
        *
        * @param options The set of options to activate history with.
+       * @returns Whether or not activation occurred.
        */
     activate(options: Object): boolean;
     
@@ -34,11 +35,17 @@ declare module 'aurelia-history' {
     deactivate(): void;
     
     /**
+       * Returns the fully-qualified root of the current history object.
+       * @returns The absolute root of the application.
+       */
+    getAbsoluteRoot(): string;
+    
+    /**
        * Causes a history navigation to occur.
        *
        * @param fragment The history fragment to navigate to.
        * @param options The set of options that specify how the navigation should occur.
-       * @return True if navigation occurred/false otherwise.
+       * @returns True if navigation occurred/false otherwise.
        */
     navigate(fragment: string, options?: NavigationOptions): boolean;
     

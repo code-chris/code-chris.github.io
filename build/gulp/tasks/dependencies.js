@@ -1,5 +1,7 @@
 var gulp = require('gulp');
 var path = require("path");
+var debug = require("gulp-debug");
+var flatten = require("gulp-flatten");
 var fs = require("fs");
 
 gulp.task("copy-aurelia-typings", function () {

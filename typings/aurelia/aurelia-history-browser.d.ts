@@ -1,7 +1,32 @@
 declare module 'aurelia-history-browser' {
-  import 'core-js';
-  import { DOM, PLATFORM }  from 'aurelia-pal';
-  import { History }  from 'aurelia-history';
+  import {
+    DOM,
+    PLATFORM
+  } from 'aurelia-pal';
+  import {
+    History
+  } from 'aurelia-history';
+  
+  /**
+   * Provides information about how to handle an anchor event.
+   */
+  export interface AnchorEventInfo {
+    
+    /**
+       * Indicates whether the event should be handled or not.
+       */
+    shouldHandleEvent: boolean;
+    
+    /**
+       * The href of the link or null if not-applicable.
+       */
+    href: string;
+    
+    /**
+       * The anchor element or null if not-applicable.
+       */
+    anchor: Element;
+  }
   
   /**
    * Class responsible for handling interactions that should trigger browser history navigations.
@@ -21,6 +46,10 @@ declare module 'aurelia-history-browser' {
     deactivate(): void;
   }
   
+  /**
+   * The default LinkHandler implementation. Navigations are triggered by click events on
+   * anchor elements with relative hrefs when the history instance is using pushstate.
+   */
   /**
    * The default LinkHandler implementation. Navigations are triggered by click events on
    * anchor elements with relative hrefs when the history instance is using pushstate.
@@ -49,12 +78,13 @@ declare module 'aurelia-history-browser' {
        *
        * @param event The Event to inspect for target anchor and href.
        */
-    static getEventInfo(event: Event): Object;
+    static getEventInfo(event: Event): AnchorEventInfo;
     
     /**
        * Finds the closest ancestor that's an anchor element.
        *
        * @param el The element to search upward from.
+       * @returns The link element that is the closest ancestor.
        */
     static findClosestAnchor(el: Element): Element;
     
@@ -62,6 +92,7 @@ declare module 'aurelia-history-browser' {
        * Gets a value indicating whether or not an anchor targets the current window.
        *
        * @param target The anchor element whose target should be inspected.
+       * @returns True if the target of the link element is this window; false otherwise.
        */
     static targetIsThisWindow(target: Element): boolean;
   }
@@ -86,8 +117,8 @@ declare module 'aurelia-history-browser' {
     
     /**
        * Activates the history object.
-       *
        * @param options The set of options to activate history with.
+       * @returns Whether or not activation occurred.
        */
     activate(options?: Object): boolean;
     
@@ -95,6 +126,12 @@ declare module 'aurelia-history-browser' {
        * Deactivates the history object.
        */
     deactivate(): void;
+    
+    /**
+       * Returns the fully-qualified root of the current history object.
+       * @returns The absolute root of the application.
+       */
+    getAbsoluteRoot(): string;
     
     /**
        * Causes a history navigation to occur.

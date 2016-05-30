@@ -1,12 +1,54 @@
 declare module 'aurelia-templating-resources' {
   import * as LogManager from 'aurelia-logging';
-  import { inject, Container }  from 'aurelia-dependency-injection';
-  import { BoundViewFactory, ViewSlot, customAttribute, templateController, Animator, useView, customElement, bindable, ViewResources, resource, ViewCompileInstruction, CompositionEngine, noView, View, TargetInstruction, ViewEngine }  from 'aurelia-templating';
-  import { createOverrideContext, bindingMode, EventManager, BindingBehavior, ValueConverter, sourceContext, mergeSplice, valueConverter, ObserverLocator }  from 'aurelia-binding';
-  import { DOM, FEATURE }  from 'aurelia-pal';
-  import { TaskQueue }  from 'aurelia-task-queue';
-  import { Loader }  from 'aurelia-loader';
-  import { relativeToFile }  from 'aurelia-path';
+  import {
+    inject,
+    Container
+  } from 'aurelia-dependency-injection';
+  import {
+    BoundViewFactory,
+    ViewSlot,
+    customAttribute,
+    templateController,
+    Animator,
+    useView,
+    customElement,
+    bindable,
+    ViewResources,
+    resource,
+    ViewCompileInstruction,
+    CompositionEngine,
+    noView,
+    View,
+    TargetInstruction,
+    ViewEngine
+  } from 'aurelia-templating';
+  import {
+    createOverrideContext,
+    bindingMode,
+    EventManager,
+    BindingBehavior,
+    ValueConverter,
+    sourceContext,
+    mergeSplice,
+    valueConverter,
+    ObserverLocator
+  } from 'aurelia-binding';
+  import {
+    DOM,
+    FEATURE
+  } from 'aurelia-pal';
+  import {
+    TaskQueue
+  } from 'aurelia-task-queue';
+  import {
+    Loader
+  } from 'aurelia-loader';
+  import {
+    relativeToFile
+  } from 'aurelia-path';
+  import {
+    mixin
+  } from 'aurelia-metadata';
   
   /**
   * A strategy is for repeating a template over an iterable or iterable-like object.
@@ -191,6 +233,11 @@ declare module 'aurelia-templating-resources' {
   export function updateOneTimeBinding(binding: any): any;
   
   /**
+   * Returns the index of the element in an array, optionally using a matcher function.
+   */
+  export function indexOf(array: any, item: any, matcher: any, startIndex: any): any;
+  
+  /**
   * A strategy for repeating a template over null or undefined (does nothing)
   */
   export class NullRepeatStrategy {
@@ -208,9 +255,8 @@ declare module 'aurelia-templating-resources' {
       * Creates an instance of If.
       * @param {BoundViewFactory} viewFactory The factory generating the view
       * @param {ViewSlot} viewSlot The slot the view is injected in to
-      * @param {TaskQueue} taskQueue
       */
-    constructor(viewFactory: any, viewSlot: any, taskQueue: any);
+    constructor(viewFactory: any, viewSlot: any);
     
     /**
       * Binds the if to the binding context and override context
@@ -299,18 +345,8 @@ declare module 'aurelia-templating-resources' {
   export class DebounceBindingBehavior {
     bind(binding: any, source: any, delay?: any): any;
     
-    //  should not delay initial target update that occurs during bind.
+    // should not delay initial target update that occurs during bind.
     unbind(binding: any, source: any): any;
-  }
-  class CSSResource {
-    constructor(address: string);
-    initialize(container: Container, target: Function): void;
-    register(registry: ViewResources, name?: string): void;
-    load(container: Container): Promise<CSSResource>;
-  }
-  class CSSViewEngineHooks {
-    constructor(mode: string);
-    beforeCompile(content: DocumentFragment, resources: ViewResources, instruction: ViewCompileInstruction): void;
   }
   
   /**
@@ -392,18 +428,13 @@ declare module 'aurelia-templating-resources' {
     signals: any;
     signal(name: string): void;
   }
-  class ModeBindingBehavior {
-    constructor(mode: any);
-    bind(binding: any, source: any, lookupFunctions: any): any;
-    unbind(binding: any, source: any): any;
-  }
-  export class OneTimeBindingBehavior extends ModeBindingBehavior {
+  export class OneTimeBindingBehavior {
     constructor();
   }
-  export class OneWayBindingBehavior extends ModeBindingBehavior {
+  export class OneWayBindingBehavior {
     constructor();
   }
-  export class TwoWayBindingBehavior extends ModeBindingBehavior {
+  export class TwoWayBindingBehavior {
     constructor();
   }
   
@@ -413,6 +444,106 @@ declare module 'aurelia-templating-resources' {
   */
   export const lifecycleOptionalBehaviors: any;
   export function viewsRequireLifecycle(viewFactory: any): any;
+  
+  /**
+  * An abstract base class for elements and attributes that repeat
+  * views.
+  */
+  export class AbstractRepeater {
+    constructor(options: any);
+    
+    /**
+       * Returns the number of views the repeater knows about.
+       *
+       * @return {Number}  the number of views.
+       */
+    viewCount(): any;
+    
+    /**
+       * Returns all of the repeaters views as an array.
+       *
+       * @return {Array} The repeater's array of views;
+       */
+    views(): any;
+    
+    /**
+       * Returns a single view from the repeater at the provided index.
+       *
+       * @param {Number} index The index of the requested view.
+       * @return {View|ViewSlot} The requested view.
+       */
+    view(index: any): any;
+    
+    /**
+       * Returns the matcher function to be used by the repeater, or null if strict matching is to be performed.
+       *
+       * @return {Function|null} The requested matcher function.
+       */
+    matcher(): any;
+    
+    /**
+       * Adds a view to the repeater, binding the view to the
+       * provided contexts.
+       *
+       * @param {Object} bindingContext The binding context to bind the new view to.
+       * @param {Object} overrideContext A secondary binding context that can override the primary context.
+       */
+    addView(bindingContext: any, overrideContext: any): any;
+    
+    /**
+       * Inserts a view to the repeater at a specific index, binding the view to the
+       * provided contexts.
+       *
+       * @param {Number} index The index at which to create the new view at.
+       * @param {Object} bindingContext The binding context to bind the new view to.
+       * @param {Object} overrideContext A secondary binding context that can override the primary context.
+       */
+    insertView(index: any, bindingContext: any, overrideContext: any): any;
+    
+    /**
+       * Moves a view across the repeater.
+       *
+       * @param {Number} sourceIndex The index of the view to be moved.
+       * @param {Number} sourceIndex The index where the view should be placed at.
+       */
+    moveView(sourceIndex: any, targetIndex: any): any;
+    
+    /**
+       * Removes all views from the repeater.
+       * @param {Boolean} returnToCache Should the view be returned to the view cache?
+       * @param {Boolean} skipAnimation Should the removal animation be skipped?
+       * @return {Promise|null}
+       */
+    removeAllViews(returnToCache?: boolean, skipAnimation?: boolean): any;
+    
+    /**
+       * Removes an array of Views from the repeater.
+       *
+       * @param {Array} viewsToRemove The array of views to be removed.
+       * @param {Boolean} returnToCache Should the view be returned to the view cache?
+       * @param {Boolean} skipAnimation Should the removal animation be skipped?
+       * @return {Promise|null}
+       */
+    removeViews(viewsToRemove: Array<View>, returnToCache?: boolean, skipAnimation?: boolean): any;
+    
+    /**
+       * Removes a view from the repeater at a specific index.
+       *
+       * @param {Number} index The index of the view to be removed.
+       * @param {Boolean} returnToCache Should the view be returned to the view cache?
+       * @param {Boolean} skipAnimation Should the removal animation be skipped?
+       * @return {Promise|null}
+       */
+    removeView(index: number, returnToCache?: boolean, skipAnimation?: boolean): any;
+    
+    /**
+       * Forces a particular view to update it's bindings, called as part of
+       * an in-place processing of items for better performance
+       *
+       * @param {Object} view the target view for bindings updates
+       */
+    updateBindings(view: View): any;
+  }
   
   /**
   * A strategy for repeating a template over an array.
@@ -526,14 +657,20 @@ declare module 'aurelia-templating-resources' {
       */
     toView(untrustedMarkup: any): any;
   }
+  export function getElementName(address: any): any;
+  export function configure(config: any): any;
   export class SignalBindingBehavior {
     static inject(): any;
     signals: any;
     constructor(bindingSignaler: any);
-    bind(binding: any, source: any, name: any): any;
+    bind(binding: any, source: any): any;
     unbind(binding: any, source: any): any;
   }
   
+  /**
+  * Locates the best strategy to best repeating a template over different types of collections.
+  * Custom strategies can be plugged in as well.
+  */
   /**
   * Locates the best strategy to best repeating a template over different types of collections.
   * Custom strategies can be plugged in as well.
@@ -561,7 +698,7 @@ declare module 'aurelia-templating-resources' {
   /**
   * Binding to iterate over iterable objects (Array, Map and Number) to genereate a template for each iteration.
   */
-  export class Repeat {
+  export class Repeat extends AbstractRepeater {
     items: any;
     local: any;
     key: any;
@@ -605,5 +742,18 @@ declare module 'aurelia-templating-resources' {
       * Invoked when the underlying inner collection changes.
       */
     handleInnerCollectionMutated(collection: any, changes: any): any;
+    
+    // @override AbstractRepeater
+    viewCount(): any;
+    views(): any;
+    view(index: any): any;
+    matcher(): any;
+    addView(bindingContext: any, overrideContext: any): any;
+    insertView(index: any, bindingContext: any, overrideContext: any): any;
+    moveView(sourceIndex: any, targetIndex: any): any;
+    removeAllViews(returnToCache: any, skipAnimation: any): any;
+    removeViews(viewsToRemove: any, returnToCache: any, skipAnimation: any): any;
+    removeView(index: any, returnToCache: any, skipAnimation: any): any;
+    updateBindings(view: View): any;
   }
 }

@@ -1,0 +1,1 @@
+define(["aurelialib:aurelia-fetch-client/aurelia-fetch-client"], function(main) { return main; });

@@ -1,0 +1,38 @@
+<template>
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+            <li><a href.bind="host">Home</a></li>
+            <li>
+                <a href="#">About</a>
+                <ul class="dl-submenu">
+                    <li>
+                        <img image.bind="content/images/avatar.jpg" alt="Christian Kotzbauer" class="author-photo">
+                        <h4>Christian Kotzbauer</h4>
+                        <p>Web Developer</p>
+                    </li>
+                    <!--<li><a href="{{ site.url }}/about/"><span class="btn btn-inverse">Learn More</span></a></li>-->
+                    <li>
+                        <a href="mailto:christian.kotzbauer@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/code-chris" target="_blank"><i class="fa fa-fw fa-github"></i> GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/ckotzbauer1" target="_blank"><i class="fa fa-fw fa-twitter"></i> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="https://www.xing.com/profile/Christian_Kotzbauer2" target="_blank"><i class="fa fa-fw fa-xing"></i> Xing</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Posts</a>
+                <ul class="dl-submenu">
+                    <li><a click.trigger="goToPosts()">All Posts</a></li>
+                    <!--<li><a click.trigger="goToTags()">All Tags</a></li>-->
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</template>

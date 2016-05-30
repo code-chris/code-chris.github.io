@@ -1,6 +1,9 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Origin = exports.metadata = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -9,43 +12,11 @@ exports.deprecated = deprecated;
 exports.mixin = mixin;
 exports.protocol = protocol;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-require('core-js');
-
 var _aureliaPal = require('aurelia-pal');
 
-var theGlobal = _aureliaPal.PLATFORM.global;
-var emptyMetadata = Object.freeze({});
-var metadataContainerKey = '__metadata__';
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-if (typeof theGlobal.Reflect === 'undefined') {
-  theGlobal.Reflect = {};
-}
-
-if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
-  Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-    return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
-  };
-}
-
-if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
-  Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
-    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
-    targetContainer[metadataKey] = metadataValue;
-  };
-}
-
-if (typeof theGlobal.Reflect.metadata === 'undefined') {
-  Reflect.metadata = function (metadataKey, metadataValue) {
-    return function (target, targetKey) {
-      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
-    };
-  };
-}
-
-var metadata = {
+var metadata = exports.metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -77,11 +48,10 @@ var metadata = {
   }
 };
 
-exports.metadata = metadata;
 var originStorage = new Map();
 var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-var Origin = (function () {
+var Origin = exports.Origin = function () {
   function Origin(moduleId, moduleMember) {
     _classCallCheck(this, Origin);
 
@@ -94,10 +64,10 @@ var Origin = (function () {
 
     if (origin === undefined) {
       _aureliaPal.PLATFORM.eachModule(function (key, value) {
-        for (var _name in value) {
-          var exp = value[_name];
+        for (var name in value) {
+          var exp = value[name];
           if (exp === fn) {
-            originStorage.set(fn, origin = new Origin(key, _name));
+            originStorage.set(fn, origin = new Origin(key, name));
             return true;
           }
         }
@@ -117,9 +87,7 @@ var Origin = (function () {
   };
 
   return Origin;
-})();
-
-exports.Origin = Origin;
+}();
 
 function decorators() {
   for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
@@ -192,20 +160,9 @@ function mixin(behavior) {
     var decorator = function decorator(target) {
       var resolvedTarget = typeof target === 'function' ? target.prototype : target;
 
-      for (var _iterator = instanceKeys, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
-
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          _ref = _iterator[_i++];
-        } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          _ref = _i.value;
-        }
-
-        var property = _ref;
-
+      var i = instanceKeys.length;
+      while (i--) {
+        var property = instanceKeys[i];
         Object.defineProperty(resolvedTarget, property, {
           value: behavior[property],
           writable: true

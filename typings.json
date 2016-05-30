@@ -1,0 +1,11 @@
+{
+  "name": "code-chris.github.io",
+  "globalDependencies": {
+    "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#95b7178e0ef33b4b88327676418b4cc3ad61df0f",
+    "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#95b7178e0ef33b4b88327676418b4cc3ad61df0f",
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#95433230a9913054c57c715e6b91a9ae738d0b97",
+    "highlightjs": "github:DefinitelyTyped/DefinitelyTyped/highlightjs/highlightjs.d.ts#bd269cad4cb2b495f940c7b6afc5825d568029be",
+    "es6-promise": "github:DefinitelyTyped/DefinitelyTyped/es6-promise/es6-promise.d.ts#0d622d857f97d44ea7dcad2b3edec1f23c48fe9e",
+    "es6-collections": "github:DefinitelyTyped/DefinitelyTyped/es6-collections/es6-collections.d.ts#0d622d857f97d44ea7dcad2b3edec1f23c48fe9e"
+  }
+}

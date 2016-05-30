@@ -1,10 +1,17 @@
 declare module 'aurelia-router' {
-  import 'core-js';
   import * as LogManager from 'aurelia-logging';
-  import { Container }  from 'aurelia-dependency-injection';
-  import { RouteRecognizer }  from 'aurelia-route-recognizer';
-  import { History }  from 'aurelia-history';
-  import { EventAggregator }  from 'aurelia-event-aggregator';
+  import {
+    RouteRecognizer
+  } from 'aurelia-route-recognizer';
+  import {
+    Container
+  } from 'aurelia-dependency-injection';
+  import {
+    History
+  } from 'aurelia-history';
+  import {
+    EventAggregator
+  } from 'aurelia-event-aggregator';
   
   /**
   * A callback to indicate when pipeline processing should advance to the next step
@@ -26,9 +33,16 @@ declare module 'aurelia-router' {
       * Indicates that pipeline processing has failed and should be stopped.
       */
     reject(result: any): Promise<any>;
+    
+    /**
+      * Indicates the successful completion of the pipeline step.
+      */
     (): Promise<any>;
   }
   
+  /**
+  * A step to be run during processing of the pipeline.
+  */
   /**
   * A step to be run during processing of the pipeline.
   */
@@ -47,6 +61,9 @@ declare module 'aurelia-router' {
   /**
   * The result of a pipeline run.
   */
+  /**
+  * The result of a pipeline run.
+  */
   export interface PipelineResult {
     status: string;
     instruction: NavigationInstruction;
@@ -62,6 +79,7 @@ declare module 'aurelia-router' {
     parentInstruction: NavigationInstruction;
     previousInstruction: NavigationInstruction;
     router: Router;
+    options: Object;
   }
   
   /**
@@ -129,19 +147,17 @@ declare module 'aurelia-router' {
       * like pipeline steps and activated modules.
       */
     settings?: any;
+    
+    /**
+      * The navigation model for storing and interacting with the route's navigation settings.
+      */
+    navModel?: NavModel;
+    
+    /**
+      * When true is specified, this route will be case sensitive.
+      */
+    caseSensitive?: boolean;
     [x: string]: any;
-  }
-  export class RouteFilterContainer {
-    static inject(): any;
-    constructor(container: Container);
-    addStep(name: string, step: any, index?: number): void;
-    getFilterSteps(name: string): any;
-  }
-  export function createRouteFilterStep(name: string): Function;
-  class RouteFilterStep {
-    isMultiStep: boolean;
-    constructor(name: string, routeFilterContainer: RouteFilterContainer);
-    getSteps(): any;
   }
   
   /**
@@ -149,6 +165,9 @@ declare module 'aurelia-router' {
   */
   export const pipelineStatus: any;
   
+  /**
+  * The class responsible for managing and processing the navigation pipeline.
+  */
   /**
   * The class responsible for managing and processing the navigation pipeline.
   */
@@ -222,6 +241,7 @@ declare module 'aurelia-router' {
       */
     viewPortInstructions: any;
     plan: Object;
+    options: Object;
     constructor(init: NavigationInstructionInit);
     
     /**
@@ -309,6 +329,12 @@ declare module 'aurelia-router' {
   *
   * @param obj The object to check.
   */
+  /**
+  * Determines if the provided object is a navigation command.
+  * A navigation command is anything with a navigate method.
+  *
+  * @param obj The object to check.
+  */
   export function isNavigationCommand(obj: any): boolean;
   
   /**
@@ -316,6 +342,30 @@ declare module 'aurelia-router' {
   */
   export class Redirect {
     constructor(url: string, options?: any);
+    
+    /**
+      * Called by the activation system to set the child router.
+      *
+      * @param router The router.
+      */
+    setRouter(router: Router): void;
+    
+    /**
+      * Called by the navigation pipeline to navigate.
+      *
+      * @param appRouter The router to be redirected.
+      */
+    navigate(appRouter: Router): void;
+  }
+  
+  /**
+  * Used during the activation lifecycle to cause a redirect to a named route.
+    * @param route The name of the route.
+    * @param params The parameters to be sent to the activation method.
+    * @param options The options to use for navigation.
+  */
+  export class RedirectToRoute {
+    constructor(route: string, params?: any, options?: any);
     
     /**
       * Called by the activation system to set the child router.
@@ -352,6 +402,38 @@ declare module 'aurelia-router' {
       * @chainable
       */
     addPipelineStep(name: string, step: Function | PipelineStep): RouterConfiguration;
+    
+    /**
+      * Adds a step to be run during the [[Router]]'s authorize pipeline slot.
+      *
+      * @param step The pipeline step.
+      * @chainable
+      */
+    addAuthorizeStep(step: Function | PipelineStep): RouterConfiguration;
+    
+    /**
+      * Adds a step to be run during the [[Router]]'s preActivate pipeline slot.
+      *
+      * @param step The pipeline step.
+      * @chainable
+      */
+    addPreActivateStep(step: Function | PipelineStep): RouterConfiguration;
+    
+    /**
+      * Adds a step to be run during the [[Router]]'s preRender pipeline slot.
+      *
+      * @param step The pipeline step.
+      * @chainable
+      */
+    addPreRenderStep(step: Function | PipelineStep): RouterConfiguration;
+    
+    /**
+      * Adds a step to be run during the [[Router]]'s postRender pipeline slot.
+      *
+      * @param step The pipeline step.
+      * @chainable
+      */
+    addPostRenderStep(step: Function | PipelineStep): RouterConfiguration;
     
     /**
       * Maps one or more routes to be registered with the router.
@@ -435,6 +517,7 @@ declare module 'aurelia-router' {
       * The parent router, or null if this instance is not a child router.
       */
     parent: Router;
+    options: Object;
     
     /**
       * @param container The [[Container]] to use when child routers.
@@ -511,7 +594,7 @@ declare module 'aurelia-router' {
       * @param params The route params to be used to populate the route pattern.
       * @returns {string} A string containing the generated URL fragment.
       */
-    generate(name: string, params?: any): string;
+    generate(name: string, params?: any, options?: any): string;
     
     /**
       * Creates a [[NavModel]] for the specified route config.
@@ -592,6 +675,21 @@ declare module 'aurelia-router' {
       * Create the navigation pipeline.
       */
     createPipeline(): Pipeline;
+    
+    /**
+      * Adds a step into the pipeline at a known slot location.
+      */
+    addStep(name: string, step: PipelineStep): void;
+    
+    /**
+       * Removes a step from a slot in the pipeline
+       */
+    removeStep(name: string, step: PipelineStep): any;
+    
+    /**
+       * Resets all pipeline slots
+       */
+    reset(): any;
   }
   
   /**

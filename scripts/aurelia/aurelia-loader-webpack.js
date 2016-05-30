@@ -1,0 +1,1 @@
+define(["aurelialib:aurelia-loader-webpack/aurelia-loader-webpack"], function(main) { return main; });

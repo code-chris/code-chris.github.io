@@ -1,0 +1,19 @@
+<template>
+    <require from='../components/SiteHeader'></require>
+    <require from='../components/PostArticle'></require>
+
+    <site-header
+            page-title.bind="title"
+            image-url.bind="imageUrl">
+    </site-header>
+
+
+    <div id="post-index">
+        <div class="backButton" click.trigger="goBack()">
+            <i class="fa fa-arrow-left"></i><a>${getBackText()}</a>
+        </div>
+        <div id="main" role="main">
+            <post-article post-data.bind="postData" show-comments.bind="true"></post-article>
+        </div>
+    </div>
+</template>

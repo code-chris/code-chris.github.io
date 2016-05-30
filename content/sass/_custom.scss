@@ -1,0 +1,110 @@
+
+@font-face {
+  font-family: 'Neuton';
+  src: url('#{$fa-font-path}/Neuton.eot?v=#{$fa-version}');
+  src: url('#{$fa-font-path}/Neuton.eot?#iefix&v=#{$fa-version}') format('embedded-opentype'),
+  url('#{$fa-font-path}/Neuton.woff2?v=#{$fa-version}') format('woff2'),
+  url('#{$fa-font-path}/Neuton.woff?v=#{$fa-version}') format('woff'),
+  url('#{$fa-font-path}/Neuton.ttf?v=#{$fa-version}') format('truetype'),
+  url('#{$fa-font-path}/Neuton.svg?v=#{$fa-version}#fontawesomeregular') format('svg');
+  //  src: url('#{$fa-font-path}/FontAwesome.otf') format('opentype'); // used when developing fonts
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+pre > code {
+  padding: 1em !important;
+  border-radius: 3px;
+}
+
+.entry-image {
+  min-height: 300px;
+}
+
+.feature {
+  .header-title {
+    height: 300px;
+  }
+}
+
+.header-title {
+  .header-title-wrap {
+    h1 {
+      letter-spacing: 0.1em;
+      font-family: "Neuton";
+      font-weight: 200;
+      font-size: 5.5em;
+
+      @media screen and (max-width: 1560px) {
+        font-size: 5em;
+      }
+
+      @media screen and (max-width: 1400px) {
+        font-size: 4.5em;
+      }
+
+      @media screen and (max-width: 1220px) {
+        font-size: 4em;
+      }
+
+      @media screen and (max-width: 1000px) {
+        font-size: 3.5em;
+      }
+
+      @media screen and (max-width: 815px) {
+        font-size: 3em;
+      }
+
+      @media screen and (max-width: 700px) {
+        font-size: 2.5em;
+      }
+
+      @media screen and (max-width: 600px) {
+        font-size: 2em;
+      }
+    }
+
+    .entry-reading-time {
+      color: white;
+    }
+  }
+}
+
+.hentry {
+  .entry-meta {
+    .entry-reading-time {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+#post-index {
+  .backButton {
+    color: rgba(150, 150, 150, 0.8);
+    cursor: pointer;
+    @media #{$medium} {
+      margin: 50px 10px -30px 10px;
+    }
+    @media #{$large} {
+      max-width: 800px;
+      margin: 50px auto -30px auto;
+    }
+
+    a {
+      color: rgba(150, 150, 150, 0.8);
+      margin-left: 8px;
+    }
+  }
+}
+
+.dl-menuwrapper {
+  .dl-menu {
+    .dl-submenu {
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+}

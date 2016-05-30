@@ -1,6 +1,7 @@
 declare module 'aurelia-logging-console' {
-  import { PLATFORM }  from 'aurelia-pal';
-  import { Logger }  from 'aurelia-logging';
+  import {
+    Logger
+  } from 'aurelia-logging';
   
   /*
    * An implementation of the Appender interface.
