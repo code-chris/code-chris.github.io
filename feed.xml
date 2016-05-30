@@ -9,9 +9,9 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Tue, 26 Apr 2016 18:30:57 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 30 May 2016 19:42:47 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Tue, 26 Apr 2016 18:30:57 GMT</pubDate>
+		<pubDate>Mon, 30 May 2016 19:42:47 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
 		<item>
 			<title><![CDATA[Pluggable NPM postprocessing]]></title>
