@@ -1,6 +1,7 @@
 var path = require('path');
-var AureliaWebpackPlugin = require('aurelia-webpack-plugin');
 var webpack = require("webpack");
+var AureliaWebpackPlugin = require('aurelia-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './app/Main',
@@ -18,9 +19,15 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery"
-        })
-        //new ExtractTextPlugin("style.less")
-        //new webpack.optimize.UglifyJsPlugin({minimize: true})
+        }),
+        new CopyWebpackPlugin([
+            { from: 'content/fonts/**/*', to: '..' },
+            { from: 'content/images/**/*', to: '..' },
+            { from: "content/images/favicon.ico", to: '..' },
+            { from: "posts/**/*", to: '..' },
+            { from: "index.html", to: '..' }
+        ]),
+        new webpack.optimize.UglifyJsPlugin({minimize: true})
     ],
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -44,10 +51,10 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.css$/, loader: "css-loader" },
-            { test: /\.scss$/, loaders: ["style", "css", "sass"] },
-            { test: /\.html$/, loader: 'html' },
-            { test: /\.ts$/, loader: 'ts-loader', exclude: [/node_modules/, /\.d.ts$/] },
+            { test: /\.css$/, loader: "style!raw" },
+            { test: /\.scss$/, loader: "style!raw!sass" },
+            { test: /\.html$/, loader: 'raw' },
+            { test: /\.ts$/, loader: 'ts', exclude: [path.resolve("node_modules"), path.resolve("typings")] },
             { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000&minetype=application/font-woff2' },
             { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000&minetype=application/font-woff' },
             { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file' }

@@ -5,8 +5,7 @@ import "../content/main.scss";
 
 bootstrap((aurelia: Aurelia): void => {
     aurelia.use
-        .standardConfiguration()
-        .globalResources("infrastructure/image");
+        .standardConfiguration();
 
     if (window.location.href.indexOf("code-chris.github.io") === -1) {
         aurelia.use.developmentLogging();
