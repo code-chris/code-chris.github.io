@@ -9,10 +9,122 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Tue, 26 Apr 2016 18:30:57 GMT</lastBuildDate>
+		<lastBuildDate>Wed, 15 Jun 2016 16:45:37 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Tue, 26 Apr 2016 18:30:57 GMT</pubDate>
+		<pubDate>Wed, 15 Jun 2016 16:45:37 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
+		<item>
+			<title><![CDATA[Migrating from Durandal to Aurelia]]></title>
+			<description><![CDATA[<p>If you have an existing Durandal application you maybe want to migrate this app to Aurelia. Typically you used
+Knockout for data-binding. Because Aurelia brings its own data-binding language the usage of Knockout
+is not necessary anymore. But probably especially this part of the migration requires the greatest effort,
+because you have to modify much of your code or partially rewrite it. So let&apos;s split this effort as much as possible:</p>
+<p>Here&apos;s a way how you can use Aurelia side by side with the Knockout technology and then migrate each view and
+view-model after another. You can use your old Knockout views and their backed JavaScript code with its observables
+and subscriptions, as if you were still using Durandal.</p>
+<h2>First Steps</h2>
+<p>First, install the Aurelia plugin</p>
+<pre><code>jspm install aurelia-knockout
+</code></pre>
+<p>and register it during the startup of your app:</p>
+<pre><code>export function configure(aurelia) =&gt; {
+    aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin(&quot;aurelia-knockout&quot;);
+
+    aurelia.start().then(() =&gt; aurelia.setRoot());
+}
+</code></pre>
+<p>The next step will be, to add the <code>knockout</code> custom attribute to each view which uses Knockout syntax:</p>
+<pre><code>&lt;template&gt;
+    &lt;div knockout&gt;
+        &lt;button data-bind=&quot;click: changeVisibility&quot;&gt;Change Visibility&lt;/button&gt;
+        &lt;div data-bind=&quot;if: isVisible&quot;&gt;
+            &lt;span data-bind=&quot;text: firstName&quot;&gt;&lt;/span&gt;
+            &lt;br/&gt;
+            &lt;span data-bind=&quot;text: lastName&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>Note: The element with the custom attribute has to wrap all code with Knockout syntax.</p>
+<p>This attribute binds the HTML to the current BindingContext of Aurelia.</p>
+<p>And that&apos;s it! With these small modifications you can use all Knockout bindings which are available.</p>
+<h2>Using Compositions</h2>
+<p>Durandal also provided a binding to compose views. Because this binding was implemented from Durandal and not
+from Knockout you can not use this feature natively. But the <code>aurelia-knockout</code> plugin supports the composition
+with all possible variants listed in the <a href="http://durandaljs.com/documentation/Using-Composition.html">official Durandal docs</a>:</p>
+<pre><code>&lt;div data-bind=&quot;compose: &apos;path/to/view.html&apos;&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: &apos;path/to/module&apos;&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: { view: &apos;path/to/view.html&apos; }&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: { model: &apos;path/to/module&apos; }&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: { model: moduleInstance }&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: { view: &apos;path/to/view.html&apos; model: &apos;path/to/module&apos; }&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: { view: &apos;path/to/view.html&apos; model: moduleInstance }&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: moduleInstance&quot;&gt;&lt;/div&gt;
+&lt;div data-bind=&quot;compose: moduleConstructorFunction&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h2>Set @bindable properties</h2>
+<p>To enhance the flexibility of your migration process, this plugin also supports the ability to set <code>@bindable</code>
+variables in rewritten subordinated Aurelia views through the activationData. This offers the possibility to rewrite
+single views in lower hierarchies without the need to do the same with their parent views.</p>
+<h5>Parent Knockout based view</h5>
+<p>Supposed that there is a parent view using Knockout technology which composes a child view like this:</p>
+<pre><code>&lt;template&gt;
+  &lt;div data-bind=&quot;compose: { model: &apos;path/to/submodule&apos;, activationData: data }&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>The appropriate data object would looks like this:</p>
+<pre><code>{
+  price: ko.observable(5),
+  productName: &quot;Apples&quot;
+}
+</code></pre>
+<h5>Child Aurelia based view</h5>
+<p>The child view and view-model uses Aurelia:</p>
+<pre><code>&lt;template&gt;
+  Product: &lt;span&gt;${productName}&lt;/span&gt;
+  &lt;br/&gt;
+  Price: &lt;span&gt;${price}&lt;/span&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code>import {bindable} from &quot;aurelia-framework&quot;;
+import {inject} from &apos;aurelia-dependency-injection&apos;;
+import {KnockoutBindable} from &quot;aurelia-knockout&quot;;
+
+@inject(KnockoutBindable)
+export class ProductView {
+
+    @bindable
+    price;
+    productName;
+
+    knockoutBindable;
+
+    constructor(knockoutBindable) {
+        this.knockoutBindable = knockoutBindable;
+    }
+
+    activate(activationData) {
+        this.knockoutBindable.applyBindableValues(activationData, this);
+    }
+}
+</code></pre>
+<p>This will set the value from <code>activationData.price</code> to <code>this.price</code>. <code>this.productName</code> however, is not
+updated because it has no <code>@bindable</code> decorator and the variable from <code>activationData</code> is no Knockout
+observable. To process non Knockout observables anyway you have to pass <code>false</code> as third parameter to the
+<code>applyBindableValues</code> function. If the outer value changed (and is an observable) the corresponding inner
+variable is updated too.</p>
+<p>Subscriptions for Knockout observables which are created from this plugin internally will be disposed automatically
+if the child view is unbound.</p>
+<p>As you can see, the migration to a new framework can be a big task depending on your application. But that does not
+mean that you have to implement it all at once.</p>]]></description>
+			<link>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
+			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0200 (Mitteleuropäische Sommerzeit)-Migrating from Durandal to Aurelia</guid>
+			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
+			<pubDate>Tue, 26 Apr 2016 18:30:57 GMT</pubDate>
+		</item>
 		<item>
 			<title><![CDATA[Pluggable NPM postprocessing]]></title>
 			<description><![CDATA[<p>Have you ever had the situation that you installed npm packages and have to perform many manual steps after that?

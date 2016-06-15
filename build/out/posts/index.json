@@ -2,6 +2,9 @@
     "2016": {
         "04": [
             "pluggable-npm-postprocessing"
+        ],
+        "06": [
+            "migrating-from-durandal-to-aurelia"
         ]
     }
 }
