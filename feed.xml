@@ -9,10 +9,46 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Wed, 15 Jun 2016 16:45:37 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 31 Oct 2016 16:50:43 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Wed, 15 Jun 2016 16:45:37 GMT</pubDate>
+		<pubDate>Mon, 31 Oct 2016 16:50:43 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
+		<item>
+			<title><![CDATA[Long-term caching of Webpack Assets]]></title>
+			<description><![CDATA[<p>If you want to use a solid long-term caching in your web application with Webpack then you have to do a lot of work.
+Especially if you are not using the normal setup ;). With &quot;normal setup&quot; I mean that you use html- and css-loaders for
+your HTML and CSS files so Webpack would interpret references to external files and include them in the final distribution.
+This is nice because file renamings during the build process (for example add some chunkhash to the filename) will
+be reflected back to the source code automatically.</p>
+<p>But if you load these files with the raw-loader Webpack would ignore these references. So you have to ensure by yourself
+that these files are available at runtime (that&apos;s the simple part). And you have to ensure that renamings are handled correctly.</p>
+<p>So you need a logic, which can do this path modifications for you. Here is it: The <strong>static-asset-hash-replace-webpack-plugin</strong>.</p>
+<p>The name is a little bit cumbersome, but it&apos;s easy to use:</p>
+<p>Install the plugin with</p>
+<pre><code>npm install static-asset-hash-replace-webpack-plugin
+</code></pre>
+<p>and extend your <code>webpack.config.js</code>:</p>
+<pre><code>var StaticAssetHashReplace = require(&apos;static-asset-hash-replace-webpack-plugin&apos;);
+
+module.exports = {
+  ...
+  plugins: [
+    new StaticAssetHashReplace()
+  ]
+  ...
+};
+</code></pre>
+<p>This will search and replace all occurrences of file references in your bundled assets. An example:</p>
+<ul>
+<li>&quot;../images/button.png&quot; =&gt; &quot;../images/button.46e48ce0628835f68a73.png&quot;</li>
+<li>&quot;../images/icon.png&quot; =&gt; &quot;../images/46e48ce0628835f68a73-icon.png&quot;</li>
+</ul>
+<p>So now you can build your own long-term caching solution with all files you want to ship including static ones.</p>]]></description>
+			<link>https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</link>
+			<guid isPermaLink="false">Mon Oct 31 2016 18:00:00 GMT+0100 (Mitteleuropäische Zeit)-Long-term caching of Webpack Assets</guid>
+			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
+			<pubDate>Mon, 31 Oct 2016 17:00:00 GMT</pubDate>
+		</item>
 		<item>
 			<title><![CDATA[Migrating from Durandal to Aurelia]]></title>
 			<description><![CDATA[<p>If you have an existing Durandal application you maybe want to migrate this app to Aurelia. Typically you used
@@ -123,7 +159,7 @@ mean that you have to implement it all at once.</p>]]></description>
 			<link>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
 			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0200 (Mitteleuropäische Sommerzeit)-Migrating from Durandal to Aurelia</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
-			<pubDate>Tue, 26 Apr 2016 18:30:57 GMT</pubDate>
+			<pubDate>Wed, 15 Jun 2016 16:45:00 GMT</pubDate>
 		</item>
 		<item>
 			<title><![CDATA[Pluggable NPM postprocessing]]></title>
