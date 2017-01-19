@@ -19,7 +19,7 @@ export class Navigation {
     }
 
     public goToPosts(): void {
-        this.router.navigateToRoute("postList", { year: "2016", month: "" });
+        this.router.navigate("posts");
     }
 
     public goToTags(): void {

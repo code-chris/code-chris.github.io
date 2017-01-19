@@ -53,9 +53,7 @@ export class PostService {
             if (posts.length !== wantedPostCount) {
                 return this.loadByIndex(obj, year, month);
             } else {
-                return new Promise<PostData[]>((resolve: (result: PostData[]) => void) => {
-                    resolve(this.sortPosts(posts));
-                });
+                return Promise.resolve(this.sortPosts(posts));
             }
         });
     }
@@ -92,7 +90,7 @@ export class PostService {
     private sortPosts(posts: PostData[]): PostData[] {
         return posts.sort((p: PostData) => {
             return p.publishDate.getDate();
-        });
+        }).reverse();
     }
 
     private loadIndex(): Promise<any> {

@@ -33,11 +33,7 @@ export class Post {
             });
     }
 
-    public getBackText(): string {
-        return moment(this.postData.publishDate).year().toString();
-    }
-
     public goBack(): void {
-        this.router.navigateToRoute("postList", { year: this.getBackText(), month: "" });
+        this.router.navigate("posts");
     }
 }
