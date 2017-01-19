@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-bootstrapper-webpack/aurelia-bootstrapper-webpack"], function(main) { return main; });

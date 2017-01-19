@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-templating-router/aurelia-templating-router"], function(main) { return main; });

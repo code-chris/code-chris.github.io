@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/moment/moment/d32e72c8227f20b274f0ceadceafe4b954568d7a/moment.d.ts",
+    "raw": "github:moment/moment/moment.d.ts#d32e72c8227f20b274f0ceadceafe4b954568d7a",
+    "typings": "https://raw.githubusercontent.com/moment/moment/d32e72c8227f20b274f0ceadceafe4b954568d7a/moment.d.ts"
+  }
+}

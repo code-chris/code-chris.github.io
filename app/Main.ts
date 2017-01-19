@@ -3,6 +3,13 @@ import {bootstrap} from 'aurelia-bootstrapper-webpack';
 
 import "../content/main.scss";
 
+Promise.config({
+    longStackTraces: false,
+    warnings: false
+});
+
+(<any>window).Promise = Promise;
+
 bootstrap((aurelia: Aurelia): void => {
     aurelia.use
         .standardConfiguration();

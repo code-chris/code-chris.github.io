@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-task-queue/aurelia-task-queue"], function(main) { return main; });

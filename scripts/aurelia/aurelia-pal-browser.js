@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-pal-browser/aurelia-pal-browser"], function(main) { return main; });

@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-history/aurelia-history"], function(main) { return main; });

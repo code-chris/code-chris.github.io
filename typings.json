@@ -1,11 +1,36 @@
 {
   "name": "code-chris.github.io",
+  "dependencies": {
+    "aurelia-binding": "file:components/aurelia-binding/dist/aurelia-binding.d.ts",
+    "aurelia-bootstrapper-webpack": "file:components/aurelia-bootstrapper-webpack/dist/aurelia-bootstrapper-webpack.d.ts",
+    "aurelia-dependency-injection": "file:components/aurelia-dependency-injection/dist/aurelia-dependency-injection.d.ts",
+    "aurelia-event-aggregator": "file:components/aurelia-event-aggregator/dist/aurelia-event-aggregator.d.ts",
+    "aurelia-fetch-client": "file:components/aurelia-fetch-client/dist/aurelia-fetch-client.d.ts",
+    "aurelia-framework": "file:components/aurelia-framework/dist/aurelia-framework.d.ts",
+    "aurelia-history": "file:components/aurelia-history/dist/aurelia-history.d.ts",
+    "aurelia-history-browser": "file:components/aurelia-history-browser/dist/aurelia-history-browser.d.ts",
+    "aurelia-loader": "file:components/aurelia-loader/dist/aurelia-loader.d.ts",
+    "aurelia-loader-webpack": "file:components/aurelia-loader-webpack/dist/aurelia-loader-webpack.d.ts",
+    "aurelia-logging": "file:components/aurelia-logging/dist/aurelia-logging.d.ts",
+    "aurelia-logging-console": "file:components/aurelia-logging-console/dist/aurelia-logging-console.d.ts",
+    "aurelia-metadata": "file:components/aurelia-metadata/dist/aurelia-metadata.d.ts",
+    "aurelia-pal": "file:components/aurelia-pal/dist/aurelia-pal.d.ts",
+    "aurelia-pal-browser": "file:components/aurelia-pal-browser/dist/aurelia-pal-browser.d.ts",
+    "aurelia-path": "file:components/aurelia-path/dist/aurelia-path.d.ts",
+    "aurelia-polyfills": "file:components/aurelia-polyfills/dist/aurelia-polyfills.d.ts",
+    "aurelia-route-recognizer": "file:components/aurelia-route-recognizer/dist/aurelia-route-recognizer.d.ts",
+    "aurelia-router": "file:components/aurelia-router/dist/aurelia-router.d.ts",
+    "aurelia-task-queue": "file:components/aurelia-task-queue/dist/aurelia-task-queue.d.ts",
+    "aurelia-templating": "file:components/aurelia-templating/dist/aurelia-templating.d.ts",
+    "aurelia-templating-binding": "file:components/aurelia-templating-binding/dist/aurelia-templating-binding.d.ts",
+    "aurelia-templating-resources": "file:components/aurelia-templating-resources/dist/aurelia-templating-resources.d.ts",
+    "aurelia-templating-router": "file:components/aurelia-templating-router/dist/aurelia-templating-router.d.ts",
+    "moment": "github:moment/moment/moment.d.ts#d32e72c8227f20b274f0ceadceafe4b954568d7a"
+  },
   "globalDependencies": {
-    "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#95b7178e0ef33b4b88327676418b4cc3ad61df0f",
-    "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#95b7178e0ef33b4b88327676418b4cc3ad61df0f",
+    "bluebird-2.0": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird-2.0.d.ts#97451842992e45af0534b67b2efbc43e36b597a9",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#95433230a9913054c57c715e6b91a9ae738d0b97",
     "highlightjs": "github:DefinitelyTyped/DefinitelyTyped/highlightjs/highlightjs.d.ts#bd269cad4cb2b495f940c7b6afc5825d568029be",
-    "es6-promise": "github:DefinitelyTyped/DefinitelyTyped/es6-promise/es6-promise.d.ts#0d622d857f97d44ea7dcad2b3edec1f23c48fe9e",
-    "es6-collections": "github:DefinitelyTyped/DefinitelyTyped/es6-collections/es6-collections.d.ts#0d622d857f97d44ea7dcad2b3edec1f23c48fe9e"
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160829180742"
   }
 }

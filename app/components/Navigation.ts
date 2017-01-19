@@ -1,6 +1,6 @@
 import {Router} from "aurelia-router";
 import {autoinject} from "aurelia-framework";
-import "script!jquery";
+import "script-loader!jquery";
 
 @autoinject
 export class Navigation {
@@ -15,7 +15,7 @@ export class Navigation {
 
     public attached(): void {
         // Dirty script execution :)
-        require("script!scripts");
+        require("script-loader!scripts");
     }
 
     public goToPosts(): void {

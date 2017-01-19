@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-binding/aurelia-binding"], function(main) { return main; });

@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-metadata/aurelia-metadata"], function(main) { return main; });

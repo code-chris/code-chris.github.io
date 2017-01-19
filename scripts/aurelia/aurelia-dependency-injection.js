@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-dependency-injection/aurelia-dependency-injection"], function(main) { return main; });

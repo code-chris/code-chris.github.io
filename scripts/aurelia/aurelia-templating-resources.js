@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-templating-resources/aurelia-templating-resources"], function(main) { return main; });

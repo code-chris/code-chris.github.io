@@ -33,3 +33,9 @@ interface Window {
 }
 
 declare function require(module: string): any;
+
+interface ReadableStream {
+}
+
+interface URLSearchParams {
+}

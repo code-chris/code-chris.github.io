@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-loader-webpack\\dist\\aurelia-loader-webpack.d.ts",
+    "raw": "file:components/aurelia-loader-webpack/dist/aurelia-loader-webpack.d.ts",
+    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-loader-webpack\\dist\\aurelia-loader-webpack.d.ts"
+  }
+}

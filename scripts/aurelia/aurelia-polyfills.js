@@ -1,1 +1,0 @@
-define(["aurelialib:aurelia-polyfills/aurelia-polyfills"], function(main) { return main; });
