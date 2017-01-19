@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "copy-components": "node build/scripts/copy.js",
+    "feed": "node build/scripts/feed.js",
     "clean": "rimraf build/out",
-    "prepare-prod": "npm run clean && node build/scripts/paramWriter.js --profile=prod",
+    "prepare-prod": "npm run clean && npm run feed && node build/scripts/paramWriter.js --profile=prod",
     "prepare-dev": "npm run clean && node build/scripts/paramWriter.js --profile=local",
     "build-prod": "npm run prepare-prod && webpack --config build/webpack/webpack.config.js && node build/scripts/feed.js",
     "build-dev": "npm run prepare-dev && webpack --config build/webpack/webpack.config.js --watch",
@@ -29,6 +30,7 @@
     "gulp-rename": "^1.2.2",
     "html-webpack-plugin": "github:ampedandwired/html-webpack-plugin#1b4f8efe94e41396e4a6f6d41cbdda94ff67bfbc",
     "jsonfile": "^2.3.1",
+    "mkdirp": "~0.5.1",
     "node-sass": "^4.3.0",
     "prompt": "^1.0.0",
     "randomstring": "~1.1.5",

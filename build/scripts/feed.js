@@ -5,6 +5,7 @@ var md = require('markdown-it')();
 var cheerio = require('cheerio');
 var moment = require('moment');
 var paths = require("./paths");
+var mkdirp = require("mkdirp");
 
 var generateFeed = () => {
     var rss = new RSS({
@@ -37,7 +38,12 @@ var generateFeed = () => {
 
     var xml = rss.xml("\t");
 
-    fs.writeFileSync("build/out/feed.xml", xml);
+    var parent = "build/out";
+    if (!fs.existsSync(parent)) {
+        mkdirp.sync(parent);
+    }
+
+    fs.writeFileSync("build/out/feed.xml", xml, { flags: "w" });
 };
 
 var parsePostData = function () {

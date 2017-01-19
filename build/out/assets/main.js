@@ -1,2 +1,2 @@
 webpackJsonp([1],{18:function(o,n){},40:function(o,n,e){(function(t){var i,a;i=[e,n,e("aurelia-framework"),e("aurelia-bootstrapper-webpack"),e(18)],a=function(o,n,e,i){"use strict";t.config({longStackTraces:!1,warnings:!1}),window.Promise=t,i.bootstrap(function(o){o.use.standardConfiguration(),window.location.href.indexOf("code-chris.github.io")===-1&&o.use.developmentLogging(),e.LogManager.setLevel(3),o.start().then(function(){return o.setRoot("App",document.body)})})}.apply(n,i),!(void 0!==a&&(o.exports=a))}).call(n,e("bluebird"))}},[40]);
-//# sourceMappingURL=main.map?bust=ZqRD3
+//# sourceMappingURL=main.map?bust=dm5UW
