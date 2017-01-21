@@ -1,2 +1,252 @@
-webpackJsonp([2],{104:function(e,t){"use strict";function r(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function o(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}function n(e,t){var r=e,o=void 0,n=void 0;r.__useDefault&&(r=r.default),a.Origin.set(r,new a.Origin(t,"default"));for(o in r)n=r[o],"function"==typeof n&&a.Origin.set(n,new a.Origin(t,o));return e}Object.defineProperty(t,"__esModule",{value:!0}),t.DefaultLoader=t.TextTemplateLoader=void 0;var i=require("aurelia-loader"),u=require("aurelia-pal"),a=require("aurelia-metadata"),l=t.TextTemplateLoader=function(){function e(){}return e.prototype.loadTemplate=function(e,t){return e.loadText(t.address).then(function(e){t.template=u.DOM.createTemplateFromMarkup(e)})},e}(),p=t.DefaultLoader=function(e){function t(){var t=r(this,e.call(this));t.textPluginName="text",t.moduleRegistry=Object.create(null),t.useTemplateLoader(new l);var o=t;return t.addPlugin("template-registry-entry",{fetch:function(e){var t=o.getOrCreateTemplateRegistryEntry(e);return t.templateIsLoaded?t:o.templateLoader.loadTemplate(o,t).then(function(e){return t})}}),t}return o(t,e),t.prototype.useTemplateLoader=function(e){this.templateLoader=e},t.prototype.loadAllModules=function(e){for(var t=[],r=0,o=e.length;r<o;++r)t.push(this.loadModule(e[r]));return Promise.all(t)},t.prototype.loadTemplate=function(e){return this._import(this.applyPluginToUrl(e,"template-registry-entry"))},t.prototype.loadText=function(e){return this._import(this.applyPluginToUrl(e,this.textPluginName)).then(function(e){return"string"==typeof e?e:e.default})},t}(i.Loader);u.PLATFORM.Loader=p,u.PLATFORM.global.System&&u.PLATFORM.global.System.import?(u.PLATFORM.eachModule=function(e){var t=System._loader.modules;for(var r in t)try{if(e(r,t[r].module))return}catch(e){}},System.set("text",System.newModule({translate:function(e){return'module.exports = "'+e.source.replace(/(["\\])/g,"\\$1").replace(/[\f]/g,"\\f").replace(/[\b]/g,"\\b").replace(/[\n]/g,"\\n").replace(/[\t]/g,"\\t").replace(/[\r]/g,"\\r").replace(/[\u2028]/g,"\\u2028").replace(/[\u2029]/g,"\\u2029")+'";'}})),p.prototype._import=function(e){return System.import(e)},p.prototype.loadModule=function(e){var t=this;return System.normalize(e).then(function(e){var r=t.moduleRegistry[e];return void 0!==r?Promise.resolve(r):System.import(e).then(function(r){return t.moduleRegistry[e]=r,n(r,e)})})},p.prototype.map=function(e,t){System.map[e]=t},p.prototype.normalizeSync=function(e,t){return System.normalizeSync(e,t)},p.prototype.normalize=function(e,t){return System.normalize(e,t)},p.prototype.applyPluginToUrl=function(e,t){return e+"!"+t},p.prototype.addPlugin=function(e,t){System.set(e,System.newModule({fetch:function(e,r){var o=t.fetch(e.address);return Promise.resolve(o).then(function(t){return e.metadata.result=t,""})},instantiate:function(e){return e.metadata.result}}))}):(u.PLATFORM.global.requirejs&&requirejs.s&&requirejs.s.contexts&&requirejs.s.contexts._&&requirejs.s.contexts._.defined?u.PLATFORM.eachModule=function(e){var t=requirejs.s.contexts._.defined;for(var r in t)try{if(e(r,t[r]))return}catch(e){}}:u.PLATFORM.eachModule=function(e){},p.prototype._import=function(e){return new Promise(function(t,r){require([e],t,r)})},p.prototype.loadModule=function(e){var t=this,r=this.moduleRegistry[e];return void 0!==r?Promise.resolve(r):new Promise(function(r,o){require([e],function(o){t.moduleRegistry[e]=o,r(n(o,e))},o)})},p.prototype.map=function(e,t){},p.prototype.normalize=function(e,t){return Promise.resolve(e)},p.prototype.normalizeSync=function(e,t){return e},p.prototype.applyPluginToUrl=function(e,t){return t+"!"+e},p.prototype.addPlugin=function(e,t){var r=define;r(e,[],{load:function(e,r,o){var n=t.fetch(e);Promise.resolve(n).then(o)}})})}});
-//# sourceMappingURL=2.map?bust=dm5UW
+webpackJsonp([2],{
+
+/***/ 104:
+/***/ (function(module, exports) {
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DefaultLoader = exports.TextTemplateLoader = undefined;
+
+var _aureliaLoader = require('aurelia-loader');
+
+var _aureliaPal = require('aurelia-pal');
+
+var _aureliaMetadata = require('aurelia-metadata');
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var TextTemplateLoader = exports.TextTemplateLoader = function () {
+  function TextTemplateLoader() {
+    
+  }
+
+  TextTemplateLoader.prototype.loadTemplate = function loadTemplate(loader, entry) {
+    return loader.loadText(entry.address).then(function (text) {
+      entry.template = _aureliaPal.DOM.createTemplateFromMarkup(text);
+    });
+  };
+
+  return TextTemplateLoader;
+}();
+
+function ensureOriginOnExports(executed, name) {
+  var target = executed;
+  var key = void 0;
+  var exportedValue = void 0;
+
+  if (target.__useDefault) {
+    target = target['default'];
+  }
+
+  _aureliaMetadata.Origin.set(target, new _aureliaMetadata.Origin(name, 'default'));
+
+  for (key in target) {
+    exportedValue = target[key];
+
+    if (typeof exportedValue === 'function') {
+      _aureliaMetadata.Origin.set(exportedValue, new _aureliaMetadata.Origin(name, key));
+    }
+  }
+
+  return executed;
+}
+
+var DefaultLoader = exports.DefaultLoader = function (_Loader) {
+  _inherits(DefaultLoader, _Loader);
+
+  function DefaultLoader() {
+    
+
+    var _this = _possibleConstructorReturn(this, _Loader.call(this));
+
+    _this.textPluginName = 'text';
+
+
+    _this.moduleRegistry = Object.create(null);
+    _this.useTemplateLoader(new TextTemplateLoader());
+
+    var that = _this;
+
+    _this.addPlugin('template-registry-entry', {
+      'fetch': function fetch(address) {
+        var entry = that.getOrCreateTemplateRegistryEntry(address);
+        return entry.templateIsLoaded ? entry : that.templateLoader.loadTemplate(that, entry).then(function (x) {
+          return entry;
+        });
+      }
+    });
+    return _this;
+  }
+
+  DefaultLoader.prototype.useTemplateLoader = function useTemplateLoader(templateLoader) {
+    this.templateLoader = templateLoader;
+  };
+
+  DefaultLoader.prototype.loadAllModules = function loadAllModules(ids) {
+    var loads = [];
+
+    for (var i = 0, ii = ids.length; i < ii; ++i) {
+      loads.push(this.loadModule(ids[i]));
+    }
+
+    return Promise.all(loads);
+  };
+
+  DefaultLoader.prototype.loadTemplate = function loadTemplate(url) {
+    return this._import(this.applyPluginToUrl(url, 'template-registry-entry'));
+  };
+
+  DefaultLoader.prototype.loadText = function loadText(url) {
+    return this._import(this.applyPluginToUrl(url, this.textPluginName)).then(function (textOrModule) {
+      if (typeof textOrModule === 'string') {
+        return textOrModule;
+      }
+
+      return textOrModule['default'];
+    });
+  };
+
+  return DefaultLoader;
+}(_aureliaLoader.Loader);
+
+_aureliaPal.PLATFORM.Loader = DefaultLoader;
+
+if (!_aureliaPal.PLATFORM.global.System || !_aureliaPal.PLATFORM.global.System.import) {
+  if (_aureliaPal.PLATFORM.global.requirejs && requirejs.s && requirejs.s.contexts && requirejs.s.contexts._ && requirejs.s.contexts._.defined) {
+    _aureliaPal.PLATFORM.eachModule = function (callback) {
+      var defined = requirejs.s.contexts._.defined;
+      for (var key in defined) {
+        try {
+          if (callback(key, defined[key])) return;
+        } catch (e) {}
+      }
+    };
+  } else {
+    _aureliaPal.PLATFORM.eachModule = function (callback) {};
+  }
+
+  DefaultLoader.prototype._import = function (moduleId) {
+    return new Promise(function (resolve, reject) {
+      require([moduleId], resolve, reject);
+    });
+  };
+
+  DefaultLoader.prototype.loadModule = function (id) {
+    var _this2 = this;
+
+    var existing = this.moduleRegistry[id];
+    if (existing !== undefined) {
+      return Promise.resolve(existing);
+    }
+
+    return new Promise(function (resolve, reject) {
+      require([id], function (m) {
+        _this2.moduleRegistry[id] = m;
+        resolve(ensureOriginOnExports(m, id));
+      }, reject);
+    });
+  };
+
+  DefaultLoader.prototype.map = function (id, source) {};
+
+  DefaultLoader.prototype.normalize = function (moduleId, relativeTo) {
+    return Promise.resolve(moduleId);
+  };
+
+  DefaultLoader.prototype.normalizeSync = function (moduleId, relativeTo) {
+    return moduleId;
+  };
+
+  DefaultLoader.prototype.applyPluginToUrl = function (url, pluginName) {
+    return pluginName + '!' + url;
+  };
+
+  DefaultLoader.prototype.addPlugin = function (pluginName, implementation) {
+    var nonAnonDefine = define;
+    nonAnonDefine(pluginName, [], {
+      'load': function load(name, req, onload) {
+        var result = implementation.fetch(name);
+        Promise.resolve(result).then(onload);
+      }
+    });
+  };
+} else {
+  _aureliaPal.PLATFORM.eachModule = function (callback) {
+    var modules = System._loader.modules;
+
+    for (var key in modules) {
+      try {
+        if (callback(key, modules[key].module)) return;
+      } catch (e) {}
+    }
+  };
+
+  System.set('text', System.newModule({
+    'translate': function translate(load) {
+      return 'module.exports = "' + load.source.replace(/(["\\])/g, '\\$1').replace(/[\f]/g, '\\f').replace(/[\b]/g, '\\b').replace(/[\n]/g, '\\n').replace(/[\t]/g, '\\t').replace(/[\r]/g, '\\r').replace(/[\u2028]/g, '\\u2028').replace(/[\u2029]/g, '\\u2029') + '";';
+    }
+  }));
+
+  DefaultLoader.prototype._import = function (moduleId) {
+    return System.import(moduleId);
+  };
+
+  DefaultLoader.prototype.loadModule = function (id) {
+    var _this3 = this;
+
+    return System.normalize(id).then(function (newId) {
+      var existing = _this3.moduleRegistry[newId];
+      if (existing !== undefined) {
+        return Promise.resolve(existing);
+      }
+
+      return System.import(newId).then(function (m) {
+        _this3.moduleRegistry[newId] = m;
+        return ensureOriginOnExports(m, newId);
+      });
+    });
+  };
+
+  DefaultLoader.prototype.map = function (id, source) {
+    System.map[id] = source;
+  };
+
+  DefaultLoader.prototype.normalizeSync = function (moduleId, relativeTo) {
+    return System.normalizeSync(moduleId, relativeTo);
+  };
+
+  DefaultLoader.prototype.normalize = function (moduleId, relativeTo) {
+    return System.normalize(moduleId, relativeTo);
+  };
+
+  DefaultLoader.prototype.applyPluginToUrl = function (url, pluginName) {
+    return url + '!' + pluginName;
+  };
+
+  DefaultLoader.prototype.addPlugin = function (pluginName, implementation) {
+    System.set(pluginName, System.newModule({
+      'fetch': function fetch(load, _fetch) {
+        var result = implementation.fetch(load.address);
+        return Promise.resolve(result).then(function (x) {
+          load.metadata.result = x;
+          return '';
+        });
+      },
+      'instantiate': function instantiate(load) {
+        return load.metadata.result;
+      }
+    }));
+  };
+}
+
+/***/ })
+
+});
+//# sourceMappingURL=2.map
