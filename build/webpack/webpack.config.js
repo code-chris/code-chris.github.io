@@ -57,7 +57,7 @@ var plugins = [];
 plugins.push(new CopyWebpackPlugin([
     { from: 'content/fonts', to: '../content/fonts[path]/[name].[ext]' },
     { from: 'content/images', to: '../content/images[path]/[name].[ext]' },
-    { from: "content/images/favicon.ico", to: '..' },
+    { from: 'content/common/robots.txt', to: '..' },
     { from: "posts", to: '../posts' }
 ]));
 

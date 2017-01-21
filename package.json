@@ -8,8 +8,9 @@
   "scripts": {
     "copy-components": "node build/scripts/copy.js",
     "feed": "node build/scripts/feed.js",
+    "sitemap": "node build/scripts/sitemap.js",
     "clean": "rimraf build/out",
-    "prepare-prod": "npm run clean && npm run feed && node build/scripts/paramWriter.js --profile=prod",
+    "prepare-prod": "npm run clean && npm run sitemap && npm run feed && node build/scripts/paramWriter.js --profile=prod",
     "prepare-dev": "npm run clean && node build/scripts/paramWriter.js --profile=local",
     "build-prod": "npm run prepare-prod && webpack --config build/webpack/webpack.config.js && node build/scripts/feed.js",
     "build-dev": "npm run prepare-dev && webpack --config build/webpack/webpack.config.js --watch",
@@ -38,6 +39,7 @@
     "rss": "^1.2.1",
     "sass-loader": "^4.1.1",
     "script-loader": "~0.7.0",
+    "sitemap": "~1.9.0",
     "style-loader": "^0.13.1",
     "typescript": "^2.1.5",
     "typings": "^2.1.0",

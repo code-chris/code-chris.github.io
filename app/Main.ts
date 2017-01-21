@@ -12,8 +12,13 @@ Promise.config({
 
 bootstrap((aurelia: Aurelia): void => {
     aurelia.use
-        .standardConfiguration()
-        .plugin('aurelia-google-analytics', config => {
+        .standardConfiguration();
+
+    if (window.location.href.indexOf("code-chris.github.io") === -1) {
+        aurelia.use
+            .developmentLogging();
+    } else {
+        aurelia.use.plugin('aurelia-google-analytics', config => {
             config.init('UA-74794817-1');
             config.attach({
                 logging: {
@@ -27,9 +32,6 @@ bootstrap((aurelia: Aurelia): void => {
                 }
             });
         });
-
-    if (window.location.href.indexOf("code-chris.github.io") === -1) {
-        aurelia.use.developmentLogging();
     }
 
     LogManager.setLevel(3);
