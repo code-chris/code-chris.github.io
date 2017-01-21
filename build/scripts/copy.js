@@ -14,6 +14,8 @@ var files = [
     "aurelia-fetch-client/dist/aurelia-fetch-client.d.ts",
     "aurelia-framework/dist/commonjs/aurelia-framework.js",
     "aurelia-framework/dist/aurelia-framework.d.ts",
+    "aurelia-google-analytics/dist/commonjs/index.js",
+    "aurelia-google-analytics/dist/commonjs/analytics.js",
     "aurelia-history/dist/commonjs/aurelia-history.js",
     "aurelia-history/dist/aurelia-history.d.ts",
     "aurelia-history-browser/dist/commonjs/aurelia-history-browser.js",

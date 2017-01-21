@@ -11,6 +11,7 @@ var buildAureliaMap = function (suffixes) {
 };
 
 module.exports = _.extend({
+    "aurelia-google-analytics": path.resolve("./components/aurelia-google-analytics/dist/commonjs/index.js"),
     "highlight/less": path.resolve("./components/highlight.js/lib/languages/less.js"),
     "highlight.js": path.resolve("./components/highlight.js/lib/highlight.js"),
     "highlight/js": path.resolve("./components/highlight.js/lib/languages/javascript.js"),
@@ -22,7 +23,6 @@ module.exports = _.extend({
     "moment": path.resolve("./components/moment/moment.js"),
     "markdown-it": path.resolve("./components/markdown-it/dist/markdown-it.js"),
     "jquery": path.resolve("./components/jquery/dist/jquery.js"),
-    "googleAnalytics": path.resolve("./components/googleAnalytics.js"),
     "bluebird": path.resolve("./components/bluebird/js/browser/bluebird.core.js"),
     "scripts": path.resolve("./components/scripts.min.js")
 }, buildAureliaMap([

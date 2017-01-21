@@ -12,7 +12,21 @@ Promise.config({
 
 bootstrap((aurelia: Aurelia): void => {
     aurelia.use
-        .standardConfiguration();
+        .standardConfiguration()
+        .plugin('aurelia-google-analytics', config => {
+            config.init('UA-74794817-1');
+            config.attach({
+                logging: {
+                    enabled: true
+                },
+                pageTracking: {
+                    enabled: true
+                },
+                clickTracking: {
+                    enabled: true
+                }
+            });
+        });
 
     if (window.location.href.indexOf("code-chris.github.io") === -1) {
         aurelia.use.developmentLogging();

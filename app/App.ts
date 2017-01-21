@@ -8,7 +8,6 @@ import * as highlightSCSS from "highlight/scss";
 import * as highlightTS from "highlight/ts";
 import * as modernizr from "modernizr";
 import * as fetch from "fetch";
-import * as googleAnalytics from "googleAnalytics";
 
 export class App {
 
@@ -27,6 +26,5 @@ export class App {
         registerLanguage("typescript", <any>highlightTS);
         modernizr;
         fetch;
-        googleAnalytics;
     }
 }

@@ -22,9 +22,6 @@ declare module "modernizr" {
 declare module "fetch" {
 }
 
-declare module "googleAnalytics" {
-}
-
 interface Window {
     page: any;
     DISQUS: any;

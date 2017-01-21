@@ -18,7 +18,7 @@
   "devDependencies": {
     "aurelia-webpack-plugin": "github:aurelia/webpack-plugin#802b3434c2ef30d4a360c45254e7b8e2b9bca479",
     "awesome-typescript-loader": "~3.0.0-beta.18",
-    "cache-bust-loader": "~1.0.0",
+    "cache-bust-loader": "~1.0.1",
     "cheerio": "^0.22.0",
     "compression-webpack-plugin": "~0.3.2",
     "copy": "~0.3.0",
@@ -51,6 +51,7 @@
     "aurelia-bootstrapper": "~1.0.1",
     "aurelia-bootstrapper-webpack": "~1.1.0",
     "aurelia-fetch-client": "~1.1.0",
+    "aurelia-google-analytics": "~1.0.4",
     "bluebird": "^3.4.7",
     "highlight.js": "^9.4.0",
     "jquery": "^2.2.4",
