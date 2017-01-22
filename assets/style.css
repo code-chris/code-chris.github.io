@@ -158,8 +158,8 @@ textarea {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../content/fonts/fontawesome-webfont.eot?bust=jPz5C?v=4.5.0");
-  src: url("../content/fonts/fontawesome-webfont.eot?bust=jPz5C?#iefix&v=4.5.0") format("embedded-opentype"), url("../content/fonts/fontawesome-webfont.woff2?bust=jPz5C?v=4.5.0") format("woff2"), url("../content/fonts/fontawesome-webfont.woff?bust=jPz5C?v=4.5.0") format("woff"), url("../content/fonts/fontawesome-webfont.ttf?bust=jPz5C?v=4.5.0") format("truetype"), url("../content/fonts/fontawesome-webfont.svg?bust=jPz5C?v=4.5.0#fontawesomeregular") format("svg");
+  src: url("../content/fonts/fontawesome-webfont.eot?bust=mVxPv?v=4.5.0");
+  src: url("../content/fonts/fontawesome-webfont.eot?bust=mVxPv?#iefix&v=4.5.0") format("embedded-opentype"), url("../content/fonts/fontawesome-webfont.woff2?bust=mVxPv?v=4.5.0") format("woff2"), url("../content/fonts/fontawesome-webfont.woff?bust=mVxPv?v=4.5.0") format("woff"), url("../content/fonts/fontawesome-webfont.ttf?bust=mVxPv?v=4.5.0") format("truetype"), url("../content/fonts/fontawesome-webfont.svg?bust=mVxPv?v=4.5.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -3517,8 +3517,8 @@ header .entry-meta {
 
 @font-face {
   font-family: 'Neuton';
-  src: url("../content/fonts/Neuton.eot?bust=jPz5C?v=4.5.0");
-  src: url("../content/fonts/Neuton.eot?bust=jPz5C?#iefix&v=4.5.0") format("embedded-opentype"), url("../content/fonts/Neuton.woff2?bust=jPz5C?v=4.5.0") format("woff2"), url("../content/fonts/Neuton.woff?bust=jPz5C?v=4.5.0") format("woff"), url("../content/fonts/Neuton.ttf?bust=jPz5C?v=4.5.0") format("truetype"), url("../content/fonts/Neuton.svg?bust=jPz5C?v=4.5.0#fontawesomeregular") format("svg");
+  src: url("../content/fonts/Neuton.eot?bust=mVxPv?v=4.5.0");
+  src: url("../content/fonts/Neuton.eot?bust=mVxPv?#iefix&v=4.5.0") format("embedded-opentype"), url("../content/fonts/Neuton.woff2?bust=mVxPv?v=4.5.0") format("woff2"), url("../content/fonts/Neuton.woff?bust=mVxPv?v=4.5.0") format("woff"), url("../content/fonts/Neuton.ttf?bust=mVxPv?v=4.5.0") format("truetype"), url("../content/fonts/Neuton.svg?bust=mVxPv?v=4.5.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -3531,6 +3531,8 @@ pre > code {
 
 .entry-content {
   font-size: 20px; }
+  .entry-content table th {
+    text-align: inherit; }
 
 .entry-meta {
   font-size: 14px; }
@@ -3578,6 +3580,9 @@ pre > code {
   margin-top: 0px;
   margin-bottom: 0px; }
 
+#post-index #main {
+  max-width: 1000px; }
+
 #post-index .backButton {
   color: rgba(150, 150, 150, 0.8);
   font-size: 18px;
@@ -3587,7 +3592,7 @@ pre > code {
       margin: 50px 10px -30px 10px; } }
   @media only screen and (min-width: 62.5em) {
     #post-index .backButton {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 50px auto -30px auto; } }
   #post-index .backButton a {
     color: rgba(150, 150, 150, 0.8);
@@ -3697,4 +3702,4 @@ Monokai style - ported by Luigi Maselli - http://grigio.org
 .hljs-selector-id {
   font-weight: bold; }
 
-/*# sourceMappingURL=vendor.map?bust=jPz5C*/
+/*# sourceMappingURL=vendor.map?bust=mVxPv*/

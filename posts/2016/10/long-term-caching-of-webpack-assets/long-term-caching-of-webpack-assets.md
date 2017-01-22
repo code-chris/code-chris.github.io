@@ -4,7 +4,7 @@
 - publishDate:  2016-10-31 18:00:00
 - owner: Christian Kotzbauer
 - share: true
-- tags: webpack
+- tags: caching,webpack
 --------------------------------
 
 If you want to use a solid long-term caching in your web application with Webpack then you have to do a lot of work.
