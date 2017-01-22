@@ -9,5 +9,10 @@
         "06": [
             "migrating-from-durandal-to-aurelia"
         ]
+    },
+    "2017": {
+        "01": [
+            "cache-busting-with-webpack"
+        ]
     }
 }

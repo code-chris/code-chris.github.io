@@ -9,10 +9,83 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Sat, 21 Jan 2017 14:58:34 GMT</lastBuildDate>
+		<lastBuildDate>Sun, 22 Jan 2017 14:04:21 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Sat, 21 Jan 2017 14:58:34 GMT</pubDate>
+		<pubDate>Sun, 22 Jan 2017 14:04:21 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
+		<item>
+			<title><![CDATA[Cache-Busting with Webpack]]></title>
+			<description><![CDATA[<p>There are several strategies to implement a caching mechanism. The common way with Webpack is, to change the file
+name and add a content-based hash. The advantage of this is, that the file only needs to be reloaded if its content
+changed. But the disadvantage is (e.g. for Images) that all references in your Source code have to be modified in
+order to match the different file names. Last year, I implemented a Webpack plugin which does the job. See my previous post:
+<a href="https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html">&quot;Long-term caching of Webpack Assets&quot;</a>
+This worked great until you start generating some paths through variables at runtime. So I reconsidered my strategy.
+The result was the usage of a fairly old mechanism: Cache-Busting with a Query-Parameter. To append this parameter
+to all the code references, I wrote a custom Webpack Loader.</p>
+<p>First, install the loader through npm:</p>
+<pre><code>npm install cache-bust-loader
+</code></pre>
+<p>Assuming, that the list of loaders in your <code>webpack.config.js</code> looks similar to this:</p>
+<pre><code class="language-js">[
+    { test: /\.css$/, loader: ExtractTextPlugin.extract({ loader: &quot;css-loader&quot; }) },
+    { test: /\.html$/, loader: &quot;raw-loader&quot; },
+    { test: /\.ts$/, loader: &quot;awesome-typescript-loader&quot; }
+]
+</code></pre>
+<p>Now, simply add the <code>cache-bust-loader</code> to each file-type where you reference other files which you want to be cache-busted:</p>
+<pre><code class="language-js">var cacheBustLoader = `cache-bust-loader?name=bust&amp;value=${bustValue}`;
+
+[
+    { test: /\.css$/, loader: ExtractTextPlugin.extract({ loader: `${cacheBustLoader}!css-loader` }) },
+    { test: /\.html$/, loader: `${cacheBustLoader}!raw-loader` },
+    { test: /\.ts$/, loader: `${cacheBustLoader}!awesome-typescript-loader` }
+]
+</code></pre>
+<p>The loader has three parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Mandatory</th>
+<th>Data type</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>True</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td>value</td>
+<td>False</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td>types</td>
+<td>False</td>
+<td>String</td>
+<td>eot;woff;woff2;svg;ttf;otf;jpg;jpeg;png;ico;gif;json</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>name</code> describes the name of the query parameter, the <code>value</code> the string which should change every build.
+If the <code>value</code> is empty, no parameters are applied (e.g. in development mode). The <code>types</code> are file-types
+which you want to be cache-busted. Split them with a semicolon.</p>
+<p>To generate a short unique string for each build you can fill <code>bustValue</code> like this:</p>
+<pre><code class="language-js">bustValue = require(&quot;randomstring&quot;).generate(5);
+</code></pre>
+<p>You then can see your result in the Network tab of your browser:</p>
+<p><img src="./posts/2017/01/cache-busting-with-webpack/network-tab.jpg" alt="network-tab"></p>]]></description>
+			<link>https://code-chris.github.io/posts/2017/01/cache-busting-with-webpack/index.html</link>
+			<guid isPermaLink="false">Sun Jan 22 2017 15:05:00 GMT+0100 (Mitteleuropäische Zeit)-Cache-Busting with Webpack</guid>
+			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
+			<pubDate>Sun, 22 Jan 2017 14:05:00 GMT</pubDate>
+		</item>
 		<item>
 			<title><![CDATA[Long-term caching of Webpack Assets]]></title>
 			<description><![CDATA[<p>If you want to use a solid long-term caching in your web application with Webpack then you have to do a lot of work.
