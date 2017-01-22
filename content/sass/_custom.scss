@@ -25,6 +25,12 @@ pre > code {
 
 .entry-content {
   font-size: 20px;
+
+  table {
+    th {
+      text-align: inherit;
+    }
+  }
 }
 
 .entry-meta {
@@ -98,6 +104,10 @@ pre > code {
 }
 
 #post-index {
+  #main {
+    max-width: 1000px;
+  }
+
   .backButton {
     color: rgba(150, 150, 150, 0.8);
     font-size: 18px;
@@ -106,7 +116,7 @@ pre > code {
       margin: 50px 10px -30px 10px;
     }
     @media #{$large} {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 50px auto -30px auto;
     }
 

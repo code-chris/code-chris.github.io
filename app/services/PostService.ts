@@ -88,9 +88,9 @@ export class PostService {
     }
 
     private sortPosts(posts: PostData[]): PostData[] {
-        return posts.sort((p: PostData) => {
-            return p.publishDate.getDate();
-        }).reverse();
+        return posts.sort((a: PostData, b: PostData) => {
+            return b.publishDate.getTime() - a.publishDate.getTime();
+        });
     }
 
     private loadIndex(): Promise<any> {
