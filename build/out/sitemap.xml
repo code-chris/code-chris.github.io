@@ -4,4 +4,5 @@
 <url> <loc>https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</loc> <changefreq>monthly</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://code-chris.github.io/posts/2016/04/pluggable-npm-postprocessing/index.html</loc> <changefreq>monthly</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</loc> <changefreq>monthly</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://code-chris.github.io/posts/2017/01/cache-busting-with-webpack/index.html</loc> <changefreq>monthly</changefreq> <priority>0.7</priority> </url>
 </urlset>
