@@ -1,5 +1,3 @@
 # code-chris.github.io
 
-### Deploy
-
-```git subtree push --prefix=build/out https://github.com/code-chris/code-chris.github.io.git master```
+[![Travis](https://img.shields.io/travis/code-chris/code-chris.github.io.svg?branch=source)](https://travis-ci.org/code-chris/code-chris.github.io)
