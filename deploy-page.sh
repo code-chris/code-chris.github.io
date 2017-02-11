@@ -20,4 +20,4 @@ cp -r build/out/**/* public
 cd public
 git add .
 git commit -m "Deploy to Github Pages"
-git push origin gh-pages
+git push origin master
