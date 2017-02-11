@@ -9,9 +9,9 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Sat, 11 Feb 2017 14:19:07 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 11 Feb 2017 16:56:22 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Sat, 11 Feb 2017 14:19:07 GMT</pubDate>
+		<pubDate>Sat, 11 Feb 2017 16:56:22 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
 		<item>
 			<title><![CDATA[Cache-Busting with Webpack]]></title>
@@ -82,9 +82,9 @@ which you want to be cache-busted. Split them with a semicolon.</p>
 <p>You then can see your result in the Network tab of your browser:</p>
 <p><img src="./posts/2017/01/cache-busting-with-webpack/network-tab.jpg" alt="network-tab"></p>]]></description>
 			<link>https://code-chris.github.io/posts/2017/01/cache-busting-with-webpack/index.html</link>
-			<guid isPermaLink="false">Sun Jan 22 2017 15:05:00 GMT+0100 (Mitteleuropäische Zeit)-Cache-Busting with Webpack</guid>
+			<guid isPermaLink="false">Sun Jan 22 2017 15:05:00 GMT+0000 (UTC)-Cache-Busting with Webpack</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
-			<pubDate>Sun, 22 Jan 2017 14:05:00 GMT</pubDate>
+			<pubDate>Sun, 22 Jan 2017 15:05:00 GMT</pubDate>
 		</item>
 		<item>
 			<title><![CDATA[Long-term caching of Webpack Assets]]></title>
@@ -118,9 +118,9 @@ module.exports = {
 </ul>
 <p>So now you can build your own long-term caching solution with all files you want to ship including static ones.</p>]]></description>
 			<link>https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</link>
-			<guid isPermaLink="false">Mon Oct 31 2016 18:00:00 GMT+0100 (Mitteleuropäische Zeit)-Long-term caching of Webpack Assets</guid>
+			<guid isPermaLink="false">Mon Oct 31 2016 18:00:00 GMT+0000 (UTC)-Long-term caching of Webpack Assets</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
-			<pubDate>Mon, 31 Oct 2016 17:00:00 GMT</pubDate>
+			<pubDate>Mon, 31 Oct 2016 18:00:00 GMT</pubDate>
 		</item>
 		<item>
 			<title><![CDATA[Migrating from Durandal to Aurelia]]></title>
@@ -230,9 +230,9 @@ if the child view is unbound.</p>
 <p>As you can see, the migration to a new framework can be a big task depending on your application. But that does not
 mean that you have to implement it all at once.</p>]]></description>
 			<link>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
-			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0200 (Mitteleuropäische Sommerzeit)-Migrating from Durandal to Aurelia</guid>
+			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0000 (UTC)-Migrating from Durandal to Aurelia</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
-			<pubDate>Wed, 15 Jun 2016 16:45:00 GMT</pubDate>
+			<pubDate>Wed, 15 Jun 2016 18:45:00 GMT</pubDate>
 		</item>
 		<item>
 			<title><![CDATA[Pluggable NPM postprocessing]]></title>
@@ -355,9 +355,9 @@ your <code>config.js</code> as following:</p>
 <p>There are planned additional plugins for TypeScript Definitions or URL-Rewriting in CSS. The core package itself
 should preserve an API to access it within a NodeJS-Script.</p>]]></description>
 			<link>https://code-chris.github.io/posts/2016/04/pluggable-npm-postprocessing/index.html</link>
-			<guid isPermaLink="false">Tue Apr 26 2016 20:33:00 GMT+0200 (Mitteleuropäische Sommerzeit)-Pluggable NPM postprocessing</guid>
+			<guid isPermaLink="false">Tue Apr 26 2016 20:33:00 GMT+0000 (UTC)-Pluggable NPM postprocessing</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
-			<pubDate>Tue, 26 Apr 2016 18:33:00 GMT</pubDate>
+			<pubDate>Tue, 26 Apr 2016 20:33:00 GMT</pubDate>
 		</item>
 	</channel>
 </rss>
