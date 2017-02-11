@@ -7,7 +7,7 @@ import * as highlightLESS from "highlight/less";
 import * as highlightSCSS from "highlight/scss";
 import * as highlightTS from "highlight/ts";
 import * as modernizr from "modernizr";
-import * as fetch from "fetch";
+import * as fetch from "whatwg-fetch";
 
 export class App {
 

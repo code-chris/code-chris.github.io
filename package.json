@@ -9,11 +9,11 @@
     "copy-components": "node build/scripts/copy.js",
     "feed": "node build/scripts/feed.js",
     "sitemap": "node build/scripts/sitemap.js",
-    "clean": "rimraf build/out",
+    "clean": "node node_modules/rimraf/bin.js build/out",
     "prepare-prod": "npm run clean && npm run sitemap && npm run feed && node build/scripts/paramWriter.js --profile=prod",
     "prepare-dev": "npm run clean && node build/scripts/paramWriter.js --profile=local",
-    "build-prod": "npm run prepare-prod && webpack --config build/webpack/webpack.config.js && node build/scripts/feed.js",
-    "build-dev": "npm run prepare-dev && webpack --config build/webpack/webpack.config.js --watch",
+    "build-prod": "npm run prepare-prod && node node_modules/webpack/bin/webpack.js --config build/webpack/webpack.config.js && node build/scripts/feed.js",
+    "build-dev": "npm run prepare-dev && node node_modules/webpack/bin/webpack.js --config build/webpack/webpack.config.js --watch",
     "create-post": "node build/scripts/posts.js"
   },
   "devDependencies": {

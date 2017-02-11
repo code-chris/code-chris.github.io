@@ -19,7 +19,7 @@ declare module "highlight/less" {
 declare module "modernizr" {
 }
 
-declare module "fetch" {
+declare module "whatwg-fetch" {
 }
 
 interface Window {
