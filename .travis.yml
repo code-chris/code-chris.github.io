@@ -7,6 +7,10 @@ node_js:
 after_success:
   - bash ./deploy-page.sh
 
+branches:
+  only:
+    - source
+
 env:
   global:
     - secure: "l39T8kbnmHxIDwkdiHmV5WHBIVquCam7Izu2BLX/vpRRFEdVzYIwH6WtoFM+aAjcx/bXlLy7GssHNVSy0wyNMPnenU38V5nko8b7vkXbqafdAkYo51MOASy59+fpRCVPmO01fbdqoB7W6VbMCt7fmpird1RVSSCo3Cqvg8DCm5ALZk8ExLMxYniRZ4LGbT5ldhYWnjGq8nRHQNlKScXzrp9Np/TdMGclPwUl9YNg+eiGlMSjaZQioFNfkyoOpqa7xBcLZcegh73qxaOkqLa/9lDlrNGQfHR0Y77KHp+MccDFTba6i/hxReaqhFFWpt+PdujQrE1b2g8VfMkuwdiZt6FaL70YBU9mwi0fsCYIcC37zMlPi5U3g8uwzDRI1gYPF5z5bmraVyME+RzpaQoJP9gFEIZdeOmacAoenJ9D0OwpmXc7o8OGlQOpIR/OADOOljbSw0k2jkjCXXmLBO6MJ/QiVKlFBQjeZH0o3//JYj5fM5s371/QGCrgosko8cV6+4Noc04kSWR7RYXlVC8IUq9CrYKtxUgjoVjIK9c10f3GROg2W/6EB3Zu5UQOaxcaX6M1F41FdktTSXNFzQ5/49PZoCYn4NeAsunQfomqoaSorxCyjcc84/m1kgjwfjdue+6AWD7Yn0Fr8unftd3XHUSwzEPj3wTuOdjj1lC/fDE="
