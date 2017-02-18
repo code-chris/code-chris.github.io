@@ -1,6 +1,5 @@
 import {Router} from "aurelia-router";
 import {autoinject} from "aurelia-framework";
-import "script-loader!jquery";
 
 @autoinject
 export class Navigation {
@@ -11,11 +10,6 @@ export class Navigation {
     constructor(router: Router) {
         this.router = router;
         this.host = (<any>router.history).location.origin;
-    }
-
-    public attached(): void {
-        // Dirty script execution :)
-        require("script-loader!scripts");
     }
 
     public goToPosts(): void {

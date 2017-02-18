@@ -16,9 +16,6 @@ declare module "highlight/scss" {
 declare module "highlight/less" {
 }
 
-declare module "modernizr" {
-}
-
 declare module "whatwg-fetch" {
 }
 

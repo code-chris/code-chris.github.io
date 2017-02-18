@@ -6,7 +6,6 @@ import * as highlightCSS from "highlight/css";
 import * as highlightLESS from "highlight/less";
 import * as highlightSCSS from "highlight/scss";
 import * as highlightTS from "highlight/ts";
-import * as modernizr from "modernizr";
 import * as fetch from "whatwg-fetch";
 
 export class App {
@@ -24,7 +23,6 @@ export class App {
         registerLanguage("less", <any>highlightLESS);
         registerLanguage("scss", <any>highlightSCSS);
         registerLanguage("typescript", <any>highlightTS);
-        modernizr;
         fetch;
     }
 }
