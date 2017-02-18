@@ -1,9 +1,9 @@
-import {PostData} from "../contracts/PostData";
+import {PostData} from "../../contracts/PostData";
+import {PostService} from "../../services/PostService";
 import {autoinject} from "aurelia-framework";
-import {PostService} from "../services/PostService";
 
 @autoinject
-export class PostList {
+export class TagList {
 
     private posts: PostData[];
     private postService: PostService;
@@ -16,10 +16,9 @@ export class PostList {
     }
 
     public activate(params: any): Promise<PostData[]> {
-        var year: string = params.year;
-        var month: string = params.month;
+        var tag: string = params.tag;
 
-        return this.postService.loadPosts(year, month)
+        return this.postService.loadPostsByTag(tag)
             .then(postData => this.posts = postData);
     }
 }

@@ -103,11 +103,87 @@ pre > code {
   }
 }
 
-#post-index {
+#post-index, #home-page {
   #main {
     max-width: 1000px;
   }
+}
 
+#home-page {
+  #main {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+
+    .picture-container {
+      display: inline-block;
+      margin-right: 20px;
+
+      img {
+        height: 400px;
+        width: 265px;
+        margin-top: -280px;
+      }
+    }
+
+    .info-container {
+      display: inline-block;
+
+      .space {
+        height: 50px;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      .vita {
+        font-size: 20px;
+      }
+
+      .pill {
+        background-color: #323D49;
+        padding: 5px;
+        border-radius: 5px;
+        color: white;
+      }
+
+      .contact {
+        margin-top: 50px;
+        font-size: 30px;
+
+        a {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    .projects {
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+          border-radius: 3px;
+          background-color: #fff;
+          box-shadow: 0 0 0 0, 0 6px 12px rgba(34, 34, 34, 0.1);
+          padding: 20px;
+          margin-bottom: 15px;
+
+          h2 {
+            margin-top: 0;
+          }
+
+          span {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+#post-index {
   .backButton {
     color: rgba(150, 150, 150, 0.8);
     font-size: 18px;
@@ -123,16 +199,6 @@ pre > code {
     a {
       color: rgba(150, 150, 150, 0.8);
       margin-left: 8px;
-    }
-  }
-}
-
-.dl-menuwrapper {
-  .dl-menu {
-    .dl-submenu {
-      a {
-        cursor: pointer;
-      }
     }
   }
 }

@@ -3,7 +3,9 @@ import {bindable} from "aurelia-framework";
 import {App} from "../App";
 import {highlightBlock} from "highlight.js";
 import * as $ from "jquery";
+import {autoinject} from "aurelia-dependency-injection";
 
+@autoinject
 export class PostArticle {
 
     @bindable
@@ -13,8 +15,11 @@ export class PostArticle {
 
     private siteUrl: string = App.siteUrl;
 
-    public attached(view: Element): void {
-        $("pre code", view).each((index: number, element: Element) => {
+    constructor(private view: Element) {
+    }
+
+    public attached(): void {
+        $("pre code", this.view).each((index: number, element: Element) => {
             highlightBlock(element);
         });
     }

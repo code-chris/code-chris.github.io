@@ -1,0 +1,69 @@
+<template>
+    <require from='../../components/SiteHeader'></require>
+
+    <site-header
+            page-title.bind="title"
+            image-url.bind="imageUrl">
+    </site-header>
+
+    <div id="home-page">
+        <div id="main" role="main">
+            <div class="picture-container">
+                <img src="content/images/avatar.jpg" alt="Christian Kotzbauer" class="author-photo">
+            </div>
+            <div class="info-container">
+                <div class="space"></div>
+                <h1>Christian Kotzbauer</h1>
+                <p class="vita">Web Developer specialized in JavaScript, <br>Typescript and Single Page Apps.</p>
+
+                <div style="margin-bottom: 15px;">
+                    <span class="pill">JavaScript</span>
+                    <span class="pill">TypeScript</span>
+                    <span class="pill">Aurelia</span>
+                    <span class="pill">Knockout</span>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <span class="pill">Durandal</span>
+                    <span class="pill">Webpack</span>
+                    <span class="pill">Single-Page Applications</span>
+                </div>
+                <div>
+                    <span class="pill">Performance</span>
+                    <span class="pill">Web-Development</span>
+                    <span class="pill">Web-Architecture</span>
+                </div>
+
+                <div class="contact">
+                    <a href="mailto:christian.kotzbauer@gmail.com"><i class="fa fa-fw fa-envelope"></i></a>
+                    <a href="https://github.com/code-chris" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                    <a href="https://twitter.com/ckotzbauer1" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+                    <a href="https://www.xing.com/profile/Christian_Kotzbauer2" target="_blank"><i class="fa fa-fw fa-xing"></i></a>
+                </div>
+            </div>
+
+            <div class="projects">
+                <h2>Projects</h2>
+                <ul>
+                    <li>
+                        <div>
+                            <h2><a href="https://github.com/code-chris/aurelia-knockout" target="_blank">aurelia-knockout</a></h2>
+                            <span>Aurelia plugin that enables the Usage of Knockout Bindings alongside with Aurelia.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h2><a href="https://code-chris.github.io/jsperformance" target="_blank">jsperformance</a></h2>
+                            <span>Performance-Comparison of Native Browser Functions, Lodash and Underscore.js in different Browsers.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h2><a href="https://github.com/code-chris/cache-bust-loader" target="_blank">cache-bust-loader</a></h2>
+                            <span>Webpack-Loader to enable Cache-Busting with Query-Parameters.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>

@@ -149,8 +149,8 @@ plugins.push(p);
 var cacheBustLoader = `cache-bust-loader?name=bust&value=${params.bustValue}&types=eot;woff;woff2;svg;ttf;otf;jpg;jpeg;png;ico;gif`;
 
 var loaders = [
-    { test: /\.css$/, loader: ExtractTextPlugin.extract({ fallbackLoader: "style-loader", loader: `${cacheBustLoader}!raw-loader` }) },
-    { test: /\.scss/, loader: ExtractTextPlugin.extract({ fallbackLoader: "style-loader", loader: `${cacheBustLoader}!raw-loader!sass-loader` }) },
+    { test: /\.css$/, loader: ExtractTextPlugin.extract({ fallback: "style-loader", use: `${cacheBustLoader}!raw-loader` }) },
+    { test: /\.scss/, loader: ExtractTextPlugin.extract({ fallback: "style-loader", use: `${cacheBustLoader}!raw-loader!sass-loader` }) },
     { test: /\.html$/, loader: `${cacheBustLoader}!raw-loader` },
     { test: /\.ts$/, loader: `${cacheBustLoader}!awesome-typescript-loader`, exclude: [path.resolve("node_modules"), path.resolve("typings")] },
     { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff2' },

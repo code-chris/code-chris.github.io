@@ -1,6 +1,6 @@
 import {bindable, autoinject} from "aurelia-framework";
-import {PostData} from "../contracts/PostData";
-import {PostService} from "../services/PostService";
+import {PostData} from "../../contracts/PostData";
+import {PostService} from "../../services/PostService";
 import {NavModel} from "aurelia-router";
 import {RouteConfig, Router} from "aurelia-router";
 import * as moment from "moment";
