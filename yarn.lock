@@ -294,9 +294,9 @@ aurelia-framework@^1.0.0:
     aurelia-task-queue "^1.0.0"
     aurelia-templating "^1.0.0"
 
-aurelia-google-analytics@~1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/aurelia-google-analytics/-/aurelia-google-analytics-1.0.4.tgz#22950538f345b5985de7aa617980aeaf9a4691d3"
+aurelia-google-analytics@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/aurelia-google-analytics/-/aurelia-google-analytics-2.0.0.tgz#878fd7968f389f27505954a503723b2fb3e8e055"
 
 aurelia-history-browser@^1.0.0:
   version "1.0.0"
