@@ -8,6 +8,7 @@ script:
   - "npm run build-prod"
 
 after_success:
+  - bash ./yarn-greenkeeper.sh
   - bash ./deploy-page.sh
 
 branches:
