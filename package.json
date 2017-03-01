@@ -49,7 +49,7 @@
     "yargs": "~6.6.0"
   },
   "dependencies": {
-    "aurelia-bootstrapper": "~1.0.1",
+    "aurelia-bootstrapper": "~2.1.0",
     "aurelia-bootstrapper-webpack": "~1.1.0",
     "aurelia-fetch-client": "~1.1.0",
     "aurelia-google-analytics": "~2.0.0",
