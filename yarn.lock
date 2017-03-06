@@ -244,9 +244,9 @@ aurelia-bootstrapper-webpack@~1.1.0:
     aurelia-pal-browser "^1.1.0"
     aurelia-polyfills "^1.0.0"
 
-aurelia-bootstrapper@~1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/aurelia-bootstrapper/-/aurelia-bootstrapper-1.0.1.tgz#a59a71349f0f632c408468a7f59cc163fc3a817e"
+aurelia-bootstrapper@~2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/aurelia-bootstrapper/-/aurelia-bootstrapper-2.1.1.tgz#4757ac17611b6096704961b55148f77b042b6ac5"
   dependencies:
     aurelia-event-aggregator "^1.0.0"
     aurelia-framework "^1.0.0"
@@ -254,7 +254,7 @@ aurelia-bootstrapper@~1.0.1:
     aurelia-history-browser "^1.0.0"
     aurelia-loader-default "^1.0.0"
     aurelia-logging-console "^1.0.0"
-    aurelia-pal "^1.0.0"
+    aurelia-pal "^1.3.0"
     aurelia-pal-browser "^1.0.0"
     aurelia-polyfills "^1.0.0"
     aurelia-router "^1.0.1"
@@ -358,6 +358,10 @@ aurelia-pal-browser@^1.0.0, aurelia-pal-browser@^1.1.0:
 aurelia-pal@^1.0.0, aurelia-pal@^1.1.0, aurelia-pal@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aurelia-pal/-/aurelia-pal-1.2.0.tgz#ebf0138b3ff2961a2afdd33d5a9841961940247c"
+
+aurelia-pal@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/aurelia-pal/-/aurelia-pal-1.3.0.tgz#95d2b8da8fb318adb6019d320d1d2f9028f37f17"
 
 aurelia-path@^1.0.0:
   version "1.1.1"
