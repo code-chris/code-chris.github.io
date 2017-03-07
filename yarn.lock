@@ -3826,9 +3826,9 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-sitemap@~1.10.0:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-1.10.1.tgz#3d63ea82ecf7346e97ed16602cf4ce572d76a015"
+sitemap@~1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-1.11.0.tgz#1f24de61bfe9483cb96c60fee4db9bad04e830a3"
   dependencies:
     underscore "^1.7.0"
     url-join "^1.1.0"
