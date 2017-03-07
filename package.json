@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "aurelia-webpack-plugin": "github:aurelia/webpack-plugin#802b3434c2ef30d4a360c45254e7b8e2b9bca479",
-    "awesome-typescript-loader": "~3.0.0-beta.18",
+    "awesome-typescript-loader": "~3.1.2",
     "cache-bust-loader": "~1.0.1",
     "cheerio": "^0.22.0",
     "compression-webpack-plugin": "~0.3.2",
