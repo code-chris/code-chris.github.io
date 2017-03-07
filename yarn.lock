@@ -455,13 +455,13 @@ aurelia-templating@^1.0.0, aurelia-templating@^1.2.0:
     recursive-readdir "^2.0.0"
     upath "^0.2.0"
 
-awesome-typescript-loader@~3.0.0-beta.18:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-3.0.3.tgz#83884dcd19eb7054b638bb34328fec9584783dde"
+awesome-typescript-loader@~3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-3.1.2.tgz#3df192b91a6285f795ca65e63aad114fbb44f710"
   dependencies:
     colors "^1.1.2"
     enhanced-resolve "^3.1.0"
-    loader-utils "^0.2.16"
+    loader-utils "^1.0.2"
     lodash "^4.17.4"
     mkdirp "^0.5.1"
     object-assign "^4.1.1"
