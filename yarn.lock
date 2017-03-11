@@ -648,9 +648,11 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-cache-bust-loader@~1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/cache-bust-loader/-/cache-bust-loader-1.0.1.tgz#43c5c99dbbdce5340ece03c095a0138360752ad2"
+cache-bust-loader@~1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cache-bust-loader/-/cache-bust-loader-1.0.3.tgz#5ee7a383034d0dad3e7f7279ecc15b7db6141e07"
+  dependencies:
+    loader-utils "~1.0.3"
 
 camel-case@3.0.x:
   version "3.0.0"
@@ -2502,6 +2504,14 @@ loader-utils@0.2.x, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.
 loader-utils@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.0.2.tgz#a9f923c865a974623391a8602d031137fad74830"
+  dependencies:
+    big.js "^3.1.3"
+    emojis-list "^2.0.0"
+    json5 "^0.5.0"
+
+loader-utils@~1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.0.3.tgz#566c320c24c33cb3f02db4df83f3dbf60b253de3"
   dependencies:
     big.js "^3.1.3"
     emojis-list "^2.0.0"
