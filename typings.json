@@ -28,7 +28,7 @@
   },
   "globalDependencies": {
     "bluebird-2.0": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird-2.0.d.ts#97451842992e45af0534b67b2efbc43e36b597a9",
-    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#95433230a9913054c57c715e6b91a9ae738d0b97",
-    "highlightjs": "github:DefinitelyTyped/DefinitelyTyped/highlightjs/highlightjs.d.ts#bd269cad4cb2b495f940c7b6afc5825d568029be"
+    "highlightjs": "github:DefinitelyTyped/DefinitelyTyped/highlightjs/highlightjs.d.ts#bd269cad4cb2b495f940c7b6afc5825d568029be",
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#95433230a9913054c57c715e6b91a9ae738d0b97"
   }
 }
