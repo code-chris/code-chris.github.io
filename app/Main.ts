@@ -1,5 +1,5 @@
 import {Aurelia, LogManager} from "aurelia-framework";
-import {bootstrap} from 'aurelia-bootstrapper-webpack';
+import {PLATFORM} from "aurelia-pal";
 
 import "../content/main.scss";
 
@@ -10,7 +10,7 @@ Promise.config({
 
 (<any>window).Promise = Promise;
 
-bootstrap((aurelia: Aurelia): void => {
+export function configure(aurelia: Aurelia) {
     aurelia.use
         .standardConfiguration();
 
@@ -18,7 +18,7 @@ bootstrap((aurelia: Aurelia): void => {
         aurelia.use
             .developmentLogging();
     } else {
-        aurelia.use.plugin('aurelia-google-analytics', config => {
+        aurelia.use.plugin(PLATFORM.moduleName('aurelia-google-analytics'), config => {
             config.init('UA-74794817-1');
             config.attach({
                 logging: {
@@ -36,5 +36,5 @@ bootstrap((aurelia: Aurelia): void => {
 
     LogManager.setLevel(3);
 
-    aurelia.start().then(() => aurelia.setRoot("App", document.body));
-});
+    aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName("App"), document.body));
+};

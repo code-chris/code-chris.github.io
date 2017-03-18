@@ -32,7 +32,7 @@ var path = require("path");
 // 0.1 Webpack & Webpack plugins
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var AureliaWebpackPlugin = require('aurelia-webpack-plugin');
+var { AureliaPlugin } = require('aurelia-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Visualizer = require("webpack-visualizer-plugin");
@@ -64,10 +64,13 @@ plugins.push(new CopyWebpackPlugin([
 // 1.1
 // The AureliaWebpackPlugin handles all Aurelia related dependencies in the application
 // e.g. <require from=""></require> tags in HTML
-// This plugin will deprecate soon if "https://github.com/aurelia/skeleton-navigation/pull/714" is tested and stable
-plugins.push(new AureliaWebpackPlugin({
-    root: path.resolve('.'),
-    src: path.resolve('./app/')
+plugins.push(new AureliaPlugin({
+    includeAll: "app",
+    viewsFor: "app/**/*.{ts,js}",
+    features: {
+        svg: false,
+        unparser: false
+    }
 }));
 
 // 1.2
@@ -165,8 +168,7 @@ var loaders = [
 // #####################################
 module.exports = {
     entry: {
-        main: "./app/Main",
-        vendor: Object.keys(libraryMapping),
+        main: "aurelia-bootstrapper"
     },
     output: {
         path: path.resolve('./build/out/assets'),
@@ -176,11 +178,11 @@ module.exports = {
     },
     plugins: plugins,
     resolve: {
-        extensions: ['.ts', '.js', '.scss', '.css', '.html'],
+        extensions: ['.ts', '.js'],
+        modules: ["app", "node_modules"].map(x => path.resolve(x)),
         alias: libraryMapping
     },
     module: {
-        noParse: /aurelia-loader-default/,
         rules: loaders
     },
     devtool: isProduction ? "#source-map" : undefined,

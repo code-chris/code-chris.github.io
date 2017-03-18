@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-pal\\dist\\aurelia-pal.d.ts",
-    "raw": "file:components/aurelia-pal/dist/aurelia-pal.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-pal\\dist\\aurelia-pal.d.ts"
+    "src": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-pal\\dist\\aurelia-pal.d.ts",
+    "raw": "file:node_modules/aurelia-pal/dist/aurelia-pal.d.ts",
+    "typings": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-pal\\dist\\aurelia-pal.d.ts"
   }
 }

@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-bootstrapper-webpack\\dist\\aurelia-bootstrapper-webpack.d.ts",
-    "raw": "file:components/aurelia-bootstrapper-webpack/dist/aurelia-bootstrapper-webpack.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-bootstrapper-webpack\\dist\\aurelia-bootstrapper-webpack.d.ts"
-  }
-}
