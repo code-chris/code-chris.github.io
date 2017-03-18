@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-route-recognizer\\dist\\aurelia-route-recognizer.d.ts",
-    "raw": "file:components/aurelia-route-recognizer/dist/aurelia-route-recognizer.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-route-recognizer\\dist\\aurelia-route-recognizer.d.ts"
+    "src": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-route-recognizer\\dist\\aurelia-route-recognizer.d.ts",
+    "raw": "file:node_modules/aurelia-route-recognizer/dist/aurelia-route-recognizer.d.ts",
+    "typings": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-route-recognizer\\dist\\aurelia-route-recognizer.d.ts"
   }
 }

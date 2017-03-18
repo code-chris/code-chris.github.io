@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-loader\\dist\\aurelia-loader.d.ts",
-    "raw": "file:components/aurelia-loader/dist/aurelia-loader.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-loader\\dist\\aurelia-loader.d.ts"
+    "src": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-loader\\dist\\aurelia-loader.d.ts",
+    "raw": "file:node_modules/aurelia-loader/dist/aurelia-loader.d.ts",
+    "typings": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-loader\\dist\\aurelia-loader.d.ts"
   }
 }

@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "M:\\github\\code-chris.github.io\\components\\aurelia-dependency-injection\\dist\\aurelia-dependency-injection.d.ts",
-    "raw": "file:components/aurelia-dependency-injection/dist/aurelia-dependency-injection.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\components\\aurelia-dependency-injection\\dist\\aurelia-dependency-injection.d.ts"
+    "src": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-dependency-injection\\dist\\aurelia-dependency-injection.d.ts",
+    "raw": "file:node_modules/aurelia-dependency-injection/dist/aurelia-dependency-injection.d.ts",
+    "typings": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-dependency-injection\\dist\\aurelia-dependency-injection.d.ts"
   }
 }
