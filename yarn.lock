@@ -267,9 +267,11 @@ aurelia-framework@^1.0.0:
     aurelia-task-queue "^1.0.0"
     aurelia-templating "^1.0.0"
 
-aurelia-google-analytics@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/aurelia-google-analytics/-/aurelia-google-analytics-2.0.0.tgz#878fd7968f389f27505954a503723b2fb3e8e055"
+aurelia-google-analytics@~2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/aurelia-google-analytics/-/aurelia-google-analytics-2.1.0.tgz#35a0b8b831138d55f7e4ae61fac8cfdb57a7799b"
+  dependencies:
+    deepmerge "^1.3.2"
 
 aurelia-history-browser@^1.0.0:
   version "1.0.0"
@@ -1058,6 +1060,10 @@ deep-equal@~0.2.1:
 deep-extend@~0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.1.tgz#efe4113d08085f4e6f9687759810f807469e2253"
+
+deepmerge@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.3.2.tgz#1663691629d4dbfe364fa12a2a4f0aa86aa3a050"
 
 defaults@^1.0.0, defaults@^1.0.2, defaults@^1.0.3:
   version "1.0.3"
