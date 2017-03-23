@@ -39,7 +39,7 @@
     "rss": "^1.2.1",
     "sass-loader": "^6.0.0",
     "sitemap": "~1.11.0",
-    "style-loader": "^0.15.0",
+    "style-loader": "^0.16.0",
     "typescript": "^2.1.5",
     "typings": "^2.1.0",
     "underscore": "^1.8.3",
