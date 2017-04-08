@@ -21,7 +21,7 @@
     "awesome-typescript-loader": "~3.1.2",
     "cache-bust-loader": "~1.0.3",
     "cheerio": "^0.22.0",
-    "compression-webpack-plugin": "~0.3.2",
+    "compression-webpack-plugin": "~0.4.0",
     "copy": "~0.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "extract-text-webpack-plugin": "~2.1.0",
