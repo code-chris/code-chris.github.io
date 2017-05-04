@@ -46,7 +46,7 @@
     "url-loader": "^0.5.7",
     "webpack": "~2.5.0",
     "webpack-visualizer-plugin": "~0.1.10",
-    "yargs": "~7.1.0"
+    "yargs": "~8.0.1"
   },
   "dependencies": {
     "aurelia-bootstrapper": "~2.1.1",
