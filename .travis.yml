@@ -2,19 +2,29 @@ language:
   - "node_js"
 
 node_js:
-  - "7.5"
-
-script:
-  - "npm run build-prod"
-
-after_success:
-  - bash ./yarn-greenkeeper.sh
-  - bash ./deploy-page.sh
+  - "node"
 
 branches:
   only:
-    - source
-    - /^greenkeeper/.*$/
+  - source
+  - /^greenkeeper/.*$/
+
+
+before_install:
+  - npm i -g npm5
+  - npm5 i -g greenkeeper-lockfile
+
+install: npm5 install
+
+before_script: greenkeeper-lockfile-update
+
+script:
+  - npm5 run build-prod
+
+after_script: greenkeeper-lockfile-upload
+
+after_success:
+  - bash ./deploy-page.sh
 
 env:
   global:
