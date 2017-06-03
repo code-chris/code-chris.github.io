@@ -54,7 +54,7 @@
     "aurelia-google-analytics": "~2.2.0",
     "aurelia-loader-webpack": "^2.1.0",
     "bluebird": "^3.4.7",
-    "highlight.js": "^9.11.0",
+    "highlight.js": "^9.12.0",
     "jquery": "~3.2.1",
     "markdown-it": "^8.3.0",
     "moment": "~2.18.1",
