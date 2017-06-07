@@ -44,7 +44,7 @@
     "typings": "~2.1.1",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
-    "webpack": "~2.6.0",
+    "webpack": "~3.0.0-rc.1",
     "webpack-visualizer-plugin": "~0.1.10",
     "yargs": "~8.0.1"
   },
