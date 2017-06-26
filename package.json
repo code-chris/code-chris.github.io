@@ -38,7 +38,7 @@
     "raw-loader": "~0.5.1",
     "rss": "^1.2.1",
     "sass-loader": "^6.0.0",
-    "sitemap": "~1.12.0",
+    "sitemap": "~1.13.0",
     "style-loader": "~0.18.0",
     "typescript": "~2.3.2",
     "typings": "~2.1.1",
