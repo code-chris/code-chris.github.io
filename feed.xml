@@ -9,13 +9,16 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Fri, 07 Jul 2017 04:48:46 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 07 Jul 2017 05:05:34 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Fri, 07 Jul 2017 04:48:46 GMT</pubDate>
+		<pubDate>Fri, 07 Jul 2017 05:05:34 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
 		<item>
 			<title><![CDATA[Cache-Busting with Webpack]]></title>
-			<description><![CDATA[<p>There are several strategies to implement a caching mechanism. The common way with Webpack is, to change the file
+			<description><![CDATA[<html><head></head><body>
+
+
+<p>There are several strategies to implement a caching mechanism. The common way with Webpack is, to change the file
 name and add a content-based hash. The advantage of this is, that the file only needs to be reloaded if its content
 changed. But the disadvantage is (e.g. for Images) that all references in your Source code have to be modified in
 order to match the different file names. Last year, I implemented a Webpack plugin which does the job. See my previous post:
@@ -80,7 +83,8 @@ which you want to be cache-busted. Split them with a semicolon.</p>
 <pre><code class="language-js">bustValue = require(&quot;randomstring&quot;).generate(5);
 </code></pre>
 <p>You then can see your result in the Network tab of your browser:</p>
-<p><img src="./posts/2017/01/cache-busting-with-webpack/network-tab.jpg" alt="network-tab"></p>]]></description>
+<p><img src="./posts/2017/01/cache-busting-with-webpack/network-tab.jpg" alt="network-tab"></p>
+</body></html>]]></description>
 			<link>https://code-chris.github.io/posts/2017/01/cache-busting-with-webpack/index.html</link>
 			<guid isPermaLink="false">Sun Jan 22 2017 15:05:00 GMT+0000 (UTC)-Cache-Busting with Webpack</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
@@ -88,7 +92,10 @@ which you want to be cache-busted. Split them with a semicolon.</p>
 		</item>
 		<item>
 			<title><![CDATA[Long-term caching of Webpack Assets]]></title>
-			<description><![CDATA[<p>If you want to use a solid long-term caching in your web application with Webpack then you have to do a lot of work.
+			<description><![CDATA[<html><head></head><body>
+
+
+<p>If you want to use a solid long-term caching in your web application with Webpack then you have to do a lot of work.
 Especially if you are not using the normal setup ;). With &quot;normal setup&quot; I mean that you use html- and css-loaders for
 your HTML and CSS files so Webpack would interpret references to external files and include them in the final distribution.
 This is nice because file renamings during the build process (for example add some chunkhash to the filename) will
@@ -116,7 +123,8 @@ module.exports = {
 <li>&quot;../images/button.png&quot; =&gt; &quot;../images/button.46e48ce0628835f68a73.png&quot;</li>
 <li>&quot;../images/icon.png&quot; =&gt; &quot;../images/46e48ce0628835f68a73-icon.png&quot;</li>
 </ul>
-<p>So now you can build your own long-term caching solution with all files you want to ship including static ones.</p>]]></description>
+<p>So now you can build your own long-term caching solution with all files you want to ship including static ones.</p>
+</body></html>]]></description>
 			<link>https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</link>
 			<guid isPermaLink="false">Mon Oct 31 2016 18:00:00 GMT+0000 (UTC)-Long-term caching of Webpack Assets</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
@@ -124,7 +132,10 @@ module.exports = {
 		</item>
 		<item>
 			<title><![CDATA[Migrating from Durandal to Aurelia]]></title>
-			<description><![CDATA[<p>If you have an existing Durandal application you maybe want to migrate this app to Aurelia. Typically you used
+			<description><![CDATA[<html><head></head><body>
+
+
+<p>If you have an existing Durandal application you maybe want to migrate this app to Aurelia. Typically you used
 Knockout for data-binding. Because Aurelia brings its own data-binding language the usage of Knockout
 is not necessary anymore. But probably especially this part of the migration requires the greatest effort,
 because you have to modify much of your code or partially rewrite it. So let&apos;s split this effort as much as possible:</p>
@@ -228,7 +239,8 @@ variable is updated too.</p>
 <p>Subscriptions for Knockout observables which are created from this plugin internally will be disposed automatically
 if the child view is unbound.</p>
 <p>As you can see, the migration to a new framework can be a big task depending on your application. But that does not
-mean that you have to implement it all at once.</p>]]></description>
+mean that you have to implement it all at once.</p>
+</body></html>]]></description>
 			<link>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
 			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0000 (UTC)-Migrating from Durandal to Aurelia</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
@@ -236,7 +248,10 @@ mean that you have to implement it all at once.</p>]]></description>
 		</item>
 		<item>
 			<title><![CDATA[Pluggable NPM postprocessing]]></title>
-			<description><![CDATA[<p>Have you ever had the situation that you installed npm packages and have to perform many manual steps after that?
+			<description><![CDATA[<html><head></head><body>
+
+
+<p>Have you ever had the situation that you installed npm packages and have to perform many manual steps after that?
 Me too! Each step can be very easy, like copying files from one folder to another. But it worries and is error-prone.</p>
 <p>One way around this problem can be to use other package managers which can do some of this tasks out of the box.
 JSPM is one example for this. In some cases this would work and you can feel happy with that solution. But I assert
@@ -353,7 +368,8 @@ your <code>config.js</code> as following:</p>
 <p>The result is similar to SystemJS.</p>
 <h2>Forecast</h2>
 <p>There are planned additional plugins for TypeScript Definitions or URL-Rewriting in CSS. The core package itself
-should preserve an API to access it within a NodeJS-Script.</p>]]></description>
+should preserve an API to access it within a NodeJS-Script.</p>
+</body></html>]]></description>
 			<link>https://code-chris.github.io/posts/2016/04/pluggable-npm-postprocessing/index.html</link>
 			<guid isPermaLink="false">Tue Apr 26 2016 20:33:00 GMT+0000 (UTC)-Pluggable NPM postprocessing</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
