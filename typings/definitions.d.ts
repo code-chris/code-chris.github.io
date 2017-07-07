@@ -26,8 +26,6 @@ interface Window {
     disq: any;
 }
 
-declare function require(module: string): any;
-
 interface ReadableStream {
 }
 
