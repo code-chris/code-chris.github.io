@@ -55,7 +55,7 @@
     "aurelia-loader-webpack": "^2.1.0",
     "bluebird": "^3.4.7",
     "highlight.js": "^9.11.0",
-    "jquery": "~3.2.1",
+    "jquery": "~3.3.1",
     "markdown-it": "^8.3.0",
     "moment": "~2.20.0",
     "whatwg-fetch": "^2.0.0"
