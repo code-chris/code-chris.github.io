@@ -9,9 +9,9 @@
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Wed, 24 Jan 2018 16:45:14 GMT</lastBuildDate>
+		<lastBuildDate>Sat, 27 Jan 2018 07:25:44 GMT</lastBuildDate>
 		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Wed, 24 Jan 2018 16:45:14 GMT</pubDate>
+		<pubDate>Sat, 27 Jan 2018 07:25:44 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
 		<item>
 			<title><![CDATA[Cache-Busting with Webpack]]></title>
