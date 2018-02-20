@@ -3,7 +3,6 @@ import {HttpClient} from 'aurelia-fetch-client';
 import {autoinject} from "aurelia-framework";
 import * as markdown from "markdown-it";
 import * as $ from "jquery";
-import * as moment from "moment";
 import {PostCache} from "./PostCache";
 import {App} from "../App";
 
@@ -138,8 +137,8 @@ export class PostService {
         $ul.next().remove();
         $ul.remove();
 
-        postData.lastModified = postData.lastModified ? moment(postData.lastModified).toDate() : null;
-        postData.publishDate = moment(postData.publishDate).toDate();
+        postData.lastModified = postData.lastModified ? new Date(postData.lastModified) : null
+        postData.publishDate = new Date(postData.publishDate);
         postData.share = <boolean>postData.share;
         postData.tags = (<any>postData.tags).split(",");
         postData.pageContent = tmp.innerHTML.trim();
