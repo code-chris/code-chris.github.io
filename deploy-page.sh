@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo
+
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "source" ]; then exit 0; fi
 
 set -o errexit

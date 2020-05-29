@@ -1,17 +1,9 @@
 <template>
-    <require from='../infrastructure/DateValueConverter'></require>
-    <require from='./ReadingTime'></require>
-
     <div class="entry-header">
         <div if.bind="imageUrl" class="entry-image" css.bind="headerStyle"></div>
         <div class="header-title">
             <div class="header-title-wrap">
                 <h1>${pageTitle}</h1>
-                <h2>
-                    <a href="/feed.xml">
-                        <i class="fa fa-fw fa-rss"></i>
-                    </a>
-                </h2>
             </div>
         </div>
     </div>

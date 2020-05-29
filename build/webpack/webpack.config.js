@@ -15,7 +15,6 @@ const Visualizer = require("webpack-visualizer-plugin");
 const Uglify = require('uglifyjs-webpack-plugin');
 
 const params = require("../scripts/params");
-const libraryMapping = require("./lib-map");
 const isProduction = params.prod;
 
 
@@ -27,8 +26,7 @@ const plugins = [];
 plugins.push(new CopyWebpackPlugin([
     { from: 'content/fonts', to: '../content/fonts[path]/[name].[ext]' },
     { from: 'content/images', to: '../content/images[path]/[name].[ext]' },
-    { from: 'content/common/robots.txt', to: '..' },
-    { from: "posts", to: '../posts' }
+    { from: 'content/common/robots.txt', to: '..' }
 ]));
 
 plugins.push(new webpack.DefinePlugin({
@@ -117,8 +115,7 @@ module.exports = {
     plugins: plugins,
     resolve: {
         extensions: ['.ts', '.js'],
-        modules: ["app", "node_modules"].map(x => path.resolve(x)),
-        alias: libraryMapping
+        modules: ["app", "node_modules"].map(x => path.resolve(x))
     },
     module: {
         rules: loaders

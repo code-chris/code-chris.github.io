@@ -7,29 +7,10 @@ node_js:
 branches:
   only:
   - source
-  - /^greenkeeper/.*$/
-
-
-before_install:
-  - npm i -g greenkeeper-lockfile
-
-before_script: 
-  - greenkeeper-lockfile-update
+  - /^renovate/.*$/
 
 script:
   - npm run build-prod
 
-after_script:
-  - greenkeeper-lockfile-upload
-
 after_success:
   - bash ./deploy-page.sh
-
-notifications:
-  email:
-    on_success: never
-    on_failure: never
-  slack:
-    on_success: never
-    on_failure: always
-    secure: "Mrrnle3N5qNLFbZI63jYx+O0JCl77jn7rKCIAlIBLrUZ1PbJ3BIzAFU05I0pIxdayfWfMYMhH1HnQxo0Hw1zW6YFj2d7MLbpJGIVDRk2MzR31ijCFvCy48QjiaWxiapNytW4meCEE8I4plVwokP77kEbAYZcMRRxjvrWEpfv/Ba7tN7vl7TvDr+fJ0ZUDk1XzTNAbNMiknGpjHylsp209pn6IwbaEzGG0upCvkXGgKk0yh8Pu4GKjjIaKMlgsGERw5JRIpDKSrA+17DvSkFJDKmwH/lm68ah38UOEXl4K9y65F3MqtkWnxTABlb5yKzqtXRl9sUNkyi4ov72s3Afi5lahaxcmQOoWd3cZ1z0/B2rWoEgpsogGJspH+vIACjDJsumCLzPEC/go8taU7FOLGAA+LjDXyxHk0GBabbaHlrCdnFW5s5hKsxDYWVm1tRM/hdxK2aQZUXh7qspiZ1DN9USEjaGmbfSbKoDRnFCj5JxR/LdhbSk8+CNLmQwvCpPotQHL/6MKl8SZn7VucCJmEPE+rnhpezS1QcBJvDXB4T44/ZWOOX5BJOhOLowQaJJniq6XIUgq9sjaSZlQJCyeeThNFFg4plyJ4p2x/7NKJbIVYhggkPzvTnkQqArlL0pQ2a48eA/NX7HN1BPE0uCXTtUWOdkRD2A9v1ktUStHF4="

@@ -1,5 +1,5 @@
-import {Aurelia, LogManager} from "aurelia-framework";
-import {PLATFORM} from "aurelia-pal";
+import { Aurelia, LogManager } from "aurelia-framework";
+import { PLATFORM } from "aurelia-pal";
 
 import "../content/main.scss";
 
