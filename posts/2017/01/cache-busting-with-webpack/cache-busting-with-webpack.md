@@ -11,7 +11,7 @@ There are several strategies to implement a caching mechanism. The common way wi
 name and add a content-based hash. The advantage of this is, that the file only needs to be reloaded if its content 
 changed. But the disadvantage is (e.g. for Images) that all references in your Source code have to be modified in 
 order to match the different file names. Last year, I implemented a Webpack plugin which does the job. See my previous post: 
-["Long-term caching of Webpack Assets"](https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html)
+["Long-term caching of Webpack Assets"](https://ckotzbauer.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html)
 This worked great until you start generating some paths through variables at runtime. So I reconsidered my strategy.
 The result was the usage of a fairly old mechanism: Cache-Busting with a Query-Parameter. To append this parameter
 to all the code references, I wrote a custom Webpack Loader.

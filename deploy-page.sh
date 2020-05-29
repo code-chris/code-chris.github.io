@@ -7,7 +7,7 @@ set -o errexit
 git config --global user.email "christian.kotzbauer@gmail.com"
 git config --global user.name "Christian Kotzbauer"
 
-git clone https://${GH_TOKEN}@github.com/code-chris/code-chris.github.io.git -b master public
+git clone https://${GH_TOKEN}@github.com/ckotzbauer/ckotzbauer.github.io.git -b master public
 
 # build
 rm -rf public/assets public/content public/posts

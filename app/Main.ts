@@ -14,7 +14,7 @@ export function configure(aurelia: Aurelia) {
     aurelia.use
         .standardConfiguration();
 
-    if (window.location.href.indexOf("code-chris.github.io") === -1) {
+    if (window.location.href.indexOf("ckotzbauer.github.io") === -1) {
         aurelia.use
             .developmentLogging();
     } else {

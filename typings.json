@@ -1,5 +1,5 @@
 {
-  "name": "code-chris.github.io",
+  "name": "ckotzbauer.github.io",
   "dependencies": {
     "aurelia-binding": "file:node_modules/aurelia-binding/dist/aurelia-binding.d.ts",
     "aurelia-bootstrapper": "file:node_modules/aurelia-bootstrapper/dist/aurelia-bootstrapper.d.ts",

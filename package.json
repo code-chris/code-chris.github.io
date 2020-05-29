@@ -1,5 +1,5 @@
 {
-  "name": "code-chris.github.io",
+  "name": "ckotzbauer.github.io",
   "version": "1.0.0",
   "description": "",
   "main": "app/Main.js",
@@ -32,7 +32,7 @@
     "jsonfile": "^4.0.0",
     "mini-css-extract-plugin": "~0.4.1",
     "mkdirp": "~0.5.1",
-    "node-sass": "~4.9.2",
+    "node-sass": "~4.14.1",
     "optimize-css-assets-webpack-plugin": "~5.0.0",
     "prompt": "^1.0.0",
     "randomstring": "~1.1.5",

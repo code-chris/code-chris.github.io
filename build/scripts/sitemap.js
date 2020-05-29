@@ -4,7 +4,7 @@ var fs = require("fs");
 var mkdirp = require("mkdirp");
 var index = require("../../posts/index.json");
 
-var sitemap = sm.createSitemap({ hostname: 'https://code-chris.github.io', cacheTime: 600000 });
+var sitemap = sm.createSitemap({ hostname: 'https://ckotzbauer.github.io', cacheTime: 600000 });
 sitemap.add({ url: `/index.html`, changefreq: 'monthly', priority: 0.7 });
 
 var years = Object.keys(index);

@@ -1,5 +1,5 @@
 
-var siteUrl = "https://code-chris.github.io";
+var siteUrl = "https://ckotzbauer.github.io";
 
 module.exports = {
     url: siteUrl,
