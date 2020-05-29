@@ -4,14 +4,14 @@
 		<description><![CDATA[Development Experiences]]></description>
 		<link>http://github.com/dylang/node-rss</link>
 		<image>
-			<url>https://code-chris.github.io/favicon.ico</url>
+			<url>https://ckotzbauer.github.io/favicon.ico</url>
 			<title>Development Experiences</title>
 			<link></link>
 		</image>
 		<generator>RSS for Node</generator>
-		<lastBuildDate>Sat, 28 Jul 2018 06:05:42 GMT</lastBuildDate>
-		<atom:link href="https://code-chris.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-		<pubDate>Sat, 28 Jul 2018 06:05:41 GMT</pubDate>
+		<lastBuildDate>Fri, 29 May 2020 14:16:02 GMT</lastBuildDate>
+		<atom:link href="https://ckotzbauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+		<pubDate>Fri, 29 May 2020 14:16:02 GMT</pubDate>
 		<managingEditor><![CDATA[Christian Kotzbauer]]></managingEditor>
 		<item>
 			<title><![CDATA[Cache-Busting with Webpack]]></title>
@@ -22,7 +22,7 @@
 name and add a content-based hash. The advantage of this is, that the file only needs to be reloaded if its content
 changed. But the disadvantage is (e.g. for Images) that all references in your Source code have to be modified in
 order to match the different file names. Last year, I implemented a Webpack plugin which does the job. See my previous post:
-<a href="https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html">&quot;Long-term caching of Webpack Assets&quot;</a>
+<a href="https://ckotzbauer.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html">&quot;Long-term caching of Webpack Assets&quot;</a>
 This worked great until you start generating some paths through variables at runtime. So I reconsidered my strategy.
 The result was the usage of a fairly old mechanism: Cache-Busting with a Query-Parameter. To append this parameter
 to all the code references, I wrote a custom Webpack Loader.</p>
@@ -85,7 +85,7 @@ which you want to be cache-busted. Split them with a semicolon.</p>
 <p>You then can see your result in the Network tab of your browser:</p>
 <p><img src="./posts/2017/01/cache-busting-with-webpack/network-tab.jpg" alt="network-tab"></p>
 </body></html>]]></description>
-			<link>https://code-chris.github.io/posts/2017/01/cache-busting-with-webpack/index.html</link>
+			<link>https://ckotzbauer.github.io/posts/2017/01/cache-busting-with-webpack/index.html</link>
 			<guid isPermaLink="false">Sun Jan 22 2017 15:05:00 GMT+0000 (Coordinated Universal Time)-Cache-Busting with Webpack</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
 			<pubDate>Sun, 22 Jan 2017 15:05:00 GMT</pubDate>
@@ -125,7 +125,7 @@ module.exports = {
 </ul>
 <p>So now you can build your own long-term caching solution with all files you want to ship including static ones.</p>
 </body></html>]]></description>
-			<link>https://code-chris.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</link>
+			<link>https://ckotzbauer.github.io/posts/2016/10/long-term-caching-of-webpack-assets/index.html</link>
 			<guid isPermaLink="false">Mon Oct 31 2016 18:00:00 GMT+0000 (Coordinated Universal Time)-Long-term caching of Webpack Assets</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
 			<pubDate>Mon, 31 Oct 2016 18:00:00 GMT</pubDate>
@@ -241,7 +241,7 @@ if the child view is unbound.</p>
 <p>As you can see, the migration to a new framework can be a big task depending on your application. But that does not
 mean that you have to implement it all at once.</p>
 </body></html>]]></description>
-			<link>https://code-chris.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
+			<link>https://ckotzbauer.github.io/posts/2016/06/migrating-from-durandal-to-aurelia/index.html</link>
 			<guid isPermaLink="false">Wed Jun 15 2016 18:45:00 GMT+0000 (Coordinated Universal Time)-Migrating from Durandal to Aurelia</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
 			<pubDate>Wed, 15 Jun 2016 18:45:00 GMT</pubDate>
@@ -370,7 +370,7 @@ your <code>config.js</code> as following:</p>
 <p>There are planned additional plugins for TypeScript Definitions or URL-Rewriting in CSS. The core package itself
 should preserve an API to access it within a NodeJS-Script.</p>
 </body></html>]]></description>
-			<link>https://code-chris.github.io/posts/2016/04/pluggable-npm-postprocessing/index.html</link>
+			<link>https://ckotzbauer.github.io/posts/2016/04/pluggable-npm-postprocessing/index.html</link>
 			<guid isPermaLink="false">Tue Apr 26 2016 20:33:00 GMT+0000 (Coordinated Universal Time)-Pluggable NPM postprocessing</guid>
 			<dc:creator><![CDATA[Christian Kotzbauer]]></dc:creator>
 			<pubDate>Tue, 26 Apr 2016 20:33:00 GMT</pubDate>
