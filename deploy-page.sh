@@ -12,8 +12,8 @@ git config --global user.name "Christian Kotzbauer"
 git clone https://${GH_TOKEN}@github.com/ckotzbauer/ckotzbauer.github.io.git -b master public
 
 # build
-rm -rf public/assets public/content public/posts
-rm public/feed.xml public/index.html public/robots.txt public/sitemap.xml
+rm -rf public/assets public/content
+rm public/index.html public/robots.txt
 cp -R -T build/out/ public
 
 # deploy
