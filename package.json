@@ -13,6 +13,8 @@
     "build-dev": "npm run prepare-dev && node node_modules/webpack-cli/bin/cli.js --config build/webpack/webpack.config.js --watch"
   },
   "devDependencies": {
+    "@types/bluebird-global": "~3.5.12",
+    "@types/jquery": "~3.3.38",
     "aurelia-webpack-plugin": "~3.0.0",
     "awesome-typescript-loader": "~5.2.0",
     "cache-bust-loader": "~1.0.5",
@@ -21,7 +23,6 @@
     "file-loader": "~1.1.11",
     "html-webpack-plugin": "~3.2.0",
     "mini-css-extract-plugin": "~0.4.1",
-    "mkdirp": "~0.5.1",
     "node-sass": "~4.14.1",
     "optimize-css-assets-webpack-plugin": "~5.0.0",
     "randomstring": "~1.1.5",
@@ -29,9 +30,7 @@
     "sass-loader": "~7.0.3",
     "style-loader": "~0.21.0",
     "typescript": "~2.9.2",
-    "typings": "~2.1.1",
     "uglifyjs-webpack-plugin": "~1.2.7",
-    "underscore": "~1.9.1",
     "url-loader": "~1.0.1",
     "webpack": "~4.16.3",
     "webpack-cli": "~3.1.0",

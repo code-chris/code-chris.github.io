@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-polyfills\\dist\\aurelia-polyfills.d.ts",
-    "raw": "file:node_modules/aurelia-polyfills/dist/aurelia-polyfills.d.ts",
-    "typings": "M:\\github\\code-chris.github.io\\node_modules\\aurelia-polyfills\\dist\\aurelia-polyfills.d.ts"
-  }
-}
