@@ -5,9 +5,8 @@ node_js:
   - "node"
 
 branches:
-  only:
-  - source
-  - /^renovate/.*$/
+  except:
+    - master
 
 script:
   - npm run build-prod
