@@ -23,11 +23,11 @@ const isProduction = params.prod;
 // #####################################
 const plugins = [];
 
-plugins.push(new CopyWebpackPlugin([
+plugins.push(new CopyWebpackPlugin({ patterns: [
     { from: 'content/fonts', to: '../content/fonts[path]/[name].[ext]' },
     { from: 'content/images', to: '../content/images[path]/[name].[ext]' },
     { from: 'content/common/robots.txt', to: '..' }
-]));
+]}));
 
 plugins.push(new webpack.DefinePlugin({
     FEATURE_NO_SVG: true,
