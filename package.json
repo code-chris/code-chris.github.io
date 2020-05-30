@@ -16,7 +16,7 @@
     "@types/bluebird-global": "3.5.12",
     "@types/jquery": "3.3.38",
     "aurelia-webpack-plugin": "4.0.0",
-    "awesome-typescript-loader": "5.2.0",
+    "awesome-typescript-loader": "5.2.1",
     "cache-bust-loader": "1.0.5",
     "copy-webpack-plugin": "4.6.0",
     "css-loader": "1.0.1",
