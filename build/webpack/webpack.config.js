@@ -90,8 +90,8 @@ const cacheBustLoader = `cache-bust-loader?name=bust&value=${params.bustValue}&t
 const loaders = [
     { test: /\.css$/, loader: [MiniCssExtractPlugin.loader, "css-loader?url=false"] },
     { test: /\.scss/, loader: [MiniCssExtractPlugin.loader, "css-loader?url=false", { loader: "sass-loader", options: { includePaths: ["node_modules"] } }] },
-    { test: /\.html$/, loader: `${cacheBustLoader}!raw-loader` },
-    { test: /\.ts$/, loader: `${cacheBustLoader}!awesome-typescript-loader`, exclude: [path.resolve("node_modules"), path.resolve("typings")] },
+    { test: /\.html$/, loader: `${cacheBustLoader}!html-loader?attributes=false` },
+    { test: /\.ts$/, loader: `${cacheBustLoader}!awesome-typescript-loader`, exclude: [path.resolve("node_modules")] },
     { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff2' },
     { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff' },
     { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
