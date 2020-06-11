@@ -141,19 +141,34 @@ pre > code {
         font-size: 20px;
       }
 
-      .pill {
-        background-color: #323D49;
-        padding: 5px;
-        border-radius: 5px;
-        color: white;
+      .tags-section {
+        display: inline-block;
+
+        .pill {
+          background-color: #323D49;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+        }
+
+        .contact {
+          margin-top: 50px;
+          font-size: 30px;
+
+          a {
+            margin-right: 15px;
+          }
+        }
       }
 
-      .contact {
-        margin-top: 50px;
-        font-size: 30px;
+      .badge-section {
+        display: inline-block;
+        vertical-align: bottom;
+        width: 289px;
 
-        a {
-          margin-right: 15px;
+        .cka-badge {
+          width: 150px;
+          float: right;
         }
       }
     }
