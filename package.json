@@ -17,7 +17,7 @@
     "@types/jquery": "3.5.0",
     "aurelia-webpack-plugin": "4.0.0",
     "awesome-typescript-loader": "5.2.1",
-    "cache-bust-loader": "1.0.5",
+    "cache-bust-loader": "1.0.6",
     "copy-webpack-plugin": "6.0.3",
     "css-loader": "3.6.0",
     "file-loader": "6.0.0",
