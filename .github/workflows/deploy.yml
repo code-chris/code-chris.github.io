@@ -14,10 +14,12 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Build
+      - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: '14'
+
+      - name: Build
         run: npm run build-prod
 
       - name: Install SSH Client
