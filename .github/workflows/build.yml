@@ -3,7 +3,8 @@ name: build
 on:
   push:
     branches:
-      - 'source'
+      - '!master'
+      - '!source'
 
 jobs:
   build:
@@ -16,5 +17,3 @@ jobs:
         with:
           node-version: '14'
       - run: npm run build-prod
-        continue-on-error: false
-      - run: bash ./deploy-page.sh

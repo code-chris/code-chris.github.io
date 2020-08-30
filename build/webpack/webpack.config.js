@@ -26,7 +26,8 @@ const plugins = [];
 plugins.push(new CopyWebpackPlugin({ patterns: [
     { from: 'content/fonts', to: '../content/fonts[path]/[name].[ext]' },
     { from: 'content/images', to: '../content/images[path]/[name].[ext]' },
-    { from: 'content/common/robots.txt', to: '..' }
+    { from: 'content/common/robots.txt', to: '..' },
+    { from: 'build/CNAME', to: '..' }
 ]}));
 
 plugins.push(new webpack.DefinePlugin({
