@@ -17,4 +17,6 @@ jobs:
         with:
           node-version: '14'
       - name: Build
-        run: npm run build-prod
+        run: |
+          npm i
+          npm run build-prod

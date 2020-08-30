@@ -20,7 +20,9 @@ jobs:
           node-version: '14'
 
       - name: Build
-        run: npm run build-prod
+        run: |
+          npm i
+          npm run build-prod
 
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.2.0
