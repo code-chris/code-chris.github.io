@@ -1,0 +1,20 @@
+name: build
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: npm run build-prod
+        continue-on-error: false
+      - run: bash ./deploy-page.sh
