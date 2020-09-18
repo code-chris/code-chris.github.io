@@ -15,7 +15,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.1
         with:
           node-version: '14'
 
@@ -25,12 +25,12 @@ jobs:
           npm run build-prod
 
       - name: Install SSH Client
-        uses: webfactory/ssh-agent@v0.2.0
+        uses: webfactory/ssh-agent@v0.4.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.5.9
+        uses: JamesIves/github-pages-deploy-action@3.6.1
         with:
           SSH: true
           BRANCH: master # The branch the action should deploy to.
