@@ -27,7 +27,9 @@ jobs:
           MERGE_DELETE_BRANCH: "true"
 
       - name: Workflow Dispatch
+        if: github.event.pull_request.state == "closed"
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: deploy
+          ref: source
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
