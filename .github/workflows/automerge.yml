@@ -28,3 +28,9 @@ jobs:
           MERGE_LABELS: "approved,!work-in-progress,!hold"
           MERGE_METHOD: "rebase"
           MERGE_DELETE_BRANCH: "true"
+
+      - name: Workflow Dispatch
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: deploy
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
