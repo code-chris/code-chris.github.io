@@ -26,8 +26,17 @@ jobs:
           MERGE_METHOD: "rebase"
           MERGE_DELETE_BRANCH: "true"
 
-      - name: Workflow Dispatch
-        if: github.event.pull_request.merged
+      - uses: octokit/request-action@v2.x
+        id: get_pullrequest
+        with:
+          route: GET /repos/:repository/pulls/:pr_number
+          repository: ${{ github.repository }}
+          pr_number: ${{ github.event.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: start deployment
+        if: fromJson(steps.get_pullrequest.outputs.data).state == 'closed'
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: deploy
