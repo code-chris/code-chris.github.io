@@ -37,7 +37,7 @@ jobs:
 
       - name: start deployment
         if: fromJson(steps.get_pullrequest.outputs.data).state == 'closed'
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: deploy
           ref: source
