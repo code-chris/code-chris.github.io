@@ -27,7 +27,7 @@
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "randomstring": "1.1.5",
     "sass": "1.28.0",
-    "sass-loader": "10.0.4",
+    "sass-loader": "10.0.5",
     "style-loader": "2.0.0",
     "typescript": "4.0.5",
     "uglifyjs-webpack-plugin": "2.2.0",
