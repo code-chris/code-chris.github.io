@@ -33,6 +33,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
-          SSH: true
-          BRANCH: master # The branch the action should deploy to.
-          FOLDER: build/out # The folder the action should deploy.
+          ssh-key: true
+          branch: master # The branch the action should deploy to.
+          folder: build/out # The folder the action should deploy.
