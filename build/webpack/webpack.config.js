@@ -7,12 +7,11 @@ const path = require("path");
 
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 const { AureliaPlugin } = require('aurelia-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Visualizer = require("webpack-visualizer-plugin");
-const Uglify = require('uglifyjs-webpack-plugin');
 
 const params = require("../scripts/params");
 const isProduction = params.prod;
@@ -24,8 +23,7 @@ const isProduction = params.prod;
 const plugins = [];
 
 plugins.push(new CopyWebpackPlugin({ patterns: [
-    { from: 'content/fonts', to: '../content/fonts[path]/[name].[ext]' },
-    { from: 'content/images', to: '../content/images[path]/[name].[ext]' },
+    { from: 'content/images/favicon.ico', to: '../content/images[path]/[name][ext]' },
     { from: 'content/common/robots.txt', to: '..' },
     { from: 'build/CNAME', to: '..' }
 ]}));
@@ -44,7 +42,7 @@ plugins.push(new AureliaPlugin({
     }
 }));
 
-plugins.push(new MiniCssExtractPlugin({ filename: `style.css${params.bust}` }));
+plugins.push(new MiniCssExtractPlugin({ filename: `style.[contenthash].css` }));
 
 plugins.push(new HtmlWebpackPlugin({
     template: './index.ejs',
@@ -53,49 +51,23 @@ plugins.push(new HtmlWebpackPlugin({
 }));
 
 plugins.push(new webpack.ProvidePlugin({
-    Promise: "bluebird",
     $: "jquery",
     jQuery: "jquery",
     "window.jQuery": "jquery"
 }));
 
-if (isProduction) {
-    plugins.push(new Uglify({ sourceMap: true, test: /\.js$/i, parallel: true }));
-    plugins.push(new OptimizeCSSAssetsPlugin({}));
-} else {
-    plugins.push(new webpack.SourceMapDevToolPlugin({
-        filename: "[name].map"
-    }));
-}
-
-plugins.push(new Visualizer({
-    filename: "../../artifacts/stats.html"
-}));
-
-const p = {};
-p.apply = (compiler) => {
-    compiler.plugin('done', () => {
-        setTimeout(() => console.log("\n\nBuild time: " + new Date().toLocaleString()), 1000);
-    });
-};
-
-plugins.push(p);
-
-
 
 // #####################################
 //         LOADER CONFIGURATIONS
 // #####################################
-const cacheBustLoader = `cache-bust-loader?name=bust&value=${params.bustValue}&types=eot;woff;woff2;svg;ttf;otf;jpg;jpeg;png;ico;gif`;
-
 const loaders = [
-    { test: /\.css$/, loader: [MiniCssExtractPlugin.loader, "css-loader?url=false"] },
-    { test: /\.scss/, loader: [MiniCssExtractPlugin.loader, "css-loader?url=false", { loader: "sass-loader", options: { sassOptions: { includePaths: ["node_modules"] } } }] },
-    { test: /\.html$/, loader: `${cacheBustLoader}!html-loader?attributes=false` },
-    { test: /\.ts$/, loader: `${cacheBustLoader}!awesome-typescript-loader`, exclude: [path.resolve("node_modules")] },
-    { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff2' },
-    { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff' },
-    { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
+    { test: /\.css$/, use: [MiniCssExtractPlugin.loader, "css-loader"] },
+    { test: /\.scss/, use: [MiniCssExtractPlugin.loader, "css-loader", { loader: "sass-loader", options: { sassOptions: { includePaths: ["node_modules"] } } }] },
+    { test: /\.html$/, use: [{ loader: "html-loader", options: { esModule: false } }] },
+    { test: /\.ts$/, loader: `ts-loader`, exclude: [path.resolve("node_modules")] },
+    { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, type: 'asset/inline' },
+    { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, type: 'asset/inline' },
+    { test: /\.(ttf|eot|svg|jpg|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/, type: 'asset/resource' }
 ];
 
 
@@ -104,14 +76,13 @@ const loaders = [
 //         MAIN CONFIGURATION
 // #####################################
 module.exports = {
+    target: "web",
     entry: {
         main: "aurelia-bootstrapper"
     },
     output: {
         path: path.resolve('./build/out/assets'),
-        filename: `[name].js${params.bust}`,
-        sourceMapFilename: `[name].map${params.bust}`,
-        publicPath: "assets/"
+        filename: `[name][contenthash].js`,
     },
     plugins: plugins,
     resolve: {
@@ -121,7 +92,13 @@ module.exports = {
     module: {
         rules: loaders
     },
-    devtool: isProduction ? "#source-map" : undefined,
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin(),
+            new CssMinimizerPlugin(),
+        ],
+    },
+    devtool: "source-map",
     mode: isProduction ? "production" : "development",
-    watch: !isProduction
 };
