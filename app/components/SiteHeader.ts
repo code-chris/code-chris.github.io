@@ -3,16 +3,7 @@ import { bindable, computedFrom } from "aurelia-framework";
 export class SiteHeader {
 
     @bindable
-    private imageUrl: string;
-    @bindable
     private pageTitle: string;
-
-    @computedFrom("imageUrl")
-    private get headerStyle(): any {
-        return {
-            'background-image': `url(${this.imageUrl})`
-        };
-    };
 
     public attached() {
         $(document).ready(() => {
